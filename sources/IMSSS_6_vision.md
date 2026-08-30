@@ -107,3 +107,166 @@ This proof shows that every theory of measurement included in the class $\mathca
 $^{5/}$ In this connection see Sierpinski [4] Section 7, page 141 ff., in particular Proposition $C_{75}$, where of course different terminology is used.
 
 $^{6/}$ It is sufficient here to consider a relational system isomorphic to the ordering of the ordinals of the second number class or to the lexicographical ordering of all pairs of real numbers.
+
+<!-- page 8 -->
+
+elementary and the proof of the necessity involves the axiom of choice.$^{7/}$
+
+Let $\mathcal{O}'$ be $\mathcal{O}$ restricted to countable$^{8/}$ relational systems. It was proved by Cantor that $\mathcal{O}'$ is a theory of measurement relative to $\langle Re, \le \rangle$, to formulate somewhat irreverently his classical result in the terminology of this paper. This restriction to countable relational systems is always sufficient. For it can be shown that the class of <u>all</u> countable relational systems of a given type is a theory of measurement; however, the numerical relational system required is so bizarre as to be of no practical value.
+
+One of the aims of measurement is to provide a means of convenient computation. But among the morass of all possible numerical relational systems only a very few are of any computational value, indeed only those definable in terms of the ordinary arithmetical notions. From an empirical standpoint most sets of qualitative data can find numerical interpretation by relations defined in terms of addition and ordering alone. By way of example we may cite the measurement of masses, distances, sensation intensities, and subjective probabilities. Frequently the consideration of weighted averages requires also the use of the multiplication of numbers. However, in the examples given in this paper we shall restrict ourselves to the notions of addition and ordering.
+
+No natural scientific situation would seem strictly to require the consideration of sets of infinite data. This state of affairs suggests that theories of measurement containing only finite relational systems would
+
+---
+
+$^{7/}$ A simple ordering is imbeddable in $\langle Re, \le \rangle$ if and only if it contains a countable dense subset. For the exact formulation and a sketch of a proof see Birkhoff [1], pp. 31-32, Theorem 2.
+
+$^{8/}$ The word 'countable' means at most denumerable and it refers to the cardinality of the domains of the relational systems.
+
+<!-- page 9 -->
+
+suffice for empirical purposes. The problem is delicate, however, for the measurement of a meteorological quantity such as temperature by an automatic recording device is usually treated as continuous both in its own scale and in time. Yet the important problem of measurement does not really lie in the correct use of such recording devices but rather in their initial calibration, a process proceeding from a finite number of qualitative decisions. Because of the akwardness of the uniform application of finite relational systems, we shall not generally make this restriction.
+
+Further remarks about establishing the existence of measurement are best motivated by reference to a concrete example. In a recent paper$^{9/}$ R. D. Luce has introduced a generalization of simple orderings which he calls <u>semiorders</u>. A <u>semiorder</u> is a relational system $\langle A, P \rangle$ of type $\langle 2 \rangle$ which satisfies the following axioms for all $x, y, z, w \in A$:
+
+S1. <u>Not</u> $xPx$.
+
+S2. <u>If</u> $xPy$ <u>and</u> $zPw$, <u>then</u> <u>either</u> $xPw$ <u>or</u> $zPy$.
+
+S3. <u>If</u> $xPy$ <u>and</u> $zPx$, <u>then</u> <u>either</u> $wPy$ <u>or</u> $zPw$.$^{10/}$
+
+Such relations are most likely to occur in situations where objects are to be arranged in order and where it is difficult to say exactly when two objects are indifferent. For example, to say that $xPy$ might be interpreted as meaning that the pitch of the sound $x$ is <u>definitely higher</u> than the pitch
+
+---
+
+$^{9/}$ See Luce [3].
+
+$^{10/}$ See Luce [3] Section 2, p. 181. The axioms given here are actually a simplification of those given by Luce.
+
+<!-- page 10 -->
+
+of $y$, or that the hue of color $x$ is <u>definitely brighter</u> than the hue of color $y$, or that the weight of the object $x$ is <u>noticeably greater</u> than that of $y$, etc. Indifference between two objects $x$ and $y$ (in symbols: $xIy$) is defined as not $xPy$, and not $yPx$. The point of Luce's axioms is that the relation $I$ of indifference is not always transitive, a fact easily appreciated for each of the intuitive interpretations given above.
+
+In his paper Luce gives a certain numerical interpretation for certain kinds of semiorders, but he does not show that any particular class of semiorders is a theory of measurement in the sense used here, because his interpretations are not relative to a fixed numerical relation. In the denumerable case the situation is very simple indeed. Let $\gg$ be the relation between real numbers defined by the condition
+
+$$x \gg y \quad \text{if and only if} \quad x > y + 1.$$
+
+Obviously, if $x$ and $y$ are real numbers such that $x \gg y$, then $x$ is <u>definitely greater than</u> $y$ or better $x$ is <u>noticeably greater than</u> $y$. The following result is not difficult to establish.
+
+<u>The class of countable semiorders is a theory of measurement relative to the numerical relational system $\langle Re, \gg \rangle$ (which is itself a semiorder).</u>
+
+It is possible to characterize all semiorders imbeddable in $\langle Re, \gg \rangle$, similar to the result for simple orderings, but this shall not concern us here.
+
+For the remainder of this discussion let $C$ be the class of all countable semiorders. The class $C$ affords an example of a theory of measurement (relative to $\langle Re, \gg \rangle$) for which not all numerical assignments are one-one functions.$^{11/}$ However, this theory has the peculiarity that those systems
+
+---
+
+$^{11/}$ For example, consider any semiorders in which any two elements are indifferent.
+
+<!-- page 11 -->
+
+having only one-one assignments can be distinguished by a simple additional axiom. Let $\langle A, P \rangle$ be any semiorder. Define a relation $E$ between elements of $A$ by the condition
+
+$$xEy \quad \text{if and only if for all } z \in A \text{ the formulas } xIz \text{ and } yIz \text{ are equivalent.}$$
+
+The relation $E$ is easily proved to be an equivalence relation, and, in fact, it is a congruence relation in the sense that for all $x, y, z \in A$
+
+$$\text{if } xPz \text{ and } xEy \text{ then } yPz, \text{ and}$$
+$$\text{if } zPx \text{ and } xEy, \text{ then } zPy.$$
+
+Furthermore, we can show that if $f$ is any numerical assignment imbedding $\langle A, P \rangle$ in $\langle Re, \gg \rangle$ then for all $x, y \in A$, if $f(x) = f(y)$, then $xEy$. Consider then the axiom:
+
+<u>S4.</u> If $xEy$, then $x = y$.
+
+Let $C^*$ be the class of all systems in $C$ which satisfy S4. Clearly from our remarks above it follows that any system in $C^*$ has only one-one numerical assignments. In the other direction, assume that $\langle A, P \rangle$ is a system in $C$ possessing only one-one assignments. Since the relation $E$ is a congruence relation for the system $\langle A, P \rangle$, we can reduce by $E$ and form a system of cosets $\langle A^*, P^* \rangle$, where $A^*$ is the family of equivalence classes under $E$, and $P^*$ is defined in the natural way. Obviously $\langle A^*, P^* \rangle$ is in $C^*$ and $\langle A, P \rangle$ is imbeddable in $\langle A^*, P^* \rangle$ (in fact, $\langle A^*, P^* \rangle$ is a homomorphic image of $\langle A, P \rangle$). Let $f^*$ be any assignment for $\langle A^*, P^* \rangle$. In a straightforward way we can define an assignment $f$ for $\langle A, P \rangle$ such
+
+<!-- page 12 -->
+
+that $f(x) = f^*([x])$, where $x \in A$ and $[x]$ is the $E$-equivalence class of $x$. Now by assumption $f$ is one-one. Hence if $xEy$, then $[x] = [y]$, and so $f^*([x]) = f^*([y])$, which implies $f(x) = f(y)$ and $x = y$. Thus $\langle A, P \rangle$ itself satisfies S4. We have shown that $C^*$ is exactly the class of all systems in $C$ possessing only one-one assignments.
+
+To be truthful, the above discussion has somewhat inverted the natural sequence of steps. In order to establish the existence of measurement for $C$ (that is, to show that $C$ is a theory of measurement relative to $\langle Re, \gg \rangle$), it is far better to consider the class $C^*$ first and prove that it is a theory of measurement relative to $\langle Re, \gg \rangle$. Finally it need only be remarked that every system in $C$ can be imbedded in a system of $C^*$ by the method of cosets. As a matter of fact it can also be proved that every system in $C$ is a sub-system of some system in $C^*$, which is another method of proving that $C$ is a theory of measurement.
+
+Let us now summarize the steps in establishing the existence of measurement using as models the simple orderings and the semiorders. First, after one is given a class, $K$ say, of relational systems, the numerical relational system should be decided upon. The numerical relational system should be naturally suggested by the structure of the systems in $K$, and as was remarked, it is most practical to consider numerical systems where all the relations can be simply defined in terms of addition and ordering of real numbers. Second, if the proof that $K$ is a theory of measurement is not at once obvious, the cardinality of systems in $K$ should be taken into consideration. The restriction to countable systems would always seem empirically justified, and adequate results are often possible with a restriction to finite systems. Third, the
+
+<!-- page 13 -->
+
+proof of the existence of measurement can often be simplified by the reduction of each relational system in $K$ by the method of cosets. One usually looks for a uniform and natural method of introducing into each relational system in $K$ an equivalence relation which preserves all the relations between the elements. Then, instead of trying to find numerical assignments for each member of $K$, one concentrates only on the reduced systems. This plan was very helpful in the case of semiorders. Instead of cosets, it is sometimes feasible to consider imbedding by subsystems. That is to say, one considers some convenient subclass $K' \subseteq K$ such that every element of $K$ is a subsystem of some system in $K'$. If $K'$ is a theory of measurement then so is $K$. In the case of semiorders we could have used either plan: cosets or subsystems.
+
+After the existence of measurement has been established, there are two questions which are often of interest: for a given relational system what is the class of all its numerical assignments? and how can the class of all systems isomorphic to the given system be described? These two questions are not unrelated, though in some cases one can be answered without deciding the other. We shall present two examples.
+
+Consider relational systems $\langle A, D \rangle$ of type $\langle 4 \rangle$. For such systems we introduce the following definitions:
+
+$$xRy \quad \text{if and only if} \quad xyDyy$$
+
+$$xyM^1 zw \quad \text{if and only if} \quad xyDzw, zwDxy, yRz \text{ and } zRy$$
+
+$$xyM^{n+1} zw \quad \text{if and only if there exist}$$
+$$u, v \in A \text{ such that}$$
+$$xyM^n uv \quad \text{and} \quad uvM^1 zw.$$
+
+<!-- page 14 -->
+
+Let $H$ be the class of all relational systems $\langle A, D \rangle$ of type $\langle 4 \rangle$ which satisfy the following axioms for every $x, y, z, u, v, w \in A$:
+
+A1. <u>If</u> $xyDzw$ <u>and</u> $zwDuv$ <u>then</u> $xyDuv$.
+
+A2. $xyDzw$ <u>or</u> $zwDxy$.
+
+A3. <u>If</u> $xyDzw$ <u>then</u> $xzDyw$.
+
+A4. <u>If</u> $xyDzw$ <u>then</u> $wzDyx$.
+
+A5. <u>If</u> $xRy$ <u>and</u> $yzDuv$ <u>then</u> $xzDuv$.
+
+A6. <u>There is a</u> $z \in A$ <u>such that</u> $xzDzy$ <u>and</u> $zyDxy$.
+
+A7. <u>If not</u> $xyDzw$ <u>and not</u> $xRy$ <u>then there is a</u> $u \in A$ <u>such that</u> $zwDxu$, <u>not</u> $xRu$ <u>and not</u> $uRy$.
+
+A8. <u>If</u> $xyDzw$ <u>and not</u> $xRy$ <u>then there are</u> $u, v \in A$ <u>and an</u> $n$ <u>such that</u> $zuM^n vw$ <u>and</u> $zuDxy$.
+
+These axioms imply that for a system $\langle A, D \rangle$ in $H$, the relation $R$ is a weak ordering of $A$, and the intuitive interpretation of $xyDzw$ in case $yRx$ and $wRz$ is that the interval between $x$ and $y$ is not greater than the interval between $z$ and $w$. Making heavy use of the last three existence axioms (note that A8 gives an Archimedean property to the ordering), it can be shown that $H$ is a theory of measurement relative to the numerical relational system $\langle Re, \Delta \rangle$ where $\Delta$ is the quaternary relation defined by the condition
+
+$$xy \Delta zw \quad \text{if and only if} \quad x - y \le z - w$$
+
+for all $x, y, z, w \in Re$. In addition, it can be shown that if $\langle A, D \rangle$ is in
+
+<!-- page 15 -->
+
+$H$ and $f$ and $g$ are two numerical assignments of $\langle A, D \rangle$ relative to $\langle Re, \Delta \rangle$, then $f$ and $g$ are related by a positive linear transformation;$^{12/}$ that is, there exist $\alpha, \beta \in Re$ with $\alpha > 0$ such that for all $x \in Re$, $f(x) = \alpha g(x) + \beta$. This gives in a certain sense the answer to the first question above: if we know one numerical assignment of $\langle A, D \rangle$, we know them all. Except for very special systems in $H$, nothing more specific can really be expected.
+
+Notice that all relational systems in $H$ are necessarily infinite. In the next section we shall consider in detail the theory of measurement $F$ consisting of all finite relational systems imbeddable in $\langle Re, \Delta \rangle$. Here the situation is quite hopeless. There simply is no apparent general statement that can be made about the relation between assignments. In as much as any function $\varphi$ which imbeds $\langle Re, \Delta \rangle$ in itself is necessarily a linear transformation and conversely, it follows that if $\langle A, D \rangle$ is a system in $F$ and $f$ is an assignment for $\langle A, D \rangle$, then $f$ composed with a linear transformation is also an assignment. The main difficulty with $F$ is that two assignments for the same system in $F$ need not be related by a linear transformation.
+
+The situation with regard to the class $C^*$ of semiorders introduced above is much the same as that for $F$, in as much as there is no apparent relation between assignments. However, though it seems difficult to describe all the different finite systems in $F$, we can answer this question for the finite systems in $C^*$. The description is facilitated by the following definition.
+
+---
+
+$^{12/}$ The proofs of both these facts about $H$ are very similar to the corresponding proofs in Suppes and Winet [5].
+
+<!-- page 16 -->
+
+Let $s = \langle s_1, \dots, s_n \rangle$ and $t = \langle t_1, \dots, t_n \rangle$ be two finite sequences of positive integers of the same length $n$. We write $s \varepsilon t$ to mean:
+
+(i) $s_{i+1} > s_i$ for $i < n$,
+
+(ii) $t_{i+1} > t_i$ for $i < n$,
+
+(iii) $s_i > t_i$ for $i \le n$.
+
+Let $m$ be any integer not less than $s_n$. We define $\mathcal{O}_m(s,t)$, where $s \varepsilon t$, to be the relational system $\langle A, P \rangle$, where $A = \{1, \dots, m\}$ and the binary relation $P$ is defined by the condition
+
+$$k P \ell \quad \text{if and only if there is an integer } i \le n \text{ such that}$$
+
+$$k \ge s_i > t_i \ge \ell$$
+
+for all $k, \ell \in A$.
+
+It is possible without much trouble to establish the following facts:
+
+(1) $\mathcal{O}_m(s,t)$ is a semiorder;
+
+(2) If $\mathcal{O}_m(s,t)$ satisfies axiom S4, and if $\mathcal{O}_m(s,t)$ is isomorphic to $\mathcal{O}_{m'}(s',t')$, then $m = m'$, $s = s'$, and $t = t'$;
+
+(3) Any finite semiorder is isomorphic to a system $\mathcal{O}_m(s,t)$ for suitable $m$, $s$, and $t$.
+
+Thus what has been accomplished is the exhibition of exactly one representative of each isomorphism type of finite semiorders which satisfy axiom S4. Actually, with very little more effort we could do the same for arbitrary finite semiorders. Since a system $\mathcal{O}_m(s,t)$ seems to be a definite object that we can constructively define, we feel that this construction yields an adequate
