@@ -1,0 +1,63 @@
+{
+  "title": "A Lean 4 Formalization of Scott's Measurement Structures and Linear Inequalities (1964)",
+  "upload_type": "software",
+  "access_right": "open",
+  "language": "eng",
+  "version": "0.1.0",
+  "description": "Machine-checked Lean 4 formalization of Dana Scott's 1964 paper Measurement Structures and Linear Inequalities (Journal of Mathematical Psychology 1 (1964), 233-247). Dana Scott was not contacted and did not participate in, review, or endorse this formalization. Primary readable artifact: arxiv.pdf (when published). Source repository: https://github.com/catskillsresearch/scott1964.",
+  "creators": [
+    {
+      "name": "Ericson, Lars Warren",
+      "affiliation": "Catskills Research Company",
+      "orcid": "0000-0001-8299-9361"
+    }
+  ],
+  "keywords": [
+    "Lean 4",
+    "mathlib",
+    "formal verification",
+    "measurement theory",
+    "linear inequalities",
+    "utility theory",
+    "intransitive indifference",
+    "subjective probability",
+    "Dana Scott"
+  ],
+  "subjects": [
+    {
+      "term": "Measurement",
+      "identifier": "http://id.loc.gov/authorities/subjects/sh85083608",
+      "scheme": "url"
+    },
+    {
+      "term": "Utility theory",
+      "identifier": "http://id.loc.gov/authorities/subjects/sh85141626",
+      "scheme": "url"
+    },
+    {
+      "term": "Inequalities (Mathematics)",
+      "identifier": "http://id.loc.gov/authorities/subjects/sh85065985",
+      "scheme": "url"
+    },
+    {
+      "term": "Algebra, Boolean",
+      "identifier": "http://id.loc.gov/authorities/subjects/sh85003429",
+      "scheme": "url"
+    },
+    {
+      "term": "Automatic theorem proving",
+      "identifier": "http://id.loc.gov/authorities/subjects/sh85010112",
+      "scheme": "url"
+    }
+  ],
+  "license": "Apache-2.0",
+  "notes": "Software and Lean sources are Apache-2.0 (see LICENSE). Scott's source PDF in sources/ is not Apache-2.0 (see NOTICE). Readable paper PDF is arxiv.pdf in this deposit when present. Prepared with LLM assistance; all Lean proofs are machine-checked.",
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/catskillsresearch/scott1964",
+      "relation": "isSupplementTo",
+      "scheme": "url",
+      "resource_type": "software"
+    }
+  ]
+}

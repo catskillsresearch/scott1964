@@ -1,0 +1,18 @@
+This repository's original Lean, scripts, and author-written documentation
+are licensed under the Apache License, Version 2.0 (see LICENSE).
+
+Third-party source material (not Apache-2.0)
+--------------------------------------------
+
+sources/ScottMeasurement1964.pdf is Dana S. Scott, Measurement Structures and
+Linear Inequalities, Journal of Mathematical Psychology, Volume 1, 1964,
+pages 233-247. Copyright 1964 by Academic Press Inc. It is included only as
+the cited primary source for this formalization. Palomar and other
+redistributors must not treat it as licensed under Apache-2.0.
+
+A working Markdown transcription (when present as
+sources/ScottMeasurement1964.md) retains Scott's wording under Scott's /
+the publisher's copyright. YAML headers, page markers, and editorial notes
+are part of this repository's documentation.
+
+See sources/README.md.

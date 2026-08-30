@@ -1,0 +1,24 @@
+name = "scott1964"
+version = "0.1.0"
+keywords = ["measurement-theory", "scott-1964", "linear-inequalities", "utility-theory", "lean4"]
+defaultTargets = ["Scott1964", "Challenge", "Solution"]
+
+# Scott1964 is the proof development. Challenge / Solution are the Palomar Comparator pair.
+
+[leanOptions]
+pp.unicode.fun = true
+relaxedAutoImplicit = true
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.33.0"
+
+[[lean_lib]]
+name = "Scott1964"
+
+[[lean_lib]]
+name = "Challenge"
+
+[[lean_lib]]
+name = "Solution"

@@ -1,0 +1,39 @@
+# Citation File Format — GitHub “Cite this repository.”
+# Authoritative Zenodo metadata (subjects, resource type, relations): .zenodo.json
+
+cff-version: 1.2.0
+title: "A Lean 4 Formalization of Scott's Measurement Structures and Linear Inequalities (1964)"
+message: "If you use this formalization, please cite it as below."
+type: software
+authors:
+  - family-names: Ericson
+    given-names: Lars Warren
+    affiliation: Catskills Research Company
+    orcid: "https://orcid.org/0000-0001-8299-9361"
+abstract: >-
+  Machine-checked Lean 4 formalization of Dana Scott's 1964 paper Measurement
+  Structures and Linear Inequalities (Journal of Mathematical Psychology 1
+  (1964), 233–247). Dana Scott was not contacted and did not participate in,
+  review, or endorse this formalization.
+keywords:
+  - Lean 4
+  - measurement theory
+  - linear inequalities
+  - utility theory
+  - subjective probability
+  - formal verification
+repository-code: "https://github.com/catskillsresearch/scott1964"
+license: Apache-2.0
+version: 0.1.0
+date-released: 2026-08-30
+# After Zenodo publish, add preferred-citation.doi here.
+preferred-citation:
+  type: software
+  title: "A Lean 4 Formalization of Scott's Measurement Structures and Linear Inequalities (1964)"
+  authors:
+    - family-names: Ericson
+      given-names: Lars Warren
+  year: 2026
+  version: 0.1.0
+  url: "https://github.com/catskillsresearch/scott1964"
+  notes: "Deposit dist/scott1964-zenodo.zip on Zenodo for a DOI; source lives on GitHub."
