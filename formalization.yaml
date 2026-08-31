@@ -9,11 +9,13 @@ project:
     (1964), 233–247). The paper derives necessary and sufficient conditions
     for three finite representation problems — intransitive indifference,
     ordered differences, and subjective probability — from the general
-    solvability criterion for finite systems of linear inequalities. Lean is
-    written by AI agents under the direction and review of the author. Dana
-    Scott did not participate in or endorse this formalization. There is no
-    sorry outside the deliberate holes in Challenge.lean, no project-defined
-    axiom, and Mathlib is the only Lake dependency.
+    solvability criterion for finite systems of linear inequalities. The
+    development also covers Scott's ordered-group and signed-charge remarks,
+    literal vector cancellation, and the KPS obstruction to de Finetti's five
+    axioms. Lean is written by AI agents under the direction and review of the
+    author. Dana Scott did not participate in or endorse this formalization.
+    There is no sorry outside the deliberate holes in Challenge.lean, no
+    project-defined axiom, and Mathlib is the only Lake dependency.
   authors:
     - "Lars Warren Ericson"
   license: "Apache-2.0"
@@ -29,16 +31,28 @@ classification:
 
 status:
   scope: >-
-    Scaffold. Challenge.lean states Scott's Theorem 2.1 (intransitive
-    indifference), Theorem 3.2 (ordered differences), and Theorem 4.1
-    (subjective probability) with deliberate proof holes. No proof has landed
-    in the Solution import graph yet, so comparator.json compares no
-    declaration. The §1 linear-inequality theorems (1.1–1.4) that drive the
-    paper's proofs are not yet stated.
+    Complete sorry-free formalizations of Scott's eight numbered theorems
+    1.1–1.4, 2.1, 3.1, 3.2, and 4.1. Challenge.lean contains the deliberate
+    Palomar proof holes, while Solution.lean re-exports all proofs. A ninth
+    compared result is explicitly labelled as a modern reconstruction of the
+    infinite probability theorem Scott announced but did not publish here.
+    Supplementary results cover finite local embeddings of linearly ordered
+    abelian groups and the lexicographic global obstruction, literal vector
+    cancellation and signed charges, and an integrated KPS counterexample to
+    sufficiency of the bundled de Finetti axioms.
   sorry_count: 0
   sorry_in_definitions: 0
   axioms: ["propext", "Classical.choice", "Quot.sound"]
-  main_results: []
+  main_results:
+    - "Scott1964.MeasurementStructures.LinearInequalities.scott_theorem_1_1"
+    - "Scott1964.MeasurementStructures.LinearInequalities.scott_theorem_1_2"
+    - "Scott1964.MeasurementStructures.LinearInequalities.scott_theorem_1_3"
+    - "Scott1964.MeasurementStructures.LinearInequalities.scott_theorem_1_4"
+    - "Scott1964.MeasurementStructures.theorem_2_1"
+    - "Scott1964.MeasurementStructures.theorem_3_1"
+    - "Scott1964.MeasurementStructures.theorem_3_2"
+    - "Scott1964.MeasurementStructures.theorem_4_1"
+    - "Scott1964.MeasurementStructures.Probability.Infinite.reconstructed_infinite_theorem_4_1"
 
 fidelity:
   divergences: >-
@@ -47,7 +61,11 @@ fidelity:
     scripts/ocr_pdf_pipeline.sh). Challenge.lean renders Scott's condition
     (4_B) with the atom-counting reading of the algebraic sum of
     characteristic functions, which Scott gives in words immediately after
-    the theorem. Exact divergences are listed in known_gaps and in arxiv.md.
+    the theorem; theorem_4_1_vector separately proves the equivalent literal
+    vector-sum form. Theorem 2.1 currently uses the direct Scott–Suppes
+    staircase construction, while Scott's local cycle reductions are
+    formalized separately. Exact divergences are listed in known_gaps and in
+    arxiv.md.
 
 sources:
   - title: "Measurement Structures and Linear Inequalities"
@@ -120,25 +138,20 @@ review:
 
 known_gaps:
   - >-
-    Section 1 is unformalized. Theorems 1.1 and 1.2 (realizability of a finite
-    symmetric set of vectors, in the general and rational cases), Theorem 1.3
-    (realizability of a binary relation on a finite rational set), and
-    Theorem 1.4 (extendability to a strictly monotonic relation on the
-    additive closure) have no Lean statements yet.
+    Scott's closing paragraph does not state the hypotheses or conclusion of
+    his announced infinite extension. The repository's infinite result is a
+    modern Hahn–Banach/Kelley reconstruction under an explicit generalized
+    Kelley condition, not a recovery or attribution of Scott's unpublished
+    theorem.
   - >-
-    Theorem 2.1 is stated but unproved.
-  - >-
-    Theorem 3.1 (realizability by a pair of utility functions on A x A*) has
-    no Lean statement. Theorem 3.2 is stated but unproved.
-  - >-
-    Theorem 4.1 is stated but unproved. Scott's extension of Theorem 4.1 to
-    infinite Boolean algebras, mentioned in the closing discussion, is out of
-    scope.
+    Theorem 2.1 is proved by the direct finite Scott–Suppes construction.
+    Scott's 1964 local cycle-shortening lemmas are formalized, but there is no
+    completed Preference/LinearProof module assembling them into an alternate
+    proof through the section-1 linear-inequality machinery.
 
 limitations:
   - >-
-    Comparator compares nothing until a proof lands under
-    Scott1964/MeasurementStructures/ and is reached by Solution.lean.
+    No external mathematical review has been performed.
   - >-
     Challenge.lean may contain deliberate sorries; Solution.lean and
     Scott1964/MeasurementStructures/* must not.
@@ -146,18 +159,48 @@ limitations:
 alignment:
   namespace: "Scott1964.MeasurementStructures"
   statements:
+    - source: "Theorems 1.1–1.4 (finite linear inequalities)"
+      lean: "LinearInequalities.scott_theorem_1_1 through scott_theorem_1_4"
+      module: "Scott1964.MeasurementStructures.LinearInequalities.ScottTheorems"
+      status: proved
+      note: "General, rational, relational, and strictly monotonic-extension forms."
     - source: "Theorem 2.1 (intransitive indifference)"
       lean: "theorem_2_1"
-      module: "Challenge (statement)"
-      status: stated
+      module: "Scott1964.MeasurementStructures.Preference.Intransitive"
+      status: proved
       note: "Realizability of P by f with xPy iff f(x) >= f(y) + 1."
+    - source: "Theorem 3.1 (additive utility for pairs)"
+      lean: "theorem_3_1"
+      module: "Scott1964.MeasurementStructures.Differences.Pair"
+      status: proved
+      note: "Representation by the sum of two utility functions."
     - source: "Theorem 3.2 (ordered differences)"
       lean: "theorem_3_2"
-      module: "Challenge (statement)"
-      status: stated
+      module: "Scott1964.MeasurementStructures.Differences.Ordered"
+      status: proved
       note: "Realizability of a quaternary D by a single utility function."
     - source: "Theorem 4.1 (subjective probability)"
       lean: "theorem_4_1"
-      module: "Challenge (statement)"
-      status: stated
-      note: "Realizability of a qualitative ordering by a probability measure."
+      module: "Scott1964.MeasurementStructures.Probability.Finite"
+      status: proved
+      note: "Atom-count form; theorem_4_1_vector proves the equivalent literal vector form."
+    - source: "Page 15 signed-measure characterization"
+      lean: "scott_p15_signed_charge; scott_p15_signed_charge_vector"
+      module: "Scott1964.MeasurementStructures.Probability.Finite"
+      status: proved
+      note: "Completeness and cancellation characterize finitely additive signed charges."
+    - source: "Ordered-group remarks after Theorem 1.4"
+      lean: "LinearInequalities.finite_local_real_embedding"
+      module: "Scott1964.MeasurementStructures.LinearInequalities.OrderedGroup"
+      status: proved
+      note: "Includes a lexicographic strictly-monotonic example and global real obstruction."
+    - source: "Kraft–Pratt–Seidenberg counterexample"
+      lean: "Probability.KPSCounterexample.deFinetti_axioms_insufficient"
+      module: "Scott1964.MeasurementStructures.Probability.KPSCounterexample"
+      status: proved
+      note: "Bundled de Finetti axioms hold, but RealizableProbability fails."
+    - source: "Closing-paragraph announcement of an infinite extension"
+      lean: "Probability.Infinite.reconstructed_infinite_theorem_4_1"
+      module: "Scott1964.MeasurementStructures.Probability.Infinite.Reconstructed"
+      status: proved
+      note: "Modern reconstruction; not attributed as Scott's unpublished theorem."

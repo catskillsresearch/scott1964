@@ -270,3 +270,349 @@ It is possible without much trouble to establish the following facts:
 (3) Any finite semiorder is isomorphic to a system $\mathcal{O}_m(s,t)$ for suitable $m$, $s$, and $t$.
 
 Thus what has been accomplished is the exhibition of exactly one representative of each isomorphism type of finite semiorders which satisfy axiom S4. Actually, with very little more effort we could do the same for arbitrary finite semiorders. Since a system $\mathcal{O}_m(s,t)$ seems to be a definite object that we can constructively define, we feel that this construction yields an adequate
+
+<!-- page 17 -->
+
+<!-- page 16 -->
+
+description of finite semiorders and answers the second of our questions.
+
+3. <u>Axiomatizability.</u> Given a theory of measurement it is natural to ask various questions about its axiomatizability, for the axiomatic analysis of any mathematical theory usually throws considerable light on the structure of the theory. In particular given an extrinsic characterization of a theory of measurement via a particular numerical relational system, it is quite desirable to have an intrinsic axiomatic characterization of the theory to be able better to recognize when a relational system actually belongs to the theory. In view of the paucity of metamathematical results concerning the axiomatics of higher-order theories, we shall restrict ourselves to the problem of axiomatizing theories of measurement in first-order logic.
+
+It is a well-known result that if a set of first-order axioms has one infinite model, then it has models of unbounded cardinalities. Since for the most part we are interested in one-one assignments with values in the set of real numbers, unbounded cardinalities are hardly an asset. That is to say: the class of all relational systems that are models of a given set of first-order axioms is usually not a theory of measurement. To remove such difficulties without having to understand them, we simply restrict the cardinalities under consideration. Even a restriction to finite cardinalities is not too strong and leads to some rather difficult questions. Thus for the remainder of this section we shall consider only <u>finitary theories of measurement</u>, i.e., theories containing only finite relational systems. Such a theory is called <u>axiomatizable</u> if there exists a set of sentences of first-order logic (the axioms of the theory) such that a finite relational system is in the theory if and only if the system satisfies all the sentences in the set.
+
+<!-- page 18 -->
+
+A theory is <u>finitely axiomatizable</u> if it has a finite set of axioms. A theory is <u>universally axiomatizable</u> if it has a set of axioms each of which is a universal sentence (i.e., a sentence in prenex normal form with only universal quantifiers).
+
+It should be observed first that <u>any</u> finitary theory of measurement is axiomatizable. This is no deeper than saying that in first-order logic we can write down a sentence completely describing the isomorphism type of each finite relational system in the given theory, and clearly these sentences can serve as the required set of axioms. It is of course quite obvious that we cannot give in each instance an effective method for writting down the axioms, since there are clearly a continuum number of distinct finitary theories of measurement. Notice also that if the theory is closed under subsystems then the axioms may be taken as universal sentences, and conversely. In case one considers theories consisting of all finite relational systems imbeddable in a given numerical relational system, then the problem of a recursive or effective axiomatization is simply the problem of whether the class of universal sentences true in the given numerical relational system is recursively enumerable or not. It is not difficult to establish that this last problem is equivalent to the problem of giving a recursive enumeration of all the relation types of finite relational systems <u>not</u> imbeddable in the given numerical relational system. For numerical relational systems whose relations are definable in first-order logic in terms of $+$ and $\le$, these problems do not arise since the first-order theory of $+$ and $\le$ is decidable, and it is to these relational systems that we shall primarily restrict our further attention.
+
+<!-- page 19 -->
+
+The most interesting axiomatizability question for finitary theories of measurement would seem to be: when are they <u>finitely</u> axiomatizable? In empirical applications a finite axiomatization provides the basis for an exact classification of sources of error. And if the axioms are universal sentences, the computational decision as to whether a given relational system is a model of the axioms (and thus a member of the theory of measurement defined by the axioms) reduces to considering subsystems of the given relational system which have a cardinality equal to the number of distinct variables required to write the axioms as a single universal sentence. Vaught [7] has provided a useful criterion for certain classes of relational systems to be axiomatizable by means of a universal sentence. His result yields immediately the following criterion for finitary theories of measurement.
+
+<u>A finitary theory of measurement $K$ is axiomatizable by a universal sentence if, and only if, $K$ is closed under subsystems and there is an integer $n$ such that if any finite relational system $\mathfrak{A}$ has the property that every subsystem of $\mathfrak{A}$ with no more than $n$ elements is in $K$ then $\mathfrak{A}$ is in $K$.</u>
+
+The classes of finite simple orderings and finite semiorders are two examples of finitary theories of measurement axiomatizable by a universal sentence. On the other hand there are interesting examples of finitary theories of measurement closed under subsystems which are not axiomatizable by a universal sentence. We now turn to one such example.
+
+Let $F$ be the class of all finitary relational systems of type $\langle 4 \rangle$ imbeddable in the numerical relational system $\langle Re, \Delta \rangle$. A wide variety of sets of empirical data are in $F$. In fact, all sets of psychological data
+
+<!-- page 20 -->
+
+based upon judgments of differences of sensation intensities or of differences in utility qualify as candidates for membership in $F$. For example, in an experiment concerned with the subjective measurement of loudness of $n$ sounds, the appropriate empirical data would be obtained by asking subjects to compare each of the $n$ sounds with every other and then to compare the difference of loudness in every pair of sounds with every other. More elaborate interpretations are required to obtain appropriate data on utility differences for individuals or social groups (cf. Davidson, Suppes and Siegel [2], Suppes and Winet [5]). It may be of some interest to mention one probabiltistic interpretation closely related to the classical scaling method of paired comparisons. Subjects are asked to choose only between objects, but they are asked to make this choice a number of times. There are many situations in which they vacillate in their choice, and the probability $p_{xy}$ that $x$ will be chosen over $y$ may be estimated from the relative frequency with which $x$ is so chosen. From inequalities of the form $p_{xy} \le p_{zw}$ we may obtain a set of empirical data, that is, a finite relational system of type $\langle 4 \rangle$, which is a candidate for membership in $F$. The intended interpretation is that if $p_{xy} \ge \frac{1}{2}$ and $p_{zw} \ge \frac{1}{2}$, then $p_{xy} \le p_{zw}$ if and only if the difference in sensation intensity or difference in utility between $x$ and $y$ is equal to or less than that between $z$ and $w$, the idea being, of course, that if $x$ and $y$ are closer together than $z$ and $w$ in the subjective scale, then the relative frequency of choice of $x$ over $y$ is closer to one-half than that of $z$ over $w$.
+
+Before formally proving that the theory of measurement $F$ is not axiomatizable by a universal sentence, we intuitively indicate for a
+
+<!-- page 21 -->
+
+relational system of ten elements the kind of difficulty which arises in any attempt to axiomatize $F$. Let the ten elements be $a_1, \dots, a_{10}$ ordered as shown on the following diagram with atomic intervals given the designations indicated.
+
+```
+|  α₁  |  α₂  |  α₃  |  α₄  |        γ        |  β₁  |  β₂  |  β₃  |  β₄  |
+───────┼──────┼──────┼──────┼─────────────────┼──────┼──────┼──────┼──────
+  a₁     a₂     a₃     a₄     a₅               a₆     a₇     a₈     a₉    a₁₀
+```
+
+Let $\alpha$ be the interval $(a_1, a_5)$, let $\beta$ be the interval $(a_6, a_{10})$, and let $\gamma$ be larger than $\alpha$ or $\beta$. We suppose further that
+
+$$\alpha_1 \text{ is equal in size to } \beta_2$$
+$$\alpha_2 \text{ is equal in size to } \beta_4$$
+$$\alpha_3 \text{ is equal in size to } \beta_1$$
+$$\alpha_4 \text{ is equal in size to } \beta_3$$
+
+but
+
+$$\alpha \text{ is less than } \beta.^{13/}$$
+
+The size relationships among the remaining intervals may be so chosen that any subsystem of nine elements is imbeddable in $\langle Re, \Delta \rangle$, whereas the full system of ten elements is clearly not.
+
+Generalizing this example and using the criterion derived from Vaught's
+
+---
+
+$^{13/}$ Essentially this example was first given in another context by Herman Rubin to show that a particular set of axioms was defective.
+
+<!-- page 22 -->
+
+theorem we now prove:
+
+<u>Theorem:</u> <u>The theory of measurement</u> $F$ <u>is not axiomatizable by a universal sentence.</u>
+
+<u>Proof:</u> In order to apply the criterion of axiomatizability by a universal sentence, we need to show that for every $n$ there is a finite relational system $\mathfrak{A}$ of type $\langle 4 \rangle$ such that every subsystem of $\mathfrak{A}$ with $n$ elements in its domain is in $F$ but $\mathfrak{A}$ is not.
+
+To this end, for every even integer $n \ge 10$ we construct a finite relational system $\mathfrak{A}$ of type $\langle 4 \rangle$ such that every subsystem of $n-1$ elements is in $F$. (<u>A fortiori</u> every subsystem of $n-k$ elements for $k < n$ is in $F$.) To make the construction both definite and compact, we take numbers as elements of the domain and disrupt exactly one numerical relationship. Let now $n$ be an even integer equal to or greater than 10. The selection of numbers $a_1, \dots, a_n$ may be most easily described by specifying the numerical size of the atomic intervals. We define:
+
+$$\alpha_i = a_{i+1} - a_i \quad \text{for } i=1, \dots, \frac{n}{2} - 1$$
+
+$$\beta_i = a_{\frac{n}{2} + i + 1} - a_{\frac{n}{2} + i} \quad \text{for } i=1, \dots, \frac{n}{2} - 1.$$
+
+We then set:
+
+$$\alpha_i = 2^i \quad \text{for } i=1, \dots, \frac{n}{2} - 1$$
+
+$$a_{\frac{n}{2} + 1} = 2^n.$$
+
+In fixing the size of $\beta_i$, we have two cases to consider depending on the
+
+<!-- page 23 -->
+
+parity of $\frac{n}{2}$.
+
+Case 1. $\frac{n}{2}$ is even. Then $\frac{n}{2} - 1$ is odd, and we set: if $i$ is even
+
+$$\beta_i = \alpha_{\frac{i}{2}} \quad \text{for } i=2, 4, \dots, \frac{n}{2} - 2$$
+
+and if $i$ is odd
+
+$$\beta_i = \alpha_{\frac{n}{4} + \frac{i-1}{2}} \quad \text{for } i=1, 3, \dots, \frac{n}{2} - 1.$$
+
+Case 2. $\frac{n}{2}$ is odd. Then $\frac{n}{2} - 1$ is even, and we set: if $i$ is even
+
+$$\beta_i = \alpha_{\frac{i}{2}} \quad \text{for } i=2, 4, \dots, \frac{n}{2} - 1$$
+
+and if $i$ is odd
+
+$$\beta_i = \alpha_{\frac{n-2}{4} + \frac{i+1}{2}} \quad \text{for } i=1, 3, \dots, \frac{n}{2} - 2.$$
+
+Thus if $n=12$,we have:
+
+$$\alpha_1 = \beta_2$$
+$$\alpha_2 = \beta_4$$
+$$\alpha_3 = \beta_1$$
+$$\alpha_4 = \beta_3$$
+$$\alpha_5 = \beta_5 \ .$$
+
+With the set $A = \{a_1, \dots, a_n\}$ defined, we now define the relation $D$
+
+<!-- page 24 -->
+
+as the expected numerical relation except for permutations of $a_1$, $a_{\frac{n}{2}}$, $a_{\frac{n}{2}+1}$ and $a_n$. If $x, y, z, w \in A$ and $\langle x, y, z, w \rangle$ is not some permutation of $\langle a_1, a_{\frac{n}{2}}, a_{\frac{n}{2}+1}, a_n \rangle$ then $\langle x, y, z, w \rangle \in D$ if and only if
+
+$$x - y \le z - w. \tag{1}$$
+
+Moreover, let $a = a_1$, $b = a_{\frac{n}{2}}$, $c = a_{\frac{n}{2}+1}$, $d = a_n$, then we put the following nine permutations of $\langle a, b, c, d \rangle$ in $D$:
+
+$$\begin{array}{ll}
+\langle b, a, d, c \rangle & \langle a, d, c, b \rangle \\
+\langle b, d, a, c \rangle & \langle c, b, d, a \rangle \\
+\langle b, d, c, a \rangle & \langle c, d, a, b \rangle \\
+\langle a, b, d, c \rangle & \langle c, d, b, a \rangle \\
+\langle a, c, d, b \rangle &
+\end{array} \tag{2}$$
+
+(These nine permutations just correspond to the strict inequalities following from $b - a < d - c$. All nine are needed to make the subsystems of $\langle A, D \rangle$ have the appropriate properties.)
+
+From the choice of the numbers in $A$ and the definition of $D$ it is obvious that $\langle A, D \rangle$ is not imbeddable in $\langle Re, \Delta \rangle$, that is, that $\langle A, D \rangle$ is not in $F$, for the atomic intervals between $a_1$ and $a_{\frac{n}{2}}$ must add up to a length equal to the sum of the atomic intervals between $a_{\frac{n}{2}+1}$ and $a_n$, but by hypothesis the interval $(a_1, a_{\frac{n}{2}})$ is less than the interval $(a_{\frac{n}{2}+1}, a_n)$. It remains to show that every subsystem of $n-1$ elements is in $F$. Two cases
+
+<!-- page 25 -->
+
+naturally arise.
+
+**Case 1.** The element omitted in the subsystem is $a_1$, $a_{\frac{n}{2}}$, $a_{\frac{n}{2}+1}$ or $a_n$. Then the nine permutations of (2) are not in $D$ restricted the subsystem, and the subsystem is not merely imbeddable in $\langle Re, \Delta \rangle$ but by virtue of (1) is a subsystem of it.
+
+**Case 2.** The element omitted is neither $a_1$, $a_{\frac{n}{2}}$, $a_{\frac{n}{2}+1}$ nor $a_n$. Let $a_i$ be the element not in the subsystem. There are two cases to consider.
+
+**Case 2a.** $a_i < a_{\frac{n}{2}}$. For this situation we may use for our numerical assignment the function $f$ defined as follows:
+
+$$f(a_{i-j}) = a_{i-j} + 1 \quad \text{for } j=1, \dots, i-1$$
+
+$$f(a_{i+j}) = a_{i+j} \quad \text{for } j=1, \dots, n-i.$$
+
+It is straightforward but tedious to verify that $f$ is a numerical assignment, that is, that it preserves the relation $D$ as defined by (1) and (2). Only two observations are crucial to this verification. First, regarding atomic intervals (in the full system), if
+
+$$a_{i-j+1} - a_{i-j} = a_{k+1} - a_k \quad \text{for } k > i,$$
+
+then
+
+$$\begin{aligned}
+f(a_{i-j+1}) - f(a_{i-j}) &= (a_{i-j+1} - 1) - (a_{i-j} - 1) \\
+&= a_{k+1} - a_k \\
+&= f(a_{k+1}) - f(a_k).
+\end{aligned}$$
+
+<!-- page 26 -->
+
+Second, the numbers in $A$ were so chosen that if $x,y,z,w \in A$, if $(z,w)$ is not an atomic interval, if $(x,y) \neq (z,w)$ and if
+
+$$x - y \le z - w,$$
+
+then
+
+$$(3) \quad x - y + 2 \le z - w;$$
+
+whence it is clear from the definition of $f$ that
+
+$$f(x) - f(y) \le f(z) - f(w).$$
+
+(Note that (3) implies the weaker result that no two distinct non-atomic intervals have the same size.)
+
+**Case 2b.** $a_i > a_{\frac{n}{2}} + 1$. Here we may use a numerical assignment $f$ defined, as would be expected from the previous case, by the equations:
+
+$$f(a_{i-j}) = a_{i-j} \quad \text{for } j=1, \dots, i-1$$
+
+$$f(a_{i+j}) = a_{i+j} + 1 \quad \text{for } j=1, \dots, n-i.$$
+
+And this completes the proof of the theorem.
+
+It would be pleasant to report that we could prove a stronger result about the theory of measurement $F$, namely, that it is not finitely axiomatizable. Unfortunately, there seems to be a paucity of tools available for studying such questions for classes of relational systems. However, we would like to state a conjecture which if true would provide one useful tool for studying the finite axiomatizability of finitary theories of measurement like $F$
+
+<!-- page 27 -->
+
+which are closed under submodels. We say that two sentences are <u>finitely equivalent</u> if and only if they are satisfied by the same finite relational systems, and we <u>conjecture</u>: if $S$ is a sentence such that if it is satisfied by a finite model it is satisfied by every submodel of the finite model, then there is a universal sentence finitely equivalent to $S$. If this conjecture is true it follows that any finitary theory of measurement closed under submodels is finitely axiomatizable if and only if it is axiomatizable by a universal sentence.
+
+The proof (or disproof) of this conjecture appears difficult. It easily follows from Tarski's results [6] on universal (arithmetical) classes in the wider sense that if the finitistic restrictions are removed throughout in the conjecture, the thus modified conjecture is true. For $S$, being closed under submodels, defines a universal class in the wider sense of relational systems, which class is axiomatizable by a denumerable set of universal sentences. Since $S$ is logically equivalent to this set of universal sentences, it is a logical consequence of some finite subset of them, but because it implies the full set, it also implies the finite subset and is thus equivalent to it.
+
+Our conjecture is one concerning the general theory of models and its pertinence is not restricted to theories of measurement. In conclusion we should like to mention two unsolved problems typical of those which arise in the special area of measurement. (i) <u>Let $R$ be any binary numerical relation definable in an elementary manner in terms of plus and less than. Is every finitary theory of measurement with respect to $R$ finitely axiomatizable?</u> (If our conjecture about finite models is true then the theory of measurement $F$ is not finitely axiomatizable and shows that the answer to this
+
+<!-- page 28 -->
+
+problem is negative for quaternary relations definable in terms of plus and less than.) (ii) <u>Is every finitary theory of measurement axiomatizable by a universal sentence a theory of measurement with respect to a numerical relational system all of whose relations are definable in terms of addition and ordering of real numbers?</u>
+
+<!-- page 29 -->
+
+## References
+
+[1] G. Birkhoff, *Lattice Theory*, revised ed., New York, 1948.
+
+[2] D. Davidson, P. Suppes and S. Siegel, *Decision Making: An Experimental Approach*, Stanford University Press, Stanford, Calif., 1957.
+
+[3] R. D. Luce, "Semiorders and a theory of utility discrimination", *Econometrica*, vol. 24 (1956), pp. 178-191.
+
+[4] W. Sierpinski, *Hypothèse du Continu*, Warsaw, 1934.
+
+[5] P. Suppes and M. Winet, "An axiomatization of utility based on the notion of utility differences", *Management Science*, vol. 1 (1955), pp. 259-270.
+
+[6] A. Tarski, "Contributions to the theory of models. I, II, III". *Nederl. Akad. Wetensch. Proc. Ser. A.*, vol. 27 (1954), pp. 572-581, 582-588; vol. 58 (1955), pp. 56-64.
+
+[7] R. Vaught, "Remarks on universal classes of relational systems", *Nederl. Akad. Wetensch. Proc. Ser. A.*, vol. 57 (1954), pp. 589-591.
+
+Princeton University,
+Stanford University
+
+<!-- page 30 -->
+
+**STANFORD UNIVERSITY**
+
+**Technical Reports Distribution List**
+
+Contract Nonr 225(17)
+
+(NR 171-034)
+
+ASTIA Documents Service Center, Knott Building, Dayton 2, Ohio. 5
+
+Commanding Officer, Office of Naval Research, Branch Office, Navy #100, Fleet Post Office, New York, New York. 35
+
+Director, Naval Research Laboratory, Attn: Technical Information Officer, Washington 25, D. C. 6
+
+Office of Naval Research, Group Psychology Branch, Code 452, Department of the Navy, Washington 25, D. C. 5
+
+Office of Naval Research, Branch Office, 346 Broadway, New York 13, New York. 1
+
+Office of Naval Research, Branch Office, 1000 Geary Street, San Francisco 9, Calif. 1
+
+Office of Naval Research, Branch Office, 1030 Green Street, Pasadena 1, Calif. 1
+
+Office of Naval Research, Branch Office, Tenth Floor, The John Crerar Library Building, 86 East Randolph Street, Chicago 1, Illinois. 1
+
+Office of Technical Services, Department of Commerce, Washington 25, D. C. 1
+
+Office of Naval Research, Mathematics Division, Code 430, Department of the Navy, Washington 25, D. C. 1
+
+Office of Naval Research, Logistics Branch, Code 436, Department of the Navy, Washington 25, D. C. 1
+
+Operations Research Office, 7100 Connecticut Avenue, Chevy Chase, Maryland, Attn: The Library. 1
+
+The Rand Corporation, 1700 Main Street, Santa Monica, Calif., Attn: Dr. John Kennedy. 1
+
+The Logistics Research Project, The George Washington Univ., 707 - 22nd Street, N. W., Washington 7, D. C. 1
+
+Dr. R. F. Bales, Department of Social Relations, Harvard University, Cambridge, Massachusetts. 1
+
+Dr. Alex Bavelas, Massachusetts Institute of Technology, Cambridge, Massachusetts. 1
+
+Dr. Donald Campbell, Department of Psychology, Northwestern University, Evanston, Illinois. 1
+
+Dr. Clyde H. Coombs, Bureau of Psychological Services, University of Michigan, 1027 E. Huron Street, Ann Arbor, Michigan. 1
+
+<!-- page 31 -->
+
+Dr. Mort Deutsch, Graduate School of Arts & Sciences, New York University, Washington Square, New York 3, New York. 1
+
+Dr. Francis J. DiVesta, Department of Psychology, Syracuse University, 123 College Place, Syracuse, New York. 1
+
+Dr. Leon Festinger, Department of Psychology, Stanford University. 1
+
+Dr. Murray Gerstenhaber, University of Pennsylvania, Philadelphia, Pennsylvania. 1
+
+Dr. Leo A. Goodman, Statistical Research Center, University of Chicago, Chicago 37, Illinois. 1
+
+Dr. Harry Helson, Department of Psychology, University of Texas, Austin, Texas. 1
+
+Dr. William E. Kappauf, Department of Psychology, University of Illinois, Urbana, Illinois. 1
+
+Dr. Leo Katz, Department of Mathematics, Michigan State College, East Lansing, Michigan. 1
+
+Dr. Duncan Luce, Bureau of Applied Social Research, Columbia University, New York 27, New York. 1
+
+Dr. Nathan Maccoby, Boston University Graduate School, Boston 15, Massachusetts. 1
+
+Dr. O. K. Moore, Department of Sociology, Box 1965, Yale Station, New Haven, Conn. 1
+
+Dr. Theodore M. Newcomb, Department of Psychology, University of Michigan, Ann Arbor, Michigan. 1
+
+Dr. Helen Peak, Department of Psychology, University of Michigan, Ann Arbor, Michigan. 1
+
+Dr. George Saslow, Department of Neuropsychiatry, Washington University, 640 South Kingshighway, St. Louis, Missouri. 1
+
+Dr. C. P. Seitz, Special Devices Center, Office of Naval Research, Sands Point, Port Washington, Long Island, New York. 1
+
+Dr. Marvin Shaw, The Johns Hopkins University, Mergenthaler Hall, Baltimore, Maryland. 1
+
+Dr. Herbert Solomon, Teachers College, Columbia University, New York, New York. 1
+
+Dr. F. F. Stephan, Box 337, Princeton University, Princeton, New Jersey. 1
+
+Dr. Dewey B. Stuit, 108 Schaeffer Hall, State University of Iowa, Iowa City, Iowa. 1
+
+<!-- page 32 -->
+
+Dr. Robert L. Thorndike, Teachers College, Columbia University, New York, New York 1
+
+Dr. E. Paul Torrance, Survival Research Field Unit, Crew Research Laboratory, AFP & TRC, Stead Air Force Base, Reno, Nevada 1
+
+Dr. John T. Wilson, National Science Foundation, 1520 H Street, N. W., Washington 25, D. C. 1
+
+Professor K. J. Arrow, Department of Economics, Stanford University, Stanford, Calif. 1
+
+Professor M. Flood, Willow Run Laboratories, Ypsilanti, Mich. 1
+
+Professor Jacob Marschak, Box 2125, Yale Station, New Haven, Conn. 1
+
+Professor Oskar Morgenstern, Department of Economics & Social Institutions, Princeton University, Princeton, New Jersey 1
+
+Professor Nicholos Rashevsky, University of Chicago, Chicago 37, Illinois 1
+
+Professor David Rosenblatt, American University, Washington 6, D. C. 1
+
+Professor Tsunehiko Watanabe, Economics Department, Stanford University, Stanford, California 1
+
+Professor Alan J. Rowe, Management Sciences Research Project, University of California, Los Angeles 24, California 1
+
+Professor L. J. Savage, Committee on Statistics, University of Chicago, Chicago, Illinois 1
+
+Professor Herbert Simon, Carnegie Institute of Technology, Schenley Park, Pittsburgh, Pennsylvania 1
+
+Professor R. M. Thrall, University of Michigan, Engineering Research Institute, Ann Arbor, Michigan 1
+
+Professor A. W. Tucker, Department of Mathematics, Princeton University, Fine Hall, Princeton, New Jersey 1
+
+Professor J. Wolfowitz, Department of Mathematics, Cornell University, Ithaca, New York 1
+
+Professor Maurice Allais, 15 Rue des Gates-Ceps, Saint-Cloud, (S.-O.), France 1
+
+Professor E. W. Beth, Bern, Zweerskade 23, I, Amsterdam Z., The Netherlands 1
+
+Professor R. B. Braithwaite, King's College, Cambridge, England 1
+
+Professor Maurice Fréchet, Institut H. Poincaré, 11 Rue P. Curie, Paris 5, France 1

@@ -5,10 +5,10 @@
 Lean 4 formalization of Dana Scott's **1964** *Measurement Structures and
 Linear Inequalities* (J. Math. Psychology 1 (1964), 233–247).
 
-Scott applies the general solvability criterion for finite systems of linear
-inequalities to three representation problems: intransitive indifference
-(Theorem 2.1), ordered differences (Theorem 3.2), and subjective probability
-(Theorem 4.1).
+Scott proves four general finite linear-inequality results (Theorems 1.1--1.4)
+and applies them to intransitive indifference (Theorem 2.1), additive utility
+for pairs and ordered differences (Theorems 3.1--3.2), and finite subjective
+probability (Theorem 4.1).
 
 Standalone package — no dependency on the 1972/1976/1980/1982 domain-theory
 formalizations. This repo is submitted to
@@ -24,10 +24,37 @@ Original Lean and author-written docs are Apache-2.0. Scott's paper PDF
 
 ## Status
 
-Early scaffold. `Challenge.lean` states Theorems 2.1, 3.2, and 4.1 with
-deliberate `sorry`s; `Scott1964/MeasurementStructures/` is empty apart from
-`Basic.lean`, so `comparator.json` compares no declaration yet. A name moves
-into `theorem_names` only once its proof reaches `Solution.lean`.
+Complete sorry-free formalizations of all eight numbered theorems in the
+paper are re-exported by `Scott1964/MeasurementStructures/Basic.lean`.
+`Challenge.lean` is the Mathlib-only statement of record and contains the
+deliberate Palomar proof holes; `Solution.lean` imports the completed proofs.
+The Comparator checks all eight source theorems plus the separately labelled
+modern infinite reconstruction.
+
+The probability development also includes the finite
+Kraft--Pratt--Seidenberg counterexample. The infinite theorem is not attributed
+to Scott as a published result: Scott only announced an extension in 1964,
+whereas this repository proves a modern Hahn--Banach/Kelley reconstruction
+under an explicit generalized Kelley condition.
+
+Additional source-facing results include:
+
+- `LinearInequalities/OrderedGroup.lean`: every finite subset of a linearly
+  ordered abelian group has an order-reflecting local real model that preserves
+  visible addition equations (`finite_local_real_embedding`), while the
+  lexicographic `ℤ × ℤ` example is strictly monotonic on its generated
+  positive monoid but admits no global additive real realization;
+- the literal characteristic-vector form `ProbVectorCancellation` of
+  condition `(4_B)` and the equivalent `theorem_4_1_vector`;
+- Scott's p. 15 signed-charge characterization, in atom-count and literal
+  vector-sum forms (`scott_p15_signed_charge` and
+  `scott_p15_signed_charge_vector`); and
+- bundled `DeFinettiAxioms` together with the integrated KPS order, which
+  satisfies those five axioms but proves `¬ RealizableProbability KPSGe`.
+
+The current proof of Theorem 2.1 is the direct finite Scott--Suppes staircase
+construction. `Preference/Cycle.lean` separately formalizes Scott's local
+cycle-shortening reductions from the 1964 argument.
 
 ## Files (Palomar)
 
@@ -69,6 +96,6 @@ bash scripts/ocr_pdf_pipeline.sh --status
 See `sources/README.md`. Page PNGs and `.venv-ocr/` are gitignored.
 
 `Challenge.lean` imports only Mathlib and states the compared results with
-deliberate `sorry`s. Their proofs are to live in
-`Scott1964/MeasurementStructures/*`, imported by `Solution.lean`. See
-`arxiv.md` for the theorem inventory and known gaps.
+deliberate `sorry`s. `Solution.lean` imports the corresponding kernel-checked,
+sorry-free proofs. The proofs use only the standard axioms disclosed in
+`comparator.json`: `propext`, `Quot.sound`, and `Classical.choice`.

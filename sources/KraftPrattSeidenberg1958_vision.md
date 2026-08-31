@@ -219,3 +219,115 @@ $$P + S \leqq Q + T$$
 $$R + T \leqq P + Q + S$$
 
 and the fact that $(Q + S) + \cdots + (R + T) = P + \cdots + (P + Q + S)$ one finds $Q + S = P$, $P + Q = R + S$, $P + S = Q + T$, $R + T = P + Q + S$; from which $R = 2Q$, $P = Q + S$, $T = 2S$; and these conditions are sufficient. Taking $Q$ and $S$ so that $p, q, r, s, t$ get distinct values (say $Q = 1, S = 3; R = 2, P = 4, T = 6$), one sees that no element other than $rt$ and $pqs$ gets the value $v(rt) = v(pqs)$. Keeping $R$ and $T$ fixed but decreasing $Q, P, S$ slightly (say by $.1$ to $Q = .9, S = 2.9, P = 3.9$), we get a measure in which $qs < p, pq < rs, ps < qt, qps < rt$ and in which 15 elements have value less than $v(pqs)$ and 15 have value greater than $v(rt)$. Now we change $P, Q, R, S, T$ slightly so that the 32 elements get distinct values, the inequalities $qs < p, pq < rs, ps < qt, qps < rt$ are maintained, and also so that $qps$ and $rt$ remain in the middle (say by taking $S = 2.89, T = 5.9, R = 2.2$, keeping $Q = .9$,
+
+<!-- page 9 -->
+
+C. H. KRAFT, J. W. PRATT, AND A. SEIDENBERG
+
+$P = 3.9$). The resulting order is additive, since it has a strictly agreeing measure: but then so is the order one gets by interchanging the middle elements. In this way one gets an example of the desired kind (and, in fact, with the stated values, the above example).$^8$
+
+We now give a counter-example showing that the order on the subsets of $\{q, r, s, p, t\}$ given above can be extended to the subsets of $\{q, r, s, p, t, w\}$ in such a way that the resulting order, though it satisfies (C), (T), (A), does not almost agree with any measure.
+
+As already noted, the given order has an almost agreeing measure (e.g., $Q = 1, R = 2, S = 3, P = 4, T = 6$). Hence in the desired counter-example, $w$ would have to be amongst the first 32, otherwise it would be 33rd and any value $W$ of $w$ equal to or greater than $v(pqrst) = 16$ would yield an almost agreeing measure. A similar argument shows that at least one other element involving $w$, hence $qw$, must be amongst the first 32. The 30th element in the above order is $qspt$. Placing this 32nd, so that $rw$ is 33rd, whence $qrpt < rw$, we get $qpt < w$. Now inserting $w < qw$ between two elements which must have equal value in any almost agreeing measure, say between $qrst$ and $rpt$, the resulting order can have no almost agreeing measure. In fact, if $P, \cdots, W$ are the proposed values, then from $W = Q + W$, we get $Q = 0$, hence $R = 0$ (from $R = 2Q$), $S = 0$ (from $s < qr$), $T = 0$ (from $T = 2S$), $P = 0$ (from $P = Q + S$), and $W = 0$ (from $w < pqrst$). Hence there can be no almost agreeing measure. The order of the first 33 subsets now is:
+
+$$1 < q < \cdots < qrst < w < qw < rpt < spt < qrpt < qspt < rw < \cdots .$$
+
+To check additivity it remains to see that order is preserved upon canceling $q$ in $qrst < qw < qrpt$; since $rst < w < rpt$, this checks. In accordance with Theorem 3 one finds that
+
+$$(rs/qp)^{76}(qt/sp)^{96}(qsp/rt)^{98}(w/qrst)^{72}(rpt/qw)^{81}(rw/qspt)^8$$
+
+has all its exponents negative.
+
+**PROOF OF PROPOSITION 1.** Let $\alpha < \beta$ and write $\alpha = \alpha_1\gamma$, $\beta = \beta_1\gamma$, where $\gamma = \text{g.c.d. } (\alpha, \beta)$. Let $\delta = \text{complement of } \alpha_1\beta_1\gamma$. Then comp. $\alpha_1\gamma = \beta_1\delta$ and comp. $\beta_1\gamma = \alpha_1\delta$. Since $\alpha_1 < \beta_1$, we have comp. $\beta_1\gamma <$ comp. $\alpha_1\gamma$. Thus complementation reverses order. The proposition would now follow unless some two elements among the first $2^{n-1}$, say $\alpha, \beta$, were complements; and likewise unless some two elements among the last $2^{n-1}$, say $\gamma, \delta$, were complements. Suppose then these conditions obtain with $\alpha < \beta$, $\gamma < \delta$. From $\alpha < \gamma$, $\beta < \delta$ we get by Theorem 1 that $\alpha\beta < \gamma\delta$, contradiction, since $\alpha\beta = \gamma\delta$.
+
+**PROOF OF THEOREM 4.** First note that $\alpha < \alpha\gamma$ for any $\alpha\gamma$ in $T$, $\gamma \neq 1$. In fact if $\alpha\gamma$ is in the first half of $T$, then $\alpha$ is also, and $\alpha < \alpha\gamma$ follows from additivity. If $\alpha\gamma$ is in the second half and $\alpha$ is also, the assertion follows upon taking
+
+---
+
+$^8$ The advantage of the second method is that it leaves unanswered the question whether a simple, additive ordering of $T$ necessarily has an almost agreeing measure. Especially it leaves it unanswered for $n = 5$.
+
+<!-- page 10 -->
+
+complements; it follows trivially if $\alpha\gamma$ is in the second half and $\alpha$ is in the first half. Let then $\alpha, \beta, \alpha\gamma, \beta\gamma \in T$, $\alpha < \beta$; and assume $\beta\gamma < \alpha\gamma$, so $\gamma \neq 1$ and $\alpha < \beta < \beta\gamma < \alpha\gamma$. We may assume that $\beta$ is in the first half of $T$, as otherwise we can reduce to this case by taking complements. If now $\beta\gamma$ is in the second half, then $\alpha/\beta = \alpha\gamma/\beta\gamma = \text{complement } \beta\gamma/\text{complement } \alpha\gamma = \mu/\lambda$, where $\mu, \lambda$ are in the first half and $\lambda < \mu$. This contradicts (A) of $U$. Hence we may assume that $\beta\gamma$ is in the first half.
+
+We also suppose $\alpha\gamma$ is in the second half and in fact not the $(2^{n-1} + 1)$th element $v$, otherwise we already have a contradiction. Also, by displacing g.c.d. $(\alpha, \beta)$ to $\gamma$ we may assume g.c.d. $(\alpha, \beta) = 1$. Assuming this done, let $\delta$ be the complement of $\alpha\beta\gamma$. Let $\alpha_1, \beta_1, \gamma_1, \delta_1$ be the g.c.d.'s of $\alpha, \beta, \gamma, \delta$ respectively with $v$; and $\alpha_2, \beta_2, \gamma_2, \delta_2$ their complements. Then we have:
+
+$$\alpha_1\alpha_2 < \beta_1\beta_2 < \beta_1\beta_2\gamma_1\gamma_2 \leqq \alpha_2\beta_2\gamma_2\delta_2 < \alpha_1\beta_1\gamma_1\delta_1 = v < \alpha_1\alpha_2\gamma_1\gamma_2$$
+
+and, by complements, $\beta_1\beta_2\delta_1\delta_2 < \alpha_2\beta_2\gamma_2\delta_2 < \alpha_1\beta_1\gamma_1\delta_1 = v$. Writing
+
+$$\alpha/\beta = \alpha\gamma/\beta\gamma = (\alpha\gamma/v) \cdot (v/\beta\gamma)$$
+
+and preparing to get a contradiction by following the proof of Theorem 1, we note from the first line, by an allowable cancellation, that $\beta_2\gamma_2 < \alpha_1\delta_1$; and from the second $\beta_1\delta_1 < \alpha_2\gamma_2$. Also $\beta_1\beta_2\gamma_2 < \beta_1\alpha_1\delta_1$ from the first line; and we want $\alpha_1\beta_1\delta_1 < \alpha_1\alpha_2\gamma_2$. If $\alpha_1\alpha_2\gamma_2 \leqq \alpha_1\beta_1\delta_1$ ($\leqq v$), then $\alpha_2\gamma_2 \leqq \beta_1\delta_1$, contradiction. So we have $\beta_1\beta_2\gamma_2 < \alpha_1\alpha_2\gamma_2$. Notationally, this means we can assume $\gamma_1 = 1$; and from the symmetry of the situation (i.e., the fact that hypothesis and conclusion are unaltered by interchange of $v$ and its complement), that $\gamma_2 = 1$, contradiction. Or explicitly, we have
+
+$$\alpha_1\alpha_2 < \beta_1\beta_2 < \beta_1\beta_2\gamma_2 \leqq \alpha_2\beta_2\gamma_2\delta_2 < \alpha_1\beta_1\gamma_1\delta_1 = v$$
+
+(and $v < \alpha_1\alpha_2\gamma_2$, as otherwise we already have a contradiction), and, by complements
+
+$$\beta_1\beta_2\gamma_1\delta_1\delta_2 \leqq \alpha_2\beta_2\gamma_2\delta_2 < \alpha_1\beta_1\gamma_1\delta_1 = v.$$
+
+Now we get $\beta_1 \leqq \alpha_2\delta_2$, $\beta_2\delta_2 < \alpha_1$, whence $\beta_2\beta_1 \leqq \beta_2\alpha_2\delta_2 < \alpha_1\alpha_2$, contradiction.
+
+**5. Axiomatic considerations.** We are concerned now with putting down axiomatic conditions on an ordering of the subsets $S$ which will make the ordering compatible with a valuation. The axioms will refer to a set $T'$ which is axiomatically left undefined but which intuitively arises by a simple construction from $S$. For convenience the set $T'$ will be infinite, though actually only a finite portion of $T'$ is involved.$^9$ In fact, for a moment it may be helpful to think of $T'$ as the set of all events. Because of this, or because of the construction, one will compare some pairs of elements from $T'$, but not all pairs. That is, for $T'$ we will not assume *Comparability*, though we will assume *Transitivity*
+
+---
+
+$^9$ A bound on the number of elements of a suitable $T'$ can be computed using Theorem 2, Corollary 3.
+
+<!-- page 11 -->
+
+C. H. KRAFT, J. W. PRATT, AND A. SEIDENBERG
+
+and *Additivity*; we would allow *Generalized Additivity*, but can (and will) manage without it. In addition we take the following axiom:
+
+*Polarizability* (P). For any $\alpha$ in $T'$ there exist elements $\alpha'$, $\alpha''$ in $T'$ with $\alpha = \alpha'\alpha''$, $\alpha' \prec \alpha''$, $\alpha'' \prec \alpha'$.
+
+Though we do not assume comparability, we will assume the following:
+
+*P-Comparability* (PC). If $\alpha = \alpha'\alpha''$, $\alpha' \prec \alpha''$, $\alpha'' \prec \alpha'$, $\beta = \beta'\beta''$, $\beta' \prec \beta''$, $\beta'' \prec \beta'$, and $\alpha \prec \beta$, then $\alpha' \prec \beta'$.
+
+The intuitive content of (P) is that any event $\alpha$ is equivalent to the disjunction of two incompatible and equally likely events $\alpha'$, $\alpha''$. By "equivalent" we mean that $\alpha$ occurs if and only if $\alpha'$ or $\alpha''$ occurs. The content of this axiom is intuitively quite compelling. If $\alpha$ is any event (outcome), we can compose it with an irrelevant event having just two incompatible and equally likely outcomes, say, for example, the tossing of a coin. Let $\alpha^*$ be this composite event. Then $\alpha$ and $\alpha^*$ have essentially the same significance. Now let $\alpha'$ be composed of $\alpha$ and the outcome heads and let $\alpha''$ be composed of $\alpha$ and the outcome tails. Then $\alpha^* = \alpha'\alpha''$, $\alpha' \prec \alpha''$, $\alpha'' \prec \alpha'$.
+
+Starting with the set $S = \{x_1, \cdots, x_n\}$, we polarize its elements, i.e., we apply (P) to them, then polarize the results, etc. Call the resulting set $S'$. The set $T'$ is obtained by composing elements of $S'$ which do not overlap in content. It is clear that we shall want transitivity, additivity, and even generalized additivity in $T'$; moreover it is also clear that we shall not want to assume comparability. For we might be quite willing to compare $x_1$ and $x_2$ in likelihood, and yet be quite unwilling to compare $x'_1$ and $x'_2$, where $x'_1$ is composed of $x_1$ and the tossing of coins and $x'_2$ is composed from $x_2$ and the tossing of coins. In fact, such comparisons would amount to attaching precise numerical values to the probabilities.
+
+Now for the axioms:
+
+*The elements of the set $T'$ are undefined. In $T'$ we have a binary operation, multiplication, which is commutative and associative and has an identity 1. Elements $\alpha$, $\beta$ in $T'$ are said to be disjoint if $\alpha = \gamma\delta$, $\beta = \gamma\epsilon$, $\gamma$, $\delta$, $\epsilon$ in $T'$, implies $\gamma = 1$. For $\alpha_1, \cdots, \alpha_k$ in $T'$, $\alpha_1 \cdots \alpha_k$ is in $T'$ if and only if $\alpha_1, \cdots, \alpha_k$ are mutually disjoint. There is a transitive relation $\prec$ in $T'$. Concerning this, we assume (A),$^{10}$ (P), and (PC).*
+
+This system could be considerably weakened, but the main point for the present is to get polarizability in while avoiding comparability.
+
+Given a relation of the form $f \prec g$ or $f < g$, say for concreteness' sake, $\alpha\beta \prec \gamma\delta\epsilon$, one can obtain other relations by substituting for each of $\alpha$, $\beta$, $\cdots$, $\epsilon$ one of the two corresponding polarized components, e.g., $\alpha'\beta'' \prec \gamma'\delta''\epsilon'$. The relations so obtained will be said to be derived by polarizing the given relation. For the next theorem, we note the following lemmas.
+
+**LEMMA 1.** *A product $\alpha_1\alpha_2 \cdots \alpha_m$ can be polarized by polarizing its factors.*
+
+**PROOF.** This follows by induction on $m$ if it holds for $m = 2$. For $m = 2$,
+
+---
+
+$^{10}$ In the present setting, we write (A) in the following form: Let $\gamma$ be disjoint from $\alpha$, $\beta$; then $\alpha \prec \beta$ if and only if $\alpha\gamma \prec \beta\gamma$. Also $1 \prec \gamma$ for every $\gamma$.
+
+<!-- page 12 -->
+
+INTUITIVE PROBABILITY ON FINITE SETS
+
+let $\alpha_1' , \alpha_1'' , \alpha_2' , \alpha_2''$ be polar components of $\alpha_1 , \alpha_2$, so that $\alpha_1' < \alpha_1'' , \alpha_2' < \alpha_2''$. Since $\alpha_1 , \alpha_2$ are disjoint, so are $\alpha_1'' , \alpha_2'$. Hence $\alpha_1' \alpha_2' < \alpha_1'' \alpha_2' < \alpha_1'' \alpha_2''$.
+
+**LEMMA 2.** *Let $f$, $g$ be products of mutually disjoint elements $x_1 , \cdots , x_n$. If a relation of the form $f \prec g$ or $f < g$ obtains, then also the relations derived by polarizing the given relation obtain.*
+
+**PROOF.** For $f \prec g$, in view of Lemma 1, this follows from (PC). For $f < g$, in view of Lemma 1, we have to see that if $f$ is polarized into $f'f''$, $g$ into $g'g''$, then $f' \prec g'$. If not, then $g' \prec f'$; and since $g'' \prec g' \prec f' \prec f''$, also $g'' \prec f''$. In the case that $f$ and $g$ are disjoint, we get $g'g'' < f'g'' < f'f''$, hence $g < f$, a contradiction. The general case can be reduced to this case by canceling the $x_i$ common to $f$ and $g$.
+
+**THEOREM 5.** *Let $x_1 , \cdots , x_n$ be mutually disjoint elements of $T'$ and let $T$ be the $2^n$ products of the $x_i$ in $T'$. Let $T = \{\alpha_1 , \cdots , \alpha_m\}$, $m = 2^n$, and assume that $1 = \alpha_1 < \alpha_2 < \cdots < \alpha_m$. Then the order imposed upon $T$ arises from a valuation.*
+
+**PROOF.** We show that the order imposed upon $T$ is compatible with a valuation. Let $\beta_i , \gamma_i$ be monomials in $T$ with $\beta_i \prec \gamma_i$ for $i = 1, \cdots , s$, and $\beta_i < \gamma_i$ for some $i$; and assume that each $x_j$ occurs as often among the $\beta_i$ as among the $\gamma_i$ (in other words, in terms of the definitions preceding Theorem 2, that $\epsilon \prec \epsilon$ for $\epsilon = \prod \beta_i = \prod \gamma_i$). We polarize $\beta_i < \gamma_i$ (by polarizing the $x_j$), then polarize the results, etc., until each $x_j$ is split into $2^k \geqq s$ parts. By an appropriate choice $\beta_{i1} < \gamma_{i1}$ of the polarized relations, we can arrange matters so that no polarized component of an $x_j$ occurs in more than one $\beta_{i1}$; and similarly with the $\gamma_{i1}$; and so that the same components of the $x_j$ occur among the $\beta_{i1}$ and $\gamma_{i1}$. By Theorem 1, Corollary applied to the set of $n \cdot 2^k$ polar components of the $x_j$, $\prod \beta_{i1} < \prod \gamma_{i1}$, and this is a contradiction since $\prod \beta_{i1} = \prod \gamma_{i1}$. Hence the ordering of $T$ is compatible with a valuation, and by Theorem 2, arises from a valuation.
+
+The object of the present section, and what Theorem 5 shows, is that the condition “$\epsilon \prec \epsilon$ for no $\epsilon$” is imposed on us by our intuition when we confront probabilities. For example, we reject the order given in the first counter-example above because if we judge $qs < p, pq < rs, ps < tq, rt < spq$, then we will also judge $q's' < p', p'q'' < r's', p''s'' < t'q', r't' < s''p''q''$, where $p', p'', q', q'', r', (r''), s', s'', t', (t'')$ are polar components of $p, q, r, s, t$ respectively, and $u = (q's')(p'q'')(p''s'')(r't') < (p')(r's')(t'q')(s''p''q'') = v$; which is a contradiction since $u = v$.
+
+**REFERENCES**
+
+[1] B. DE FINETTI, “La ‘logica del plausibile’ secondo la concezione di Polya,” *Atti della XLII Riunione della Societa Italiana per il Progresso delle Scienze*, 1949 (1951), pp. 1–10.
+
+[2] W. FENCHEL, *Convex Cones, Sets and Functions*, Princeton University Press, 1953.
+
+[3] B. O. KOOPMAN, “The axioms and algebra of intuitive probability,” *Ann. of Math.*, Vol. 41 (1940), pp. 269–292.
+
+[4] L. J. SAVAGE, *Foundations of Statistics*, John Wiley, New York, 1954.

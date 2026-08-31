@@ -8,10 +8,8 @@ import Scott1964.MeasurementStructures.Basic
 /-!
 # Solution to the Challenge
 
-Imports the sorry-free core development so Comparator can match the source
-theorems named in `Challenge.lean` and `comparator.json`.
-
-The development is a scaffold: `comparator.json` lists no compared name yet.
-Each of Theorems 2.1, 3.2, and 4.1 moves into `theorem_names` only once its
-proof lands under `Scott1964/MeasurementStructures/` and reaches this module.
+Imports the complete sorry-free development so Comparator can match Scott's
+eight published theorems and the separately labelled modern reconstructed
+infinite theorem, together with their stable public definitions, against the
+Mathlib-only declarations in `Challenge.lean`.
 -/

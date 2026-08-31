@@ -26,8 +26,10 @@ participate in, review, or endorse this formalization.
 
 ## 1. Scope
 
-The repository is an early scaffold. `Challenge.lean` states the paper's three
-headline representation theorems:
+The repository formalizes all eight numbered theorems in Scott's paper:
+
+- `scott_theorem_1_1`--`scott_theorem_1_4`, the finite
+  linear-inequality engine and its relational reformulations;
 
 - `theorem_2_1`, Problem I (intransitive indifference): a binary relation `P`
   on a finite set is realizable as `f x ≥ f y + 1` exactly when it is
@@ -36,49 +38,84 @@ headline representation theorems:
   is realizable by a single utility function exactly when it is complete,
   reversal-closed, and satisfies the infinite bundle of permutation
   conditions.
+- `theorem_3_1`, the preceding additive representation theorem for a relation
+  on pairs using two utility functions.
 - `theorem_4_1`, Problem III (subjective probability): a qualitative ordering
   on a finite Boolean algebra is realizable by a probability measure exactly
   when it is nontrivial, nonnegative, complete, and satisfies Scott's
   cancellation condition.
 
-Each is currently a deliberate `sorry`. The Palomar Comparator compares no
-declaration until a proof lands under `Scott1964/MeasurementStructures/` and
-is reached by `Solution.lean`.
+The sorry-free proofs live under `Scott1964/MeasurementStructures/` and are
+re-exported by `Solution.lean`. Deliberate proof holes occur only in the
+Mathlib-only `Challenge.lean`.
 
 ## 2. Theorem inventory
 
-Stated, unproved:
+Formalized and proved:
 
+- §1: Theorems 1.1, 1.2, 1.3, and 1.4.
 - §2: Theorem 2.1.
-- §3: Theorem 3.2.
-- §4: Theorem 4.1.
+- §3: Theorems 3.1 and 3.2.
+- §4: Theorem 4.1, for finite Boolean algebras.
 
-Not yet stated:
+The development additionally contains a finite
+Kraft--Pratt--Seidenberg counterexample and
+`Probability.Infinite.reconstructed_infinite_theorem_4_1`. The latter is a
+modern theorem under the explicit `GeneralizedKelleyCondition`; it is not
+claimed to be the unpublished theorem Scott announced in the paper.
 
-- §1: Theorems 1.1 and 1.2, the general and rational realizability criteria
-  for a finite symmetric set of vectors; Theorem 1.3, realizability of a
-  binary relation on a finite rational subset of `L(S)`; Theorem 1.4, the
-  reformulation as extendability to a strictly monotonic relation on the
-  additive closure `Y⁺`. These are the engine of every later proof and are
-  the natural next milestone.
-- §3: Theorem 3.1, realizability by a *pair* of utility functions on `A × A*`.
+Further formalized results and examples:
 
-Out of scope:
-
-- The extension of Theorem 4.1 to infinite Boolean algebras, which Scott
-  mentions but does not prove in this paper.
+- `finite_local_real_embedding` makes Scott's ordered-group observation
+  precise: a finite subset of a linearly ordered abelian group has an
+  order-reflecting real model preserving each addition equation visible
+  inside that subset.
+- `lexPreference_strictlyMonotonic` and
+  `no_global_real_additive_lex_realization` exhibit the complementary
+  obstruction. Lexicographic `ℤ × ℤ` is strictly monotonic on the additive
+  closure of two generators, but no additive map to `ℝ` represents the
+  relation globally.
+- `scott_p15_signed_charge` proves Scott's p. 15 claim that completeness and
+  cancellation characterize representation by a finitely additive signed
+  charge; `scott_p15_signed_charge_vector` gives its literal vector form.
+- `kpsGe_deFinettiAxioms`, `not_realizableProbability_kpsGe`, and
+  `deFinetti_axioms_insufficient` integrate the KPS five-atom order into the
+  shared probability API: it satisfies the bundled five de Finetti axioms
+  while admitting no realizing probability.
 
 ## 3. Formalization notes
 
 Scott's condition (4_B) is stated with the algebraic sum
 `x₀ + x₁ + ⋯ + xₙ₋₁` of *characteristic functions*, not the Boolean join.
-`Challenge.lean` renders this with the atom-counting reading Scott supplies in
-words immediately after the theorem: every atom lies below exactly as many
-`xᵢ` as `yᵢ`.
+The primary `theorem_4_1` uses the equivalent atom-counting reading Scott
+supplies in words immediately after the theorem: every atom lies below exactly
+as many `xᵢ` as `yᵢ`. `ProbVectorCancellation` and
+`theorem_4_1_vector` additionally formalize the literal equality of sums of
+atom vectors, with `probVectorCancellation_iff_probCancellation` proving the
+equivalence.
 
 Condition (2_D) is, as Scott notes, an infinite bundle indexed by a length and
 a pair of permutations; no finite subfamily suffices. It is formalized as a
 universally quantified statement over `n : ℕ` and `Equiv.Perm (Fin (n + 1))`.
+
+The finite probability structure includes nonnegativity as part of
+`IsProbability`, in addition to normalization and finite additivity. The
+proofs introduce no project axioms and use only Mathlib's standard
+`propext`, `Quot.sound`, and `Classical.choice`.
+
+Theorem 2.1 currently uses the direct finite Scott--Suppes construction:
+substitutability classes are ordered and represented by a finite staircase.
+The local cycle reductions from Scott's 1964 proof are nevertheless
+formalized in `Preference/Cycle.lean` (transitivity from `(2_P)` and the
+three cycle-shortening patterns). There is currently no completed
+`Preference/LinearProof.lean` replacing the direct proof.
+
+For probability, `IsSignedCharge` intentionally drops normalization and
+nonnegativity. This separates Scott's p. 15 signed-measure statement from
+Theorem 4.1, whose conclusion remains a normalized nonnegative probability.
+Likewise, `DeFinettiAxioms` records de Finetti's literal weak nontriviality
+condition `¬ R ⊥ ⊤`, not Scott's stronger conjunction
+`R ⊤ ⊥ ∧ ¬ R ⊥ ⊤`.
 
 ## 4. Source materials
 

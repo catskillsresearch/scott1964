@@ -13,14 +13,22 @@ authors:
 abstract: >-
   Machine-checked Lean 4 formalization of Dana Scott's 1964 paper Measurement
   Structures and Linear Inequalities (Journal of Mathematical Psychology 1
-  (1964), 233–247). Dana Scott was not contacted and did not participate in,
-  review, or endorse this formalization.
+  (1964), 233–247), covering all eight numbered theorems, ordered-group and
+  signed-charge remarks, literal vector cancellation, and an integrated
+  formalization of the Kraft–Pratt–Seidenberg obstruction to de Finetti's
+  axioms. A separately labelled modern reconstruction treats the infinite
+  probability extension that Scott announced but did not state or prove in
+  the paper. Dana Scott was not contacted and did not participate in, review,
+  or endorse this formalization.
 keywords:
   - Lean 4
   - measurement theory
   - linear inequalities
   - utility theory
   - subjective probability
+  - ordered abelian groups
+  - finitely additive signed charges
+  - de Finetti axioms
   - formal verification
 repository-code: "https://github.com/catskillsresearch/scott1964"
 license: Apache-2.0
