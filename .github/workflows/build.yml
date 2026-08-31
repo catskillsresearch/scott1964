@@ -22,5 +22,5 @@ jobs:
       - name: Configure Lake cache
         run: lake exe cache get || true
 
-      - name: Run Palomar preflight
-        run: scripts/palomar_preflight.sh
+      - name: Run mechanical Palomar preflight
+        run: bash scripts/palomar_preflight.sh --mechanical-only

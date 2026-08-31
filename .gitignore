@@ -1,5 +1,8 @@
 # cache and other artifacts produced by Lean's Lake build tool
 .lake/
+.cache/palomar-editorial/
+.venv-editorial/
+vendor/palomar-policy.sync-backup/
 
 # Python bytecode
 __pycache__/

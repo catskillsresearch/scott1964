@@ -130,7 +130,8 @@ See `NOTICE` and `sources/README.md` for copyright carve-outs.
 ```bash
 lake exe cache get
 lake build
-bash scripts/palomar_preflight.sh
+bash scripts/palomar_preflight.sh --mechanical-only   # CI / routine
+bash scripts/palomar_preflight.sh                     # before submission
 ```
 
 ## 6. Palomar packaging
@@ -141,6 +142,7 @@ bash scripts/palomar_preflight.sh
 | `Solution.lean` | Imports sorry-free `Scott1964/*` |
 | `comparator.json` | Compared theorem and definition names |
 | `formalization.yaml` | formalization.yaml v0.4 |
+| `docs/PALOMAR_EDITORIAL_AUDIT.md` | Full vs mechanical preflight; packaging checklist |
 
 ---
 

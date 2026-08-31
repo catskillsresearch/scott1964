@@ -68,6 +68,7 @@ cycle-shortening reductions from the 1964 argument.
 | `comparator.json` | Comparator config for the compared theorems and definitions |
 | `formalization.yaml` | Palomar / formalization.yaml v0.4 metadata |
 | `PROVENANCE.md` | Standalone Palomar submission; relation to siblings |
+| `docs/PALOMAR_EDITORIAL_AUDIT.md` | Full vs mechanical preflight; packaging checklist |
 
 ## Build
 
@@ -76,12 +77,21 @@ lake exe cache get
 lake build
 ```
 
-`lake build` typechecks `Scott1964`, `Challenge.lean`, and `Solution.lean`. Before a
-Palomar submission, run:
+`lake build` typechecks `Scott1964`, `Challenge.lean`, and `Solution.lean`.
+
+**Routine / CI:** mechanical preflight only:
+
+```bash
+bash scripts/palomar_preflight.sh --mechanical-only
+```
+
+**Before Palomar submission:** full preflight (mechanical + editorial LLM audit):
 
 ```bash
 bash scripts/palomar_preflight.sh
 ```
+
+See `docs/PALOMAR_EDITORIAL_AUDIT.md` for packaging checklist and auth.
 
 ## Source OCR
 

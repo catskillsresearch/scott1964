@@ -1,12 +1,13 @@
 ---
 description: Prevent Palomar Comparator mismatches in Challenge/Solution declarations
-globs: "{Challenge.lean,Solution.lean,comparator.json,Scott1964/**/*.lean,scripts/*palomar*,scripts/compare_challenge_solution_types.sh}"
+globs: "{Challenge.lean,Solution.lean,comparator.json,Scott1964/**/*.lean,scripts/*palomar*,scripts/compare_challenge_solution_types.sh,formalization.yaml,docs/PALOMAR*.md}"
 alwaysApply: false
 ---
 
 # Palomar Comparator safety
 
 - Read `docs/PALOMAR_STYLE.md` before changing compared declarations.
+- Read `docs/PALOMAR_EDITORIAL_AUDIT.md` before submission packaging changes.
 - Pin universe parameter names and make unstable instance paths explicit.
 - Keep every `definition_names` value and every transitively locked
   Challenge/Solution definition structurally identical.
@@ -15,6 +16,12 @@ alwaysApply: false
 - Never use inline proofs in locked structure values: generated
   `._proof_N` constants are mechanically compared.
 - Move proof fields to named theorems and list them in `theorem_names`.
+- Every material symbol in a compared theorem type must be pinned: either
+  defined without `sorry` in Challenge.lean or listed in `definition_names`.
+- Keep `formalization.yaml` aligned with `comparator.json` (`main_results`,
+  scope, limitations, sources).
 - Challenge may contain proof holes; Solution and `Scott1964/**/*.lean` may not.
-- Run `scripts/palomar_preflight.sh` after relevant edits and before a
-  submission commit. Do not claim readiness unless it passes.
+- **CI / routine edits:** `bash scripts/palomar_preflight.sh --mechanical-only`
+- **Before Palomar submission:** full `bash scripts/palomar_preflight.sh`
+  (mechanical + editorial LLM audit). Do not claim readiness unless mechanical
+  preflight passes; treat editorial `neutral` synthesis as the submission bar.
