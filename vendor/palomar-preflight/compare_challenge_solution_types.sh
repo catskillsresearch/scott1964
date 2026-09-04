@@ -1,28 +1,29 @@
 #!/usr/bin/env bash
-# Diff Challenge vs Solution types for every comparator.json name.
-# Palomar Comparator looks up those names in two lean4export environments
-# and compares ConstantVal (name, levelParams, type, and definition value)
-# with pp.all-level fidelity. Instance names in types and values are part of
-# the comparison. A green `lake build` does not imply a match.
+# Diff Challenge vs Solution types for every comparator.json name, then walk
+# the project-namespace declaration closure the way Palomar Compare.loop does.
 #
-# Gotchas this script is meant to catch:
-# - instance-path mismatch (e.g. ConditionallyCompletePartialOrder.toSupSet
-#   vs ScottMap.instSupSet)
-# - pretty-printer hiding a module prefix (`Challenge.Foo` vs `Foo`)
-# - a `def` listed under theorem_names (Comparator then throws
-#   "constant kind don't match")
-# - a structure listed under definition_names (Comparator then throws
-#   "Challenge constant is not a definition")
-# - universe parameter names (`IsContinuousLattice.{u_3}` vs `.{u_2}`):
-#   Comparator BEqs ConstantVal.levelParams, so auto-generated `u_n`
-#   names must agree. Pin compared decls to `Type u` / `Type v`.
+# Named theorem_names / definition_names are holes (types only). Everything
+# else in the project's namespace prefix(es) must match as a full constant,
+# including generated `._proof_N` names.
 set -euo pipefail
-cd "$(dirname "$0")/.."
+
+TOOLKIT_ROOT="$(cd "$(dirname "$0")" && pwd)"
+# shellcheck source=palomar-lib.sh
+source "$TOOLKIT_ROOT/palomar-lib.sh"
+palomar_cd_project
 
 mapfile -t NAMES < <(python3 - <<'PY'
 import json
 cfg = json.load(open("comparator.json"))
 for n in cfg["theorem_names"] + cfg.get("definition_names", []):
+    print(n)
+PY
+)
+
+mapfile -t THEOREM_NAMES < <(python3 - <<'PY'
+import json
+cfg = json.load(open("comparator.json"))
+for n in cfg["theorem_names"]:
     print(n)
 PY
 )
@@ -56,18 +57,61 @@ write_lean() {
 write_lean Challenge "${tmp}/ChallengeTypes.lean"
 write_lean Solution "${tmp}/SolutionTypes.lean"
 
-# grep exits 1 on empty output, which is the normal state while comparator.json
-# still lists no names. Do not let that abort the run.
-lake env lean "${tmp}/ChallengeTypes.lean" 2>/dev/null \
-  | { grep -vE 'LEAN_PATH|trace:|warning:|declaration uses' || true; } \
-  >"${tmp}/challenge.txt"
-lake env lean "${tmp}/SolutionTypes.lean" 2>/dev/null \
-  | { grep -vE 'LEAN_PATH|trace:|warning:|declaration uses' || true; } \
-  >"${tmp}/solution.txt"
+if [[ "${PALOMAR_CHECK_DECL_KINDS:-1}" != 0 ]]; then
+  write_kind_lean() {
+    local module="$1" out="$2"
+    {
+      echo "import ${module}"
+      cat <<'LEAN'
+open Lean Elab Command
+elab "#assert_theorem " n:ident : command => do
+  match (← getEnv).find? n.getId with
+  | some (.thmInfo _) => pure ()
+  | some _ => throwError "{n.getId} is not a theorem"
+  | none => throwError "unknown declaration {n.getId}"
+elab "#assert_definition " n:ident : command => do
+  match (← getEnv).find? n.getId with
+  | some (.defnInfo _) => pure ()
+  | some _ => throwError "{n.getId} is not a definition"
+  | none => throwError "unknown declaration {n.getId}"
+LEAN
+      for n in "${THEOREM_NAMES[@]}"; do
+        echo "#assert_theorem ${n}"
+      done
+      for n in "${DEFINITION_NAMES[@]}"; do
+        echo "#assert_definition ${n}"
+      done
+    } >"${out}"
+  }
+  write_kind_lean Challenge "${tmp}/ChallengeKinds.lean"
+  write_kind_lean Solution "${tmp}/SolutionKinds.lean"
+  for module in Challenge Solution; do
+    if ! lake env lean "${tmp}/${module}Kinds.lean" >"${tmp}/${module}-kinds.raw" 2>&1; then
+      echo "FAIL: Comparator declaration-kind check failed in ${module}."
+      cat "${tmp}/${module}-kinds.raw"
+      exit 1
+    fi
+  done
+  echo "OK: theorem_names and definition_names have the required declaration kinds."
+fi
 
-# Palomar Comparator BEqs ConstantVal.levelParams, so `.{u_3}` vs `.{u_2}`
-# is a rejection. Do not strip universe names. A secondary stripped view is
-# printed only to make instance-path mismatches easier to read.
+if ! lake env lean "${tmp}/ChallengeTypes.lean" >"${tmp}/challenge.raw" 2>&1; then
+  echo "FAIL: could not inspect Challenge declarations."
+  cat "${tmp}/challenge.raw"
+  exit 1
+fi
+if ! lake env lean "${tmp}/SolutionTypes.lean" >"${tmp}/solution.raw" 2>&1; then
+  echo "FAIL: could not inspect Solution declarations."
+  cat "${tmp}/solution.raw"
+  exit 1
+fi
+grep -vE 'LEAN_PATH|trace:|warning:|declaration uses' \
+  <"${tmp}/challenge.raw" >"${tmp}/challenge.txt" || true
+grep -vE 'LEAN_PATH|trace:|warning:|declaration uses' \
+  <"${tmp}/solution.raw" >"${tmp}/solution.txt" || true
+
+# Palomar Comparator BEqs ConstantVal.levelParams. Do not strip universe names
+# for the primary diff. A stripped view is a hint for instance-path mismatches.
 normalize_instances() {
   sed -E 's/\.\{u_[0-9]+(,[ ]*u_[0-9]+)*\}//g; s/u_[0-9]+/u/g'
 }
@@ -92,20 +136,23 @@ else
   exit 1
 fi
 
-# Palomar Compare.loop walks every ordinary constant used by compared theorem
-# types (and then those constants' types and values). Named theorem_names and
-# definition_names are holes: only their types are compared. Everything else
-# in the Scott1964.* closure must match, including generated `._proof_N`
-# constants. The submitted comparator.json list is not the full comparison.
 mapfile -t BODY_NAMES < <(
   python3 - "${tmp}/challenge.txt" "${tmp}/solution.txt" <<'PY'
 import json
+import os
 import re
 import sys
 
 cfg = json.load(open("comparator.json"))
 holes = set(cfg["theorem_names"]) | set(cfg.get("definition_names", []))
-name_re = re.compile(r"Scott1964(?:\.[A-Za-z_][A-Za-z0-9_']*)+")
+prefixes = {name.split(".", 1)[0] for name in holes if name}
+for extra in os.environ.get("PALOMAR_CLOSURE_PREFIXES", "").split():
+    if extra:
+        prefixes.add(extra)
+if not prefixes:
+    raise SystemExit(0)
+alt = "|".join(re.escape(p) for p in sorted(prefixes))
+name_re = re.compile(rf"(?:{alt})(?:\.[A-Za-z_][A-Za-z0-9_']*)*")
 ordered = []
 seen = set()
 
@@ -116,6 +163,8 @@ def add(name: str) -> None:
 
 for name in cfg.get("definition_names", []):
     add(name)
+for extra in os.environ.get("PALOMAR_EXTRA_PRINT_NAMES", "").split():
+    add(extra)
 for path in sys.argv[1:]:
     try:
         text = open(path, encoding="utf-8", errors="replace").read()
@@ -164,24 +213,31 @@ dump_bodies() {
 
 dump_bodies
 
-# Follow newly printed Scott1964 names until the pretty-print closure is stable.
 printf '%s\n' "${BODY_NAMES[@]}" >"${tmp}/known-bodies.txt"
 for _ in 1 2 3 4 5 6 7 8; do
   mapfile -t extra < <(
     python3 - "${tmp}/known-bodies.txt" \
       "${tmp}/challenge-definitions.txt" "${tmp}/solution-definitions.txt" <<'PY'
 import json
+import os
 import re
 import sys
 
 cfg = json.load(open("comparator.json"))
 holes = set(cfg["theorem_names"]) | set(cfg.get("definition_names", []))
+prefixes = {name.split(".", 1)[0] for name in holes if name}
+for item in os.environ.get("PALOMAR_CLOSURE_PREFIXES", "").split():
+    if item:
+        prefixes.add(item)
+if not prefixes:
+    raise SystemExit(0)
+alt = "|".join(re.escape(p) for p in sorted(prefixes))
+name_re = re.compile(rf"(?:{alt})(?:\.[A-Za-z_][A-Za-z0-9_']*)*")
 known = {
     line.strip()
     for line in open(sys.argv[1], encoding="utf-8", errors="replace")
     if line.strip()
 }
-name_re = re.compile(r"Scott1964(?:\.[A-Za-z_][A-Za-z0-9_']*)+")
 ordered = []
 seen = set(known)
 
@@ -211,18 +267,23 @@ PY
   dump_bodies
 done
 
-# Inline structure proofs elaborate to private constants such as
-# `instPartialOrder._proof_4`. Comparator compares those generated constants
-# when they appear in a locked value. Matching names can still be accepted;
-# mismatched names (EventSpan._proof_1 vs comparisonVector._proof_1) are a
-# Palomar rejection. Treat pretty-print identity as the gate, and summarize
-# generated proofs as a hint.
 proof_names() {
   python3 - "$@" <<'PY'
+import os
 import re
 import sys
+import json
 
-pat = re.compile(r"Scott1964(?:\.[A-Za-z_][A-Za-z0-9_']*)+\._proof_[0-9]+")
+cfg = json.load(open("comparator.json"))
+holes = set(cfg["theorem_names"]) | set(cfg.get("definition_names", []))
+prefixes = {name.split(".", 1)[0] for name in holes if name}
+for item in os.environ.get("PALOMAR_CLOSURE_PREFIXES", "").split():
+    if item:
+        prefixes.add(item)
+if not prefixes:
+    raise SystemExit(0)
+alt = "|".join(re.escape(p) for p in sorted(prefixes))
+pat = re.compile(rf"(?:{alt})(?:\.[A-Za-z_][A-Za-z0-9_']*)*\._proof_[0-9]+")
 found = []
 seen = set()
 for path in sys.argv[1:]:

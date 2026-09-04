@@ -12,7 +12,10 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from palomar_paths import project_root
+
+ROOT = project_root()
 
 
 def sha256_file(path: Path) -> str:
@@ -64,7 +67,7 @@ def build_report() -> dict:
         paths["lakefile.lean"] = ROOT / "lakefile.lean"
 
     return {
-        "schema": "scott1964-local-mechanical-report-v1",
+        "schema": "palomar-local-mechanical-report-v1",
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "repository": {
             "commit": commit,

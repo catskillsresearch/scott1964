@@ -24,7 +24,7 @@ scripts/palomar_preflight.sh
   insufficient when it refers to a named child definition whose value differs.
   Palomar Compare.loop walks that closure even when the child is not listed in
   `comparator.json`. Mechanical preflight therefore runs Palomar's pinned
-  Comparator (`scripts/verify-comparator.sh`) in addition to the pretty-print
+  Comparator (`vendor/palomar-preflight/verify-comparator.sh`) in addition to the pretty-print
   dump.
 - Write order operations with explicit `@LE.le` instance paths when Challenge
   and Solution import graphs can elaborate `≤` through different parent
@@ -59,7 +59,7 @@ The preflight must confirm:
    and transitively locked bodies match;
 3. locked bodies contain no generated `._proof_N` dependencies;
 4. Palomar's pinned Comparator accepts Challenge vs Solution
-   (`scripts/verify-comparator.sh`);
+   (`vendor/palomar-preflight/verify-comparator.sh`);
 5. Solution sources contain no `sorry`;
 6. Solution theorem axioms are permitted by `comparator.json`; and
 7. the patch has no whitespace errors.
@@ -70,7 +70,7 @@ For registry submission, also run the full editorial audit
 ```bash
 bash scripts/palomar_preflight.sh              # mechanical + LLM audit
 bash scripts/palomar_preflight.sh --mechanical-only   # CI / routine edits
-python3 scripts/palomar_editorial_checks.py      # packaging pre-checks only
+python3 vendor/palomar-preflight/palomar_editorial_checks.py      # packaging pre-checks only
 ```
 
 Treat a green `lake build` alone as insufficient.

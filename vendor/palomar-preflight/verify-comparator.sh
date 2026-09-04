@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Run Palomar's pinned Comparator against this repository.
+# Run Palomar's pinned Comparator against the current Lean project.
 #
 # Pins and invocation shape come from PalomarRegistry/PalomarSubmission
 # `.github/workflows/submission.yml` (not PalomarTemplate, which may lag or
@@ -8,7 +8,12 @@
 # comparator.json.
 set -euo pipefail
 
-repository_root=$(cd "$(dirname "$0")/.." && pwd)
+TOOLKIT_ROOT="$(cd "$(dirname "$0")" && pwd)"
+# shellcheck source=palomar-lib.sh
+source "$TOOLKIT_ROOT/palomar-lib.sh"
+palomar_cd_project
+repository_root="$PALOMAR_PROJECT_ROOT"
+
 cache_root=${PALOMAR_COMPARATOR_CACHE:-"$repository_root/.cache/palomar-comparator"}
 bin_dir="$cache_root/bin"
 comparator_dir="$cache_root/comparator"
@@ -26,7 +31,7 @@ for arg in "$@"; do
     --skip-nanoda) SKIP_NANODA=1 ;;
     -h|--help)
       cat <<'EOF'
-Usage: scripts/verify-comparator.sh [--skip-nanoda]
+Usage: verify-comparator.sh [--skip-nanoda]
 
 Runs Palomar's pinned Comparator (lean4export + Compare.loop + kernel replay).
 Palomar always enables NanoDa; omit --skip-nanoda when cargo is available.
@@ -206,12 +211,12 @@ fi
 
 if [[ "$have_landrun" -eq 1 ]]; then
   export PALOMAR_LANDRUN_REAL="$landrun_bin"
-  export COMPARATOR_LANDRUN="$repository_root/scripts/landrun_passthrough.py"
+  export COMPARATOR_LANDRUN="$TOOLKIT_ROOT/landrun_passthrough.py"
 else
-  echo "WARNING: go/landrun is not available; using scripts/fake-landrun.sh." >&2
+  echo "WARNING: go/landrun is not available; using fake-landrun.sh." >&2
   echo "Const matching, axiom checks, and Lean kernel replay still run." >&2
-  chmod +x "$repository_root/scripts/fake-landrun.sh"
-  export COMPARATOR_LANDRUN="$repository_root/scripts/fake-landrun.sh"
+  chmod +x "$TOOLKIT_ROOT/fake-landrun.sh"
+  export COMPARATOR_LANDRUN="$TOOLKIT_ROOT/fake-landrun.sh"
 fi
 
 export COMPARATOR_LEAN4EXPORT="$lean4export_dir/.lake/build/bin/lean4export"

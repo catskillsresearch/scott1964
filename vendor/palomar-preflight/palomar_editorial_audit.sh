@@ -1,8 +1,12 @@
 #!/usr/bin/env bash
-# Editorial audit wrapper: cursor-sdk venv (local or scott1964 fallback).
+# Editorial audit wrapper: cursor-sdk venv in the Lean project.
 set -euo pipefail
-ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-cd "$ROOT"
+
+TOOLKIT_ROOT="$(cd "$(dirname "$0")" && pwd)"
+# shellcheck source=palomar-lib.sh
+source "$TOOLKIT_ROOT/palomar-lib.sh"
+palomar_cd_project
+export PYTHONPATH="$TOOLKIT_ROOT${PYTHONPATH:+:$PYTHONPATH}"
 
 venv_ready() {
   local py="$1"
@@ -14,13 +18,8 @@ pick_python() {
     echo .venv-editorial/bin/python
     return
   fi
-  local sibling="$ROOT/../scott1964/.venv-ocr/bin/python"
-  if venv_ready "$sibling"; then
-    echo "$sibling"
-    return
-  fi
   python3 -m venv .venv-editorial
-  .venv-editorial/bin/pip install -r scripts/requirements-editorial.txt
+  .venv-editorial/bin/pip install -r "$TOOLKIT_ROOT/requirements-editorial.txt"
   echo .venv-editorial/bin/python
 }
 
@@ -29,7 +28,7 @@ load_cursor_api_key() {
     return 0
   fi
   local tokens
-  for tokens in "$ROOT/../tokens_ssto.yaml" "$ROOT/tokens_ssto.yaml"; do
+  for tokens in "$PALOMAR_PROJECT_ROOT/../tokens_ssto.yaml" "$PALOMAR_PROJECT_ROOT/tokens_ssto.yaml"; do
     if [[ -f "$tokens" ]]; then
       CURSOR_API_KEY="$(grep -E '^CURSOR_API_KEY:' "$tokens" | head -1 | sed -E 's/^CURSOR_API_KEY:[[:space:]]*//')"
       if [[ -n "$CURSOR_API_KEY" ]]; then
@@ -43,4 +42,4 @@ load_cursor_api_key() {
 }
 
 load_cursor_api_key
-exec "$(pick_python)" scripts/palomar_editorial_audit.py "$@"
+exec "$(pick_python)" "$TOOLKIT_ROOT/palomar_editorial_audit.py" "$@"

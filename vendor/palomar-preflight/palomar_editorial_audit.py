@@ -11,7 +11,10 @@ import sys
 from pathlib import Path
 from typing import Any
 
-ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from palomar_paths import project_root
+
+ROOT = project_root()
 
 # Palomar production editorial content uses gpt-5.6-sol; lighter passes use composer-2.5.
 PRIMARY_MODEL = "gpt-5.6-sol"

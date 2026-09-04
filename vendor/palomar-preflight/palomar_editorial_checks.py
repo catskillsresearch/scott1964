@@ -8,12 +8,15 @@ import re
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from palomar_paths import project_root
+
 try:
     import yaml
 except ImportError:
     yaml = None  # type: ignore[assignment]
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = project_root()
 
 AI_NAME_PATTERNS = re.compile(
     r"(?i)\b("
