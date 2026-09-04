@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 # Palomar preflight: mechanical Comparator checks + editorial LLM audit.
+# Mechanical now runs Palomar's pinned Comparator (scripts/verify-comparator.sh)
+# so local/CI rejection matches registry verification.
 # Use --mechanical-only for CI without API calls.
 set -euo pipefail
 cd "$(dirname "$0")/.."
@@ -15,6 +17,7 @@ for arg in "$@"; do
 Usage: scripts/palomar_preflight.sh [--mechanical-only] [--no-policy-sync]
 
   --mechanical-only   Skip PalomarPolicy sync and LLM editorial audit.
+                      Still runs Palomar-pinned Comparator.
   --no-policy-sync    Audit against committed vendor/palomar-policy only.
 
 Full preflight requires CURSOR_API_KEY (or ../tokens_ssto.yaml) and runs
@@ -167,8 +170,16 @@ echo "OK: no .gitmodules."
 step "Build Lean project"
 lake build 2>&1 | grep -vE 'LEAN_PATH|trace:' | tail -20
 
-step "Compare Challenge/Solution types and definition values"
-PALOMAR_QUIET=1 bash scripts/compare_challenge_solution_types.sh
+step "Compare Challenge/Solution types and declaration-closure values"
+compare_status=0
+PALOMAR_QUIET=1 bash scripts/compare_challenge_solution_types.sh || compare_status=$?
+
+step "Run Palomar-pinned Comparator"
+bash scripts/verify-comparator.sh
+if [[ "$compare_status" -ne 0 ]]; then
+  echo "Pretty-print declaration-closure check also failed (exit ${compare_status})."
+  exit "$compare_status"
+fi
 
 step "Reject proof holes in Solution sources"
 if rg -n --glob '*.lean' \

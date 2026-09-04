@@ -1,6 +1,7 @@
 # cache and other artifacts produced by Lean's Lake build tool
 .lake/
 .cache/palomar-editorial/
+.cache/palomar-comparator/
 .venv-editorial/
 vendor/palomar-policy.sync-backup/
 

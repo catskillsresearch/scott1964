@@ -81,7 +81,7 @@ def build_report() -> dict:
         "challenge_imports": challenge_imports(),
         "artifact_hashes": {name: sha256_file(path) for name, path in paths.items() if path.is_file()},
         "preflight": {
-            "mechanical_steps": "comparator, imports, build, type-compare, sorry-scan, axioms",
+            "mechanical_steps": "comparator-config, imports, build, type-compare, pinned-comparator, sorry-scan, axioms",
             "status": "passed_before_report",
         },
     }

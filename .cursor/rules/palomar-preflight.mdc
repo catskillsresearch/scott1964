@@ -1,6 +1,6 @@
 ---
 description: Prevent Palomar Comparator mismatches in Challenge/Solution declarations
-globs: "{Challenge.lean,Solution.lean,comparator.json,Scott1964/**/*.lean,scripts/*palomar*,scripts/compare_challenge_solution_types.sh,formalization.yaml,docs/PALOMAR*.md}"
+globs: "{Challenge.lean,Solution.lean,comparator.json,Scott1964/**/*.lean,scripts/*palomar*,scripts/compare_challenge_solution_types.sh,scripts/verify-comparator.sh,formalization.yaml,docs/PALOMAR*.md}"
 alwaysApply: false
 ---
 
@@ -22,6 +22,7 @@ alwaysApply: false
   scope, limitations, sources).
 - Challenge may contain proof holes; Solution and `Scott1964/**/*.lean` may not.
 - **CI / routine edits:** `bash scripts/palomar_preflight.sh --mechanical-only`
+  (includes Palomar-pinned `scripts/verify-comparator.sh`)
 - **Before Palomar submission:** full `bash scripts/palomar_preflight.sh`
   (mechanical + editorial LLM audit). Do not claim readiness unless mechanical
   preflight passes; treat editorial `neutral` synthesis as the submission bar.

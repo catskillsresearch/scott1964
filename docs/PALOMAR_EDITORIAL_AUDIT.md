@@ -13,7 +13,7 @@ bash scripts/palomar_preflight.sh
 
 Full preflight runs:
 
-1. Mechanical Comparator checks (build, type/value match, sorry scan, axioms, …)
+1. Mechanical Comparator checks (build, type/value match, Palomar-pinned Comparator, sorry scan, axioms, …)
 2. **Policy sync** — compares `vendor/PALOMAR_POLICY_PIN` to upstream `main` and
    refreshes the vendored tree when newer
 3. Deterministic editorial pre-checks (`scripts/palomar_editorial_checks.py`)
@@ -57,7 +57,9 @@ Before running full preflight on a submission candidate, confirm:
 4. **Sources** — `formalization.yaml` `sources:` records the primary paper and
    any extra literature for separately labelled compared results.
 5. **Mechanical green** — `bash scripts/palomar_preflight.sh --mechanical-only`
-   passes, then `bash scripts/compare_challenge_solution_types.sh`.
+   passes. That now includes Palomar's pinned Comparator
+   (`scripts/verify-comparator.sh`), which walks the declaration closure
+   Comparator actually compares. Then `bash scripts/compare_challenge_solution_types.sh`.
 
 Deterministic packaging checks live in `scripts/palomar_editorial_checks.py`
 (main_results coverage, sorry-definition pinning, scope sync). They run during
@@ -108,3 +110,4 @@ First run creates `.venv-editorial/` with `cursor-sdk` and `pyyaml`, or reuses
 | `scripts/palomar_editorial_audit.py` | LLM rubric orchestrator |
 | `scripts/palomar_editorial_audit.sh` | Venv wrapper for cursor-sdk |
 | `scripts/palomar_preflight.sh` | Mechanical + editorial gate |
+| `scripts/verify-comparator.sh` | Palomar-pinned Comparator (declaration closure) |

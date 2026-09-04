@@ -79,7 +79,7 @@ lake build
 
 `lake build` typechecks `Scott1964`, `Challenge.lean`, and `Solution.lean`.
 
-**Routine / CI:** mechanical preflight only:
+**Routine / CI:** mechanical preflight only (pretty-print closure + Palomar-pinned Comparator):
 
 ```bash
 bash scripts/palomar_preflight.sh --mechanical-only

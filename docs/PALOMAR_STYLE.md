@@ -22,6 +22,10 @@ scripts/palomar_preflight.sh
 - Audit every `definition_names` body and every concrete definition reached
   transitively from a compared theorem or instance. A matching parent body is
   insufficient when it refers to a named child definition whose value differs.
+  Palomar Compare.loop walks that closure even when the child is not listed in
+  `comparator.json`. Mechanical preflight therefore runs Palomar's pinned
+  Comparator (`scripts/verify-comparator.sh`) in addition to the pretty-print
+  dump.
 - Write order operations with explicit `@LE.le` instance paths when Challenge
   and Solution import graphs can elaborate `≤` through different parent
   structures. This repository is exposed to that failure mode wherever a
@@ -54,9 +58,11 @@ The preflight must confirm:
 2. compared names, universe parameters, types, all `definition_names` values,
    and transitively locked bodies match;
 3. locked bodies contain no generated `._proof_N` dependencies;
-4. Solution sources contain no `sorry`;
-5. Solution theorem axioms are permitted by `comparator.json`; and
-6. the patch has no whitespace errors.
+4. Palomar's pinned Comparator accepts Challenge vs Solution
+   (`scripts/verify-comparator.sh`);
+5. Solution sources contain no `sorry`;
+6. Solution theorem axioms are permitted by `comparator.json`; and
+7. the patch has no whitespace errors.
 
 For registry submission, also run the full editorial audit
 (`docs/PALOMAR_EDITORIAL_AUDIT.md`):

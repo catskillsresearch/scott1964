@@ -10,6 +10,7 @@ jobs:
   build:
     name: Build Lean Project
     runs-on: ubuntu-latest
+    timeout-minutes: 90
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
