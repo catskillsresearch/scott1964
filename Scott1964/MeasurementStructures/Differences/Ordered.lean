@@ -20,8 +20,8 @@ def DiffTotal {A : Type u} (D : A → A → A → A → Prop) : Prop :=
 /-- Scott 1964, condition `(2_D)`. -/
 def DiffPermutation {A : Type u} (D : A → A → A → A → Prop) : Prop :=
   ∀ (n : ℕ) (x y : Fin (n + 1) → A) (π σ : Equiv.Perm (Fin (n + 1))),
-    (∀ i, i ≠ 0 → D (x i) (y i) (x (π i)) (y (σ i))) →
-      D (x (π 0)) (y (σ 0)) (x 0) (y 0)
+    (∀ i, i ≠ finHead n → D (x i) (y i) (x (π i)) (y (σ i))) →
+      D (x (π (finHead n))) (y (σ (finHead n))) (x (finHead n)) (y (finHead n))
 
 /-- Scott 1964, condition `(3_D)`. -/
 def DiffReversal {A : Type u} (D : A → A → A → A → Prop) : Prop :=

@@ -110,6 +110,15 @@ namespace Scott1964.MeasurementStructures
 
 open scoped Classical
 
+theorem fin_succ_pos (n : ℕ) : 0 < n + 1 :=
+  Nat.succ_pos n
+
+def finHead (n : ℕ) : Fin (n + 1) :=
+  ⟨0, fin_succ_pos n⟩
+
+theorem finHead_eq_zero (n : ℕ) : finHead n = 0 :=
+  Fin.ext rfl
+
 def RealizablePreference {A : Type u} (P : A → A → Prop) : Prop :=
   ∃ f : A → ℝ, ∀ x y, P x y ↔ f x ≥ f y + 1
 
@@ -139,8 +148,8 @@ def PairPermutation {A : Type u} {A' : Type v}
     (V : A → A' → A → A' → Prop) : Prop :=
   ∀ (n : ℕ) (x : Fin (n + 1) → A) (x' : Fin (n + 1) → A')
     (π σ : Equiv.Perm (Fin (n + 1))),
-    (∀ i, i ≠ 0 → V (x i) (x' i) (x (π i)) (x' (σ i))) →
-      V (x (π 0)) (x' (σ 0)) (x 0) (x' 0)
+    (∀ i, i ≠ finHead n → V (x i) (x' i) (x (π i)) (x' (σ i))) →
+      V (x (π (finHead n))) (x' (σ (finHead n))) (x (finHead n)) (x' (finHead n))
 
 theorem theorem_3_1 {A : Type u} {A' : Type v}
     [Fintype A] [Nonempty A] [Fintype A'] [Nonempty A']
@@ -156,8 +165,8 @@ def DiffTotal {A : Type u} (D : A → A → A → A → Prop) : Prop :=
 
 def DiffPermutation {A : Type u} (D : A → A → A → A → Prop) : Prop :=
   ∀ (n : ℕ) (x y : Fin (n + 1) → A) (π σ : Equiv.Perm (Fin (n + 1))),
-    (∀ i, i ≠ 0 → D (x i) (y i) (x (π i)) (y (σ i))) →
-      D (x (π 0)) (y (σ 0)) (x 0) (y 0)
+    (∀ i, i ≠ finHead n → D (x i) (y i) (x (π i)) (y (σ i))) →
+      D (x (π (finHead n))) (y (σ (finHead n))) (x (finHead n)) (y (finHead n))
 
 def DiffReversal {A : Type u} (D : A → A → A → A → Prop) : Prop :=
   ∀ x y z w, D x y z w → D w z y x
@@ -181,26 +190,35 @@ def IsFinitelyAdditiveProbability {B : Type u} [BooleanAlgebra B] (μ : B → �
 
 theorem IsProbability.compl {B : Type u} [BooleanAlgebra B] {μ : B → ℝ}
     (hμ : IsProbability μ) (x : B) : μ xᶜ = 1 - μ x := by
-  sorry
+  have hd : Disjoint x xᶜ := disjoint_compl_right
+  have h := hμ.additive x xᶜ hd
+  rw [sup_compl_eq_top, hμ.top] at h
+  linarith
 
 theorem IsProbability.mono_of_nonnegative {B : Type u} [BooleanAlgebra B]
     {μ : B → ℝ} (hμ : IsProbability μ) (hn : IsNonnegative μ)
     ⦃x y : B⦄ (hxy : x ≤ y) : μ x ≤ μ y := by
-  sorry
+  have hd : Disjoint x (y \ x) := by
+    rw [disjoint_iff_inf_le]
+    simp
+  have hy : x ⊔ (y \ x) = y := by
+    exact sup_sdiff_cancel_right hxy
+  rw [← hy, hμ.additive _ _ hd]
+  exact le_add_of_nonneg_right (hn _)
 
 theorem IsProbability.mono {B : Type u} [BooleanAlgebra B]
     {μ : B → ℝ} (hμ : IsProbability μ) ⦃x y : B⦄ (hxy : x ≤ y) :
-    μ x ≤ μ y := by
-  sorry
+    μ x ≤ μ y :=
+  hμ.mono_of_nonnegative hμ.nonnegative hxy
 
 theorem IsProbability.le_one_of_nonnegative {B : Type u} [BooleanAlgebra B]
     {μ : B → ℝ} (hμ : IsProbability μ) (hn : IsNonnegative μ) (x : B) :
     μ x ≤ 1 := by
-  sorry
+  simpa [hμ.top] using hμ.mono_of_nonnegative hn (show x ≤ (⊤ : B) from le_top)
 
 theorem IsProbability.le_one {B : Type u} [BooleanAlgebra B]
-    {μ : B → ℝ} (hμ : IsProbability μ) (x : B) : μ x ≤ 1 := by
-  sorry
+    {μ : B → ℝ} (hμ : IsProbability μ) (x : B) : μ x ≤ 1 :=
+  hμ.le_one_of_nonnegative hμ.nonnegative x
 
 def RealizableProbability {B : Type u} [BooleanAlgebra B] (R : B → B → Prop) : Prop :=
   ∃ μ : B → ℝ, IsProbability μ ∧ ∀ x y, R x y ↔ μ x ≥ μ y
@@ -223,7 +241,7 @@ def ProbCancellation {B : Type u} [BooleanAlgebra B] [Fintype B]
     (∀ a : B, IsAtom a →
         (∑ i, if a ≤ x i then 1 else 0) =
           (∑ i, if a ≤ y i then 1 else 0 : ℕ)) →
-      (∀ i, i ≠ 0 → R (x i) (y i)) → R (y 0) (x 0)
+      (∀ i, i ≠ finHead n → R (x i) (y i)) → R (y (finHead n)) (x (finHead n))
 
 theorem theorem_4_1 {B : Type u} [BooleanAlgebra B] [Fintype B]
     (R : B → B → Prop) :
@@ -244,12 +262,28 @@ universe u
 
 variable (B : Type u) [BooleanAlgebra B]
 
+noncomputable instance instBoundedAddReal : BoundedAdd ℝ := inferInstance
+
 def ProbabilityPoint :=
   {μ : B → ℝ // IsFinitelyAdditiveProbability μ}
 
-instance : TopologicalSpace (ProbabilityPoint B) := ⊥
+instance instTopologicalSpaceProbabilityPoint : TopologicalSpace (ProbabilityPoint B) := ⊥
 
-instance : DiscreteTopology (ProbabilityPoint B) := ⟨rfl⟩
+theorem probabilityPoint_discrete_eq_bot :
+    instTopologicalSpaceProbabilityPoint B = ⊥ :=
+  rfl
+
+instance instDiscreteTopologyProbabilityPoint : DiscreteTopology (ProbabilityPoint B) where
+  eq_bot := probabilityPoint_discrete_eq_bot B
+
+noncomputable instance instAddCommMonoidProbabilityBCF :
+    AddCommMonoid (ProbabilityPoint B →ᵇ ℝ) := inferInstance
+
+noncomputable instance instModuleProbabilityBCF :
+    Module ℝ (ProbabilityPoint B →ᵇ ℝ) := inferInstance
+
+noncomputable instance instAddCommGroupProbabilityBCF :
+    AddCommGroup (ProbabilityPoint B →ᵇ ℝ) := inferInstance
 
 theorem probabilityPoint_nonnegative (p : ProbabilityPoint B) (a : B) :
     0 ≤ p.1 a :=
@@ -259,19 +293,30 @@ theorem probabilityPoint_le_one (p : ProbabilityPoint B) (a : B) :
     p.1 a ≤ 1 :=
   p.2.le_one a
 
+theorem eventVector_dist_le_one (a : B) (p q : ProbabilityPoint B) :
+    dist (p.1 a) (q.1 a) ≤ 1 := by
+  rw [Real.dist_eq, abs_sub_le_iff]
+  constructor <;>
+    linarith [probabilityPoint_nonnegative B p a,
+      probabilityPoint_nonnegative B q a,
+      probabilityPoint_le_one B p a,
+      probabilityPoint_le_one B q a]
+
 def eventVector (a : B) : ProbabilityPoint B →ᵇ ℝ :=
-  BoundedContinuousFunction.mkOfDiscrete (fun p => p.1 a) 1 (by
-    intro p q
-    rw [Real.dist_eq]
-    rw [abs_sub_le_iff]
-    constructor <;>
-      linarith [probabilityPoint_nonnegative B p a,
-        probabilityPoint_nonnegative B q a,
-        probabilityPoint_le_one B p a,
-        probabilityPoint_le_one B q a])
+  BoundedContinuousFunction.mkOfDiscrete (fun p => p.1 a) 1
+    (eventVector_dist_le_one B a)
 
 def EventSpan : Submodule ℝ (ProbabilityPoint B →ᵇ ℝ) :=
   Submodule.span ℝ (Set.range (eventVector B))
+
+noncomputable instance instNormedAddCommGroupEventSpan :
+    NormedAddCommGroup (EventSpan B) := inferInstance
+
+noncomputable instance instNormedSpaceEventSpan :
+    NormedSpace ℝ (EventSpan B) := inferInstance
+
+noncomputable instance instLocallyConvexSpaceEventSpan :
+    LocallyConvexSpace ℝ (EventSpan B) := inferInstance
 
 def event (a : B) : EventSpan B :=
   ⟨eventVector B a, Submodule.subset_span (Set.mem_range_self a)⟩

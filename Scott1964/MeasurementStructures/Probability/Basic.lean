@@ -1,4 +1,5 @@
 import Mathlib
+import Scott1964.MeasurementStructures.FinHead
 
 /-!
 # Finitely additive probabilities on Boolean algebras
@@ -67,7 +68,7 @@ def ProbCancellation {B : Type u} [BooleanAlgebra B] [Fintype B]
     (∀ a : B, IsAtom a →
         (∑ i, if a ≤ x i then 1 else 0) =
           (∑ i, if a ≤ y i then 1 else 0 : ℕ)) →
-      (∀ i, i ≠ 0 → R (x i) (y i)) → R (y 0) (x 0)
+      (∀ i, i ≠ finHead n → R (x i) (y i)) → R (y (finHead n)) (x (finHead n))
 
 /-- Transitivity, de Finetti's condition (iv). -/
 def ProbTransitive {B : Type u} (R : B → B → Prop) : Prop :=

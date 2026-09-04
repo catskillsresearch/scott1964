@@ -1,3 +1,4 @@
+import Scott1964.MeasurementStructures.FinHead
 import Scott1964.MeasurementStructures.LinearInequalities.ScottTheorems
 
 /-!
@@ -106,8 +107,8 @@ def PairPermutation {A : Type u} {A' : Type v}
     (V : A → A' → A → A' → Prop) : Prop :=
   ∀ (n : ℕ) (x : Fin (n + 1) → A) (x' : Fin (n + 1) → A')
     (π σ : Equiv.Perm (Fin (n + 1))),
-    (∀ i, i ≠ 0 → V (x i) (x' i) (x (π i)) (x' (σ i))) →
-      V (x (π 0)) (x' (σ 0)) (x 0) (x' 0)
+    (∀ i, i ≠ finHead n → V (x i) (x' i) (x (π i)) (x' (σ i))) →
+      V (x (π (finHead n))) (x' (σ (finHead n))) (x (finHead n)) (x' (finHead n))
 
 /-- Scott's observation following `(2_V)`: the permutation condition already
 implies transitivity. -/
@@ -120,6 +121,7 @@ theorem PairPermutation.transitive {A : Type u} {A' : Type v}
     Equiv.ofBijective ![1, 2, 0] (by native_decide)
   apply hV 2 ![z, x, y] ![z', x', y'] p p
   intro i hi
+  have hi0 : i ≠ 0 := by simpa [finHead_eq_zero] using hi
   fin_cases i
   · contradiction
   · simpa [p] using hxy
@@ -149,15 +151,15 @@ theorem RealizableUtilityPair.permutation {A : Type u} {A' : Type v}
     simp only [s, t, Finset.sum_add_distrib]
     rw [hπ, hσ]
   have hrest :
-      ∑ i ∈ (Finset.univ.erase (0 : Fin (n + 1))), t i ≤
-        ∑ i ∈ (Finset.univ.erase (0 : Fin (n + 1))), s i := by
+      ∑ i ∈ (Finset.univ.erase (finHead n)), t i ≤
+        ∑ i ∈ (Finset.univ.erase (finHead n)), s i := by
     apply Finset.sum_le_sum
     intro i hi
-    have hi0 : i ≠ 0 := by
+    have hi0 : i ≠ finHead n := by
       simpa using (Finset.mem_erase.mp hi).1
     exact (hrep _ _ _ _).1 (h i hi0)
   apply (hrep _ _ _ _).2
-  have hzero : (0 : Fin (n + 1)) ∈ Finset.univ := Finset.mem_univ _
+  have hzero : finHead n ∈ Finset.univ := Finset.mem_univ _
   have hs := Finset.sum_erase_add _ s hzero
   have ht := Finset.sum_erase_add _ t hzero
   dsimp only [s, t] at *
@@ -235,14 +237,14 @@ theorem theorem_3_1 {A : Type u} {A' : Type v}
       obtain ⟨π, σ, hπ, hσ⟩ :=
         pairVector_sum_eq_permutations x y x' y' hsum'
       intro i
-      let τ : Equiv.Perm (Fin (n + 1)) := Equiv.swap 0 i
+      let τ : Equiv.Perm (Fin (n + 1)) := Equiv.swap (finHead n) i
       let π' : Equiv.Perm (Fin (n + 1)) := τ.trans (π.trans τ)
       let σ' : Equiv.Perm (Fin (n + 1)) := τ.trans (σ.trans τ)
       have hconcl := hperm n (fun j ↦ x (τ j)) (fun j ↦ x' (τ j)) π' σ' (by
         intro j hj
         have hτj : τ j ≠ i := by
           intro heq
-          have : j = 0 := τ.injective (by simpa [τ] using heq)
+          have : j = finHead n := τ.injective (by simpa [τ] using heq)
           exact hj this
         have hvR := hR (τ j)
         rw [hx (τ j), hy (τ j), hR_pair] at hvR

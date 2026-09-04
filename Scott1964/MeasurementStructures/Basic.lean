@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Lars Warren Ericson.
 -/
 
+import Scott1964.MeasurementStructures.FinHead
 import Scott1964.MeasurementStructures.LinearInequalities.Definitions
 import Scott1964.MeasurementStructures.LinearInequalities.Separation
 import Scott1964.MeasurementStructures.LinearInequalities.Rationalization

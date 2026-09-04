@@ -158,7 +158,8 @@ theorem AtomLinearRepresentation.cancellation
       (∀ a : B, IsAtom a →
         (∑ i, if a ≤ x i then 1 else 0) =
           (∑ i, if a ≤ y i then 1 else 0 : ℕ)) →
-      (∀ i, i ≠ 0 → R (x i) (y i)) → R (y 0) (x 0) := by
+      (∀ i, i ≠ finHead n → R (x i) (y i)) →
+        R (y (finHead n)) (x (finHead n)) := by
   rcases hR with ⟨φ, hrep⟩
   intro n x y hcount hweak
   have hvectors :
@@ -168,16 +169,16 @@ theorem AtomLinearRepresentation.cancellation
       ∑ i, φ (atomVector (x i)) = ∑ i, φ (atomVector (y i)) := by
     simpa only [map_sum] using congrArg φ hvectors
   have hrest :
-      ∑ i ∈ (Finset.univ.erase (0 : Fin (n + 1))),
+      ∑ i ∈ (Finset.univ.erase (finHead n)),
           φ (atomVector (y i)) ≤
-        ∑ i ∈ (Finset.univ.erase (0 : Fin (n + 1))),
+        ∑ i ∈ (Finset.univ.erase (finHead n)),
           φ (atomVector (x i)) := by
     apply Finset.sum_le_sum
     intro i hi
-    have hi0 : i ≠ 0 := by simpa using (Finset.mem_erase.mp hi).1
+    have hi0 : i ≠ finHead n := by simpa using (Finset.mem_erase.mp hi).1
     exact (hrep (x i) (y i)).1 (hweak i hi0)
-  apply (hrep (y 0) (x 0)).2
-  have hzero : (0 : Fin (n + 1)) ∈ Finset.univ := Finset.mem_univ _
+  apply (hrep (y (finHead n)) (x (finHead n))).2
+  have hzero : finHead n ∈ Finset.univ := Finset.mem_univ _
   have hx := Finset.sum_erase_add _ (fun i ↦ φ (atomVector (x i))) hzero
   have hy := Finset.sum_erase_add _ (fun i ↦ φ (atomVector (y i))) hzero
   linarith
@@ -195,8 +196,8 @@ theorem ProbCancellation.of_atomVector_sum
     {R : B → B → Prop} (hR : ProbCancellation R)
     (n : ℕ) (x y : Fin (n + 1) → B)
     (hsum : (∑ i, atomVector (x i)) = ∑ i, atomVector (y i))
-    (hweak : ∀ i, i ≠ 0 → R (x i) (y i)) :
-    R (y 0) (x 0) :=
+    (hweak : ∀ i, i ≠ finHead n → R (x i) (y i)) :
+    R (y (finHead n)) (x (finHead n)) :=
   hR n x y ((sum_atomVector_eq_iff (n + 1) x y).1 hsum) hweak
 
 /-- Scott cancellation alone implies reflexivity. -/
@@ -207,7 +208,7 @@ theorem ProbCancellation.refl
   apply hR.of_atomVector_sum 0 (fun _ ↦ x) (fun _ ↦ x)
   · rfl
   · intro i hi
-    exact False.elim (hi (Fin.eq_zero i))
+    exact False.elim (hi (by simpa [finHead_eq_zero] using Fin.eq_zero i))
 
 /-- Scott cancellation implies de Finetti transitivity. -/
 theorem ProbCancellation.transitive
@@ -222,7 +223,7 @@ theorem ProbCancellation.transitive
     abel
   · intro i hi
     fin_cases i
-    · exact False.elim (hi rfl)
+    · exact False.elim (hi (finHead_eq_zero _).symm)
     · exact hxy
     · exact hyz
 
@@ -246,7 +247,7 @@ theorem ProbCancellation.disjointUnionInvariant
       abel
     · intro i hi
       fin_cases i
-      · exact False.elim (hi rfl)
+      · exact False.elim (hi (finHead_eq_zero _).symm)
       · exact hxy
   · intro hxy
     let xs : Fin 2 → B := ![y, x ⊔ z]
@@ -256,7 +257,7 @@ theorem ProbCancellation.disjointUnionInvariant
       abel
     · intro i hi
       fin_cases i
-      · exact False.elim (hi rfl)
+      · exact False.elim (hi (finHead_eq_zero _).symm)
       · exact hxy
 
 /-! ## Reduction to Scott's explicit §1 relation theorem -/
@@ -324,7 +325,7 @@ theorem atomVectorRelation_sequenceCancellation
         B → ({a : B // IsAtom a} → ℝ)))
       (AtomVectorRelation R) := by
   intro n u v hu hv huv hsum j
-  let e : Equiv.Perm (Fin (n + 1)) := Equiv.swap 0 j
+  let e : Equiv.Perm (Fin (n + 1)) := Equiv.swap (finHead n) j
   let x : Fin (n + 1) → B := fun i ↦ eventOfAtomVector (u (e i))
   let y : Fin (n + 1) → B := fun i ↦ eventOfAtomVector (v (e i))
   have hxu : ∀ i, atomVector (x i) = u (e i) := by
