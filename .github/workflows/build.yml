@@ -15,6 +15,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Checkout palomar-preflight
+        uses: actions/checkout@v4
+        with:
+          repository: catskillsresearch/palomar-preflight
+          ref: de7e8b926342c75358801c609efd1296af4ed412
+          path: palomar-preflight
+
       - name: Install elan
         run: |
           curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- -y --default-toolchain none
