@@ -16,9 +16,9 @@ Full preflight runs:
 1. Mechanical Comparator checks (build, type/value match, Palomar-pinned Comparator, sorry scan, axioms, …)
 2. **Policy sync** — compares `vendor/PALOMAR_POLICY_PIN` to upstream `main` and
    refreshes the vendored tree when newer
-3. Deterministic editorial pre-checks (`vendor/palomar-preflight/palomar_editorial_checks.py`)
+3. Deterministic editorial pre-checks (`../palomar-preflight/palomar_editorial_checks.py`)
 4. Local `mechanical-report.json` stub
-5. **LLM editorial audit** via **Cursor SDK** (`vendor/palomar-preflight/palomar_editorial_audit.sh`)
+5. **LLM editorial audit** via **Cursor SDK** (`../palomar-preflight/palomar_editorial_audit.sh`)
    - **Substantive passes**: **`gpt-5.6-sol`**
      — `statement_alignment`, `definition_fidelity`, `literature_notability`, `synthesis`
    - **Lighter passes**: **`composer-2.5`**
@@ -58,10 +58,10 @@ Before running full preflight on a submission candidate, confirm:
    any extra literature for separately labelled compared results.
 5. **Mechanical green** — `bash scripts/palomar_preflight.sh --mechanical-only`
    passes. That now includes Palomar's pinned Comparator
-   (`vendor/palomar-preflight/verify-comparator.sh`), which walks the declaration closure
-   Comparator actually compares. Then `bash vendor/palomar-preflight/compare_challenge_solution_types.sh`.
+   (`../palomar-preflight/verify-comparator.sh`), which walks the declaration closure
+   Comparator actually compares. Then `PALOMAR_PROJECT_ROOT=$PWD bash ../palomar-preflight/compare_challenge_solution_types.sh`.
 
-Deterministic packaging checks live in `vendor/palomar-preflight/palomar_editorial_checks.py`
+Deterministic packaging checks live in `../palomar-preflight/palomar_editorial_checks.py`
 (main_results coverage, sorry-definition pinning, scope sync). They run during
 **full** preflight and fail fast before the LLM audit.
 
@@ -71,7 +71,7 @@ Comparator elaboration rules (inline proofs, instance paths, universe names):
 ## Policy sync and revert
 
 - Pin file: `vendor/PALOMAR_POLICY_PIN`
-- Sync script: `vendor/palomar-preflight/palomar_policy_sync.py`
+- Sync script: `../palomar-preflight/palomar_policy_sync.py`
 - Skip upstream check: `bash scripts/palomar_preflight.sh --no-policy-sync`
 
 If a bad upstream draft is pulled, revert before committing:
@@ -104,6 +104,5 @@ First run creates `.venv-editorial/` with `cursor-sdk` and `pyyaml`, or reuses
 |------|------|
 | `vendor/palomar-policy/` | Vendored prompts, rubric, CONTRIBUTING, schemas |
 | `vendor/PALOMAR_POLICY_PIN` | Upstream PalomarPolicy commit SHA |
-| `vendor/palomar-preflight/` | Vendored local preflight toolkit (not a submodule) |
-| `vendor/PALOMAR_PREFLIGHT_PIN` | palomar-preflight commit SHA |
+| `vendor/PALOMAR_PREFLIGHT_PIN` | palomar-preflight commit SHA (CI checkout) |
 | `scripts/palomar_preflight.sh` | Project wrapper: mechanical + editorial gate |
