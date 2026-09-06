@@ -8,15 +8,74 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 
-# Library files in dependency order (matches Scott1964.lean import order).
+# Library files in a readable dependency order (Basic last: it re-exports).
 FILES = [
     "Scott1964.lean",
+    "Scott1964/MeasurementStructures/FinHead.lean",
+    "Scott1964/MeasurementStructures/LinearInequalities/Definitions.lean",
+    "Scott1964/MeasurementStructures/LinearInequalities/Separation.lean",
+    "Scott1964/MeasurementStructures/LinearInequalities/Rationalization.lean",
+    "Scott1964/MeasurementStructures/LinearInequalities/Sequences.lean",
+    "Scott1964/MeasurementStructures/LinearInequalities/ScottTheorems.lean",
+    "Scott1964/MeasurementStructures/LinearInequalities/OrderedGroup.lean",
+    "Scott1964/MeasurementStructures/Preference/Direct.lean",
+    "Scott1964/MeasurementStructures/Preference/Cycle.lean",
+    "Scott1964/MeasurementStructures/Preference/Intransitive.lean",
+    "Scott1964/MeasurementStructures/Differences/Pair.lean",
+    "Scott1964/MeasurementStructures/Differences/Ordered.lean",
+    "Scott1964/MeasurementStructures/Probability/Basic.lean",
+    "Scott1964/MeasurementStructures/Probability/Atoms.lean",
+    "Scott1964/MeasurementStructures/Probability/Finite.lean",
+    "Scott1964/MeasurementStructures/Probability/KPSCounterexample.lean",
+    "Scott1964/MeasurementStructures/Probability/Infinite/EventSpace.lean",
+    "Scott1964/MeasurementStructures/Probability/Infinite/HahnBanach.lean",
+    "Scott1964/MeasurementStructures/Probability/Infinite/Kelley.lean",
+    "Scott1964/MeasurementStructures/Probability/Infinite/Reconstructed.lean",
     "Scott1964/MeasurementStructures/Basic.lean",
 ]
 
 FILE_ROLES: dict[str, str] = {
     "Scott1964.lean": "Root import graph",
-    "Scott1964/MeasurementStructures/Basic.lean": "Scaffold",
+    "Scott1964/MeasurementStructures/FinHead.lean": "Stable distinguished sequence index",
+    "Scott1964/MeasurementStructures/LinearInequalities/Definitions.lean":
+        "Scott's finite inequality predicates",
+    "Scott1964/MeasurementStructures/LinearInequalities/Separation.lean":
+        "Finite convex separation",
+    "Scott1964/MeasurementStructures/LinearInequalities/Rationalization.lean":
+        "Rational coefficient reduction",
+    "Scott1964/MeasurementStructures/LinearInequalities/Sequences.lean":
+        "Explicit finite sequence conditions",
+    "Scott1964/MeasurementStructures/LinearInequalities/ScottTheorems.lean":
+        "Theorems 1.1–1.4",
+    "Scott1964/MeasurementStructures/LinearInequalities/OrderedGroup.lean":
+        "Ordered-group consequences and obstruction",
+    "Scott1964/MeasurementStructures/Preference/Direct.lean":
+        "Finite Scott–Suppes staircase representation",
+    "Scott1964/MeasurementStructures/Preference/Cycle.lean":
+        "Local cycle reductions",
+    "Scott1964/MeasurementStructures/Preference/Intransitive.lean":
+        "Theorem 2.1",
+    "Scott1964/MeasurementStructures/Differences/Pair.lean":
+        "Theorem 3.1",
+    "Scott1964/MeasurementStructures/Differences/Ordered.lean":
+        "Theorem 3.2",
+    "Scott1964/MeasurementStructures/Probability/Basic.lean":
+        "Finite qualitative probability definitions",
+    "Scott1964/MeasurementStructures/Probability/Atoms.lean":
+        "Atom-vector representation",
+    "Scott1964/MeasurementStructures/Probability/Finite.lean":
+        "Theorem 4.1 and signed charges",
+    "Scott1964/MeasurementStructures/Probability/KPSCounterexample.lean":
+        "Kraft–Pratt–Seidenberg counterexample",
+    "Scott1964/MeasurementStructures/Probability/Infinite/EventSpace.lean":
+        "Universal event space",
+    "Scott1964/MeasurementStructures/Probability/Infinite/HahnBanach.lean":
+        "Closed-cone separation",
+    "Scott1964/MeasurementStructures/Probability/Infinite/Kelley.lean":
+        "Generalized Kelley cover",
+    "Scott1964/MeasurementStructures/Probability/Infinite/Reconstructed.lean":
+        "Modern infinite reconstruction",
+    "Scott1964/MeasurementStructures/Basic.lean": "Complete library re-export",
 }
 
 
@@ -69,7 +128,7 @@ def main() -> None:
     parts.append("## Document map\n\n")
     parts.append("| Part | Contents |\n")
     parts.append("| --- | --- |\n")
-    parts.append("| **§1–§6** | Full `arxiv.md` narrative |\n")
+    parts.append("| **§1–§10** | Full `arxiv.md` narrative |\n")
     parts.append("| **Appendix A** | Complete Lean 4 source, one subsection per file |\n\n")
     parts.append("### Appendix A — file index\n\n")
 
