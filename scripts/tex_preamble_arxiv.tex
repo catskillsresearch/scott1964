@@ -19,6 +19,10 @@
 \usepackage{listings}
 \usepackage[colorlinks=true,linkcolor=blue!40!black,citecolor=blue!40!black,urlcolor=blue!40!black]{hyperref}
 
+% Pandoc emits this on compact lists (including the AI model-card bullets in the abstract).
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
 % Let long \texttt{...} identifiers (e.g. lindenbaum_next_subset) break after each
 % underscore so they wrap inside narrow table cells instead of overflowing the column.
 \let\origtextunderscore\_

@@ -331,8 +331,8 @@ def build_title_page(abstract_latex: str) -> str:
         \\begin{{center}}
           \\small
           \\textbf{{ORCID:}} {ORCID} \\\\
-          \\textbf{{Primary Category:}} cs.LO (Logic in Computer Science) \\\\
-          \\textbf{{Secondary Category:}} math.LO (Logic)
+          \\textbf{{Primary Category:}} math.LO (Logic) \\\\
+          \\textbf{{Secondary Category:}} econ.TH (Theoretical Economics)
         \\end{{center}}
 
         \\begin{{abstract}}
