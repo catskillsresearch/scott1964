@@ -29,4 +29,5 @@ dist/
 *.fls
 *.fdb_latexmk
 *.toc
+*.lof
 texput.log
