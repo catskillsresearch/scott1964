@@ -26,8 +26,8 @@ repository:
   role: substantive-development
 
 classification:
-  arxiv: [math.LO, econ.TH]
-  msc2020: ["91C05", "15A39", "91B16"]
+  arxiv: [math.LO, econ.TH, cs.LO]
+  msc2020: ["91C05", "15A39", "91B16", "68V20"]
 
 status:
   scope: >-

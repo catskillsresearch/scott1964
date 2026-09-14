@@ -9,45 +9,28 @@ Inequalities*, Journal of Mathematical Psychology 1 (1964), 233–247.
 
 ## Abstract
 
-This note records a Lean 4 / mathlib formalization of Dana Scott's 1964 paper
-*Measurement Structures and Linear Inequalities*. Scott begins with a
-finite-dimensional separation criterion for systems of homogeneous linear
-inequalities and then reuses it for three representation problems:
+This note records a Lean 4 / Mathlib formalization of Dana Scott's 1964 paper
+*Measurement Structures and Linear Inequalities*. Scott gives a finite
+separation criterion for homogeneous linear inequalities and applies it to
 intransitive indifference, ordered utility differences, and qualitative
-probability. The Lean development proves all eight numbered theorems in the
-paper: Theorems 1.1–1.4, 2.1, 3.1, 3.2, and 4.1.
-
-The sorry-free library consists of approximately 4,200 lines in 21 modules
-under `Scott1964/MeasurementStructures/`. It also formalizes Scott's
-ordered-group and signed-charge remarks, the literal characteristic-vector
-form of probability cancellation, a finite Kraft–Pratt–Seidenberg
-counterexample, and a separately labelled modern reconstruction of an
-infinite probability theorem. The latter uses an explicit
-`GeneralizedKelleyCondition`; it is not attributed to Scott's unstated,
-unpublished extension mentioned in the paper's closing paragraph.
-
-The repository has no project-defined axioms and no Lake dependency beyond
-mathlib. Completed proofs use the standard classical mathlib footprint
-`[propext, Quot.sound, Classical.choice]`. Deliberate proof holes occur only
-in the Mathlib-only `Challenge.lean`; `Solution.lean` re-exports the
-kernel-checked development. The project is packaged for
-[Palomar](https://palomar-registry.org/about) with a Challenge / Solution
-pair and `formalization.yaml` metadata.
-
-Dana Scott was not contacted and did not participate in, review, or endorse
-this formalization. Lean code was written by AI agents under the direction
-and review of the author, who takes sole responsibility for the mathematical
-content.
-
-Proofs in this note are summarized at the level of their main constructions.
-Short representative Lean fragments are copied from the library; a generated
-review copy with its configured source appendix is available through
-(`scripts/generate_arxiv_with_code.sh` → `arxiv_with_code.md`).
+probability. The development kernel-checks all eight numbered theorems
+(1.1--1.4, 2.1, 3.1, 3.2, 4.1) in about 4,200 lines across 21 modules. It
+also includes ordered-group remarks, signed-charge characterizations, literal
+vector cancellation, a Kraft--Pratt--Seidenberg counterexample to de Finetti's
+axioms, and a separately labelled modern infinite reconstruction under an
+explicit generalized Kelley condition (not attributed to Scott's unpublished
+announcement). There are no project axioms beyond Mathlib's classical footprint
+`[propext, Quot.sound, Classical.choice]`; deliberate `sorry`s appear only in
+`Challenge.lean` for Palomar, while `Solution.lean` re-exports completed
+proofs. Dana Scott was not involved in or endorsing this work. Lean code was
+written by AI agents under the author's direction and review. Proof summaries
+include short Lean fragments; the full library is indexed with hyperlinks to
+https://github.com/catskillsresearch/scott1964.
 
 <!-- AI_MODEL_TOOL_BULLETS -->
 <!-- /AI_MODEL_TOOL_BULLETS -->
 
-## 1. Introduction
+## Introduction
 
 Measurement theory asks when qualitative comparisons can be represented by
 real numbers. A relation on alternatives might be represented by utility
@@ -73,7 +56,21 @@ vectors from collapsing into the neutral span. Together these conditions
 separate the strict cone from the neutral subspace and produce
 $\varphi$. Rational coordinates permit positive real coefficients to be
 replaced by integer multiplicities, yielding Scott's unweighted sequence
-conditions.
+conditions. The Palomar statement of record names the core predicates as
+follows:
+
+```lean
+def Realizable (X N : Set L) : Prop :=
+  ∃ φ : Module.Dual ℝ L, ∀ x ∈ X, x ∈ N ↔ 0 ≤ φ x
+
+def SignComplete (X N : Set L) : Prop :=
+  ∀ ⦃x⦄, x ∈ X → x ∈ N ∨ -x ∈ N
+
+def WeightedSequenceCancellation (X N : Set L) : Prop :=
+  ∀ (n : ℕ) (x : Fin (n + 1) → L) (c : Fin (n + 1) → ℝ),
+    (∀ i, x i ∈ X) → (∀ i, x i ∈ N) → (∀ i, 0 < c i) →
+    ∑ i, c i • x i = 0 → ∀ i, -x i ∈ N
+```
 
 The three applications use different incidence vectors but the same engine.
 
@@ -92,11 +89,11 @@ proof route differs from Scott's exposition: most importantly, Theorem 2.1
 currently uses a direct finite Scott–Suppes staircase construction, while
 Scott's local cycle reductions are formalized separately.
 
-## 2. Scope and layout
+## Scope and layout
 
 The library has 21 Lean modules and approximately 4,200 lines. The root
-module `Scott1964/MeasurementStructures/Basic.lean` re-exports the complete
-development imported by `Solution.lean`.
+re-export module is
+`Scott1964/MeasurementStructures/Basic.lean`, which `Solution.lean` imports.
 
 | Module cluster | Role |
 | --- | --- |
@@ -124,7 +121,7 @@ results are clearly separated from that inventory:
 The project is standalone. It imports none of the sibling formalizations of
 Scott's later domain-theory papers.
 
-## 3. How the proofs use mathlib
+## How the proofs use mathlib
 
 Mathlib supplies the finite-dimensional analytic and algebraic substrate.
 The predicates and reductions specific to Scott's paper are defined in this
@@ -151,8 +148,9 @@ difference problems. `Finset` sums, subtype cardinalities, and
 permutations.
 
 **Linear algebra over function spaces.** Scott's vectors are represented as
-functions into `ℝ`. Pair incidence vectors live in `Sum A A' → ℝ`; event
-vectors live in `{a : B // IsAtom a} → ℝ`. Mathlib linear maps provide the
+functions into $\mathbb{R}$. Pair incidence vectors live in
+$\mathrm{Sum}\,A\,A' \to \mathbb{R}$; event vectors live in
+$\{a : B \mid \mathrm{IsAtom}\,a\} \to \mathbb{R}$. Mathlib linear maps provide the
 representing functionals, while `Pi.single` and finite sums implement the
 coordinate encodings.
 
@@ -178,7 +176,7 @@ the sign and cancellation conditions, relation-difference encoding,
 Scott–Suppes weak order, pair permutation principle, atom-vector transport,
 or generalized Kelley condition. Those constructions are developed here.
 
-## 4. Proof dependency structure
+## Proof dependency structure
 
 The main published development follows one linear-inequality core and three
 applications.
@@ -235,7 +233,7 @@ flowchart TD
   KC --> INF
 ```
 
-## 5. Theorem inventory
+## Theorem inventory
 
 | Paper result | Lean theorem | Content |
 | --- | --- | --- |
@@ -253,20 +251,20 @@ Further source-facing or diagnostic results:
 | Topic | Lean theorem | Status |
 | --- | --- | --- |
 | Literal form of `(4_B)` | `theorem_4_1_vector` | Equivalent vector-sum version of Theorem 4.1 |
-| Scott's p. 15 signed charge | `scott_p15_signed_charge`, `_vector` | Proved without normalization or nonnegativity |
+| Scott's p. 15 signed charge | `scott_p15_signed_charge` (+ vector form) | Proved without normalization or nonnegativity |
 | Ordered-group remark | `finite_local_real_embedding` | Proved for each finite subset |
-| Global obstruction | `no_global_real_additive_lex_realization` | Lexicographic `ℤ × ℤ` has no global additive real representation |
+| Global obstruction | `no_global_real_additive_lex_realization` | Lexicographic $\mathbb{Z}\times\mathbb{Z}$ has no global additive real representation |
 | KPS counterexample | `deFinetti_axioms_insufficient` | Exact five-atom order satisfies bundled de Finetti axioms but has no probability realization |
-| Infinite analogue | `Probability.Infinite.reconstructed_infinite_theorem_4_1` | Modern result under `GeneralizedKelleyCondition`; not attributed to Scott |
+| Infinite analogue | `reconstructed_infinite_theorem_4_1` | Modern result under generalized Kelley condition; not attributed to Scott |
 
 The Palomar comparison locks all eight published theorems and the separately
 labelled infinite reconstruction, together with the 28 definitions appearing
 in their types. The Challenge imports only Mathlib; the Solution imports the
 corresponding completed declarations.
 
-## 6. Proof notes
+## Proof notes
 
-### 6.1 Theorem 1.1 — finite separation
+### Theorem 1.1 — finite separation
 
 Let $X$ be finite and symmetric, and let $N\subseteq X$ denote the
 vectors declared nonnegative. The strict vectors are those $x\in N$ for
@@ -296,23 +294,27 @@ theorem scott_theorem_1_1 {X N : Set L}
 The necessary direction is elementary: apply a realizing functional to a
 positive dependence and compare signs.
 
-### 6.2 Theorem 1.2 — rationalization
+### Theorem 1.2 — rationalization
 
 Theorem 1.2 replaces arbitrary positive real coefficients with repeated
-unit coefficients when vectors have rational coordinates. The nontrivial
-direction of `UnweightedSequenceCancellation.rationalWeighted` is factored
-through `Rationalization.lean`:
+unit coefficients when vectors have rational coordinates. The nontrivial direction of the rational weighted-to-unweighted reduction
+(`UnweightedSequenceCancellation.rationalWeighted`) is factored through
+`Rationalization.lean`:
 
-1. a positive real dependence among finitely many rational vectors is
-   replaced by a positive rational dependence;
-2. denominators are cleared to positive natural multiplicities;
-3. each vector is repeated according to its multiplicity;
-4. unweighted cancellation applies to the resulting finite sequence.
+The pipeline is: replace a positive real dependence by a positive rational
+dependence; clear denominators to positive natural multiplicities; repeat
+each vector according to its multiplicity; apply unweighted cancellation to
+the resulting finite sequence. This is the precise point where `[Fintype S]`
+and `IsRationalSet X` enter. Theorem 1.1 then supplies the realizing
+functional:
 
-This is the precise point where `[Fintype S]` and `IsRationalSet X` enter.
-Theorem 1.1 then supplies the realizing functional.
+```lean
+theorem scott_theorem_1_2 {S : Type*} [Fintype S] {X N : Set (S → ℝ)}
+    (hX : X.Finite) (hrat : IsRationalSet X) (hsym : Symmetric X) :
+    Realizable X N ↔ SignComplete X N ∧ UnweightedSequenceCancellation X N
+```
 
-### 6.3 Theorems 1.3 and 1.4 — relations and additive closure
+### Theorems 1.3 and 1.4 — relations and additive closure
 
 For a relation $R$ on a finite set $Y$, Theorem 1.3 moves from points to
 differences $x-y$. Completeness gives sign completeness of the difference
@@ -326,7 +328,15 @@ $$
 The proof constructs the symmetric rational difference set and applies
 Theorem 1.2. A short two-element cancellation argument ensures that the
 functional's weak inequality implies the original relation rather than only
-some relation with the same positive cone.
+some relation with the same positive cone:
+
+```lean
+theorem scott_theorem_1_3 {S : Type*} [Fintype S]
+    {Y : Set (S → ℝ)} {R : (S → ℝ) → (S → ℝ) → Prop}
+    (hY : Y.Finite) (hYrat : IsRationalSet Y) :
+    RelationRealizable Y R ↔
+      RelationComplete Y R ∧ RelationSequenceCancellation Y R
+```
 
 Theorem 1.4 characterizes the same realizability by extension to the additive
 closure $Y^+$. A realizing functional immediately defines the extension.
@@ -343,7 +353,7 @@ theorem scott_theorem_1_4 {S : Type*} [Fintype S]
         StrictlyMonotonic (additiveClosure Y) Rplus
 ```
 
-### 6.4 Theorem 2.1 — intransitive indifference
+### Theorem 2.1 — intransitive indifference
 
 Scott's relation permits indifference to be intransitive while preserving a
 real representation with a fixed discrimination threshold:
@@ -376,7 +386,7 @@ and the three local cycle-shortening moves used in Scott's printed route.
 There is not yet a second completed proof assembling those reductions through
 the section-1 linear-inequality theorem.
 
-### 6.5 Theorems 3.1 and 3.2 — pairs and differences
+### Theorems 3.1 and 3.2 — pairs and differences
 
 For Theorem 3.1, a pair $(x,x')$ is represented by an incidence vector
 having one unit coordinate in each side of `Sum A A'`. Equality of sums of
@@ -407,7 +417,7 @@ Condition `(2_D)` remains an infinite scheme: Lean quantifies over every
 `n : ℕ` and both permutations of `Fin (n + 1)`. No finite truncation is
 claimed.
 
-### 6.6 Theorem 4.1 — finite subjective probability
+### Theorem 4.1 — finite subjective probability
 
 For a finite Boolean algebra $B$, `atomVector x` is the real-valued
 characteristic function of the atoms below $x$. It is injective, and finite
@@ -453,7 +463,7 @@ Cancellation also derives reflexivity, transitivity, and both directions of
 de Finetti's disjoint-union invariance. These lemmas connect Scott's stronger
 cancellation criterion with the older qualitative-probability axioms.
 
-### 6.7 Ordered groups and the lexicographic boundary
+### Ordered groups and the lexicographic boundary
 
 Scott observes after Theorem 1.4 that finite pieces of an ordered abelian
 group can be represented in the reals while preserving the addition equations
@@ -470,7 +480,7 @@ would force one positive generator to dominate arbitrarily many multiples of
 the other. `no_global_real_additive_lex_realization` formalizes the
 contradiction.
 
-### 6.8 The Kraft–Pratt–Seidenberg counterexample
+### The Kraft–Pratt–Seidenberg counterexample
 
 `Probability/KPSCounterexample.lean` encodes the exact 32-event order on a
 five-atom powerset from Kraft, Pratt, and Seidenberg. Finite decidability is
@@ -491,7 +501,7 @@ theorem deFinetti_axioms_insufficient :
 `¬ R ⊥ ⊤`. Scott's `ProbNontrivial` is stronger:
 `R ⊤ ⊥ ∧ ¬ R ⊥ ⊤`.
 
-### 6.9 Modern reconstruction of an infinite analogue
+### Modern reconstruction of an infinite analogue
 
 Scott's final paragraph announces an extension to infinite Boolean algebras
 but gives neither a theorem statement nor hypotheses. The repository
@@ -521,7 +531,7 @@ theorem reconstructed_infinite_theorem_4_1 (R : B → B → Prop) :
 This theorem is a supplementary reconstruction, not a ninth theorem of
 Scott's published paper.
 
-## 7. Source fidelity
+## Source fidelity
 
 The working source is `sources/ScottMeasurement1964.pdf`. A searchable
 triple-pass vision transcription is generated at
@@ -529,16 +539,16 @@ triple-pass vision transcription is generated at
 `scripts/ocr_pdf_pipeline.sh`. The PDF and transcription are source material,
 not part of the Apache-2.0 grant.
 
-### 7.1 Formal conventions
+### Formal conventions
 
 Scott writes finite sequences with an exceptional zeroth term. Lean uses
 `Fin (n + 1)` and the named index `finHead n`; this avoids empty-index edge
 cases and stabilizes the statements used by the Palomar Comparator.
 
 Relations are oriented as "at least as preferred/probable." Thus
-`RelationRealizable Y R` states
-`R x y ↔ φ y ≤ φ x`, and `RealizableProbability R` states
-`R x y ↔ μ x ≥ μ y`. Scott's strict comparison is represented by
+`RelationRealizable Y R` states $R\,x\,y \leftrightarrow \varphi\,y \le \varphi\,x$,
+and `RealizableProbability R` states
+$R\,x\,y \leftrightarrow \mu(x) \ge \mu(y)$. Scott's strict comparison is represented by
 `StrictlyPreferred R x y := ¬ R y x`.
 
 The finite probability theorem uses abstract finite Boolean algebras rather
@@ -548,7 +558,7 @@ atoms, which is equivalent to choosing the atoms of a finite field of events.
 The development is classical. The disclosed axiom footprint is
 `propext`, `Quot.sound`, and `Classical.choice`; no project axiom is declared.
 
-### 7.2 Recorded divergences and limitations
+### Recorded divergences and limitations
 
 - Theorem 2.1 is completed by the direct finite Scott–Suppes staircase
   construction. Scott's local cycle reductions are formalized in
@@ -566,13 +576,12 @@ The development is classical. The disclosed axiom footprint is
 - No external mathematical review has been performed. Every proof is checked
   by the Lean kernel, but the project remains self-assessed.
 
-## 8. Palomar statement of record
+## Palomar statement of record
 
-`Challenge.lean` contains Mathlib-only declarations with deliberate theorem
-holes. `Solution.lean` imports the completed library. `comparator.json`
-compares the nine theorem names (eight published theorems plus the separately
-labelled infinite reconstruction) and 28 definitions in their statement
-closure.
+`Challenge.lean` holds Mathlib-only declarations with deliberate theorem
+holes; `Solution.lean` imports the completed library. `comparator.json`
+compares nine theorems (eight published plus the labelled infinite
+reconstruction) and 28 definitions in their statement closure.
 
 | File | Role |
 | --- | --- |
@@ -586,9 +595,23 @@ closure.
 The compared inventory is narrower than the entire library only in the sense
 that supplementary lemmas are reached through the published capstones rather
 than all being named independently. `Solution.lean` and every file below
-`Scott1964/` must remain sorry-free.
+`Scott1964/` must remain sorry-free. Representative Palomar theorem
+declarations in `Challenge.lean`:
 
-## 9. Build and preflight
+```lean
+theorem scott_theorem_1_1 {X N : Set L} (hX : X.Finite) (hsym : Symmetric X) :
+    Realizable X N ↔ SignComplete X N ∧ WeightedSequenceCancellation X N := by
+  sorry
+
+theorem theorem_4_1 {B : Type u} [BooleanAlgebra B] [Fintype B]
+    (R : B → B → Prop) :
+    RealizableProbability R ↔
+      ProbNontrivial R ∧ ProbNonneg R ∧
+      ProbTotal R ∧ ProbCancellation R := by
+  sorry
+```
+
+## Build and preflight
 
 The repository pins Lean and mathlib **v4.33.0**.
 
@@ -607,12 +630,11 @@ pinned Comparator, scans completed sources for proof holes, checks permitted
 axioms, and checks patch formatting. Full preflight adds policy synchronization
 and the editorial audit.
 
-`arxiv_with_code.md` is a generated review artifact: this narrative followed
-by the source appendix configured in `scripts/generate_arxiv_with_code.py`.
-It is gitignored and should be regenerated whenever `arxiv.md` or a listed
-source file changes.
+`arxiv_with_code.md` is generated (narrative plus Appendix A module index with
+GitHub links). Regenerate when `arxiv.md` or listed sources change; build the
+PDF and arXiv zip with `bash scripts/build_arxiv_pdf.sh`.
 
-## 10. License and source PDF
+## License and source PDF
 
 Original Lean code and author-written documentation are Apache-2.0.
 `sources/ScottMeasurement1964.pdf` and its transcription are not
