@@ -97,6 +97,10 @@ FENCE_RE = re.compile(r"^```([^\n]*)\n(.*?)^```\s*$", re.MULTILINE | re.DOTALL)
 MANUAL_SECTION_NUM = re.compile(r"^(#{1,6})[ \t]+\d+(?:\.\d+)*\.?[ \t]+", re.MULTILINE)
 NARRATIVE_MARKER = "# Narrative (from arxiv.md)"
 LEAN_MODULE_RE = re.compile(r"^###\s+(Scott1964(?:\.lean|/[^\s{]+))\s*$", re.MULTILINE)
+FIGURE_CAPTION_RE = re.compile(
+    r"<!--\s*figure-caption:\s*(.*?)\s*-->\s*\n```mermaid",
+    re.IGNORECASE | re.DOTALL,
+)
 
 
 def github_math_to_tex(text: str) -> str:
@@ -176,6 +180,26 @@ def lean_block_latex(code: str, listing_name: str) -> str:
     return "".join(parts)
 
 
+def parse_figure_captions(text: str) -> list[str]:
+    return [m.group(1).strip() for m in FIGURE_CAPTION_RE.finditer(text)]
+
+
+def escape_latex_caption(text: str) -> str:
+    out: list[str] = []
+    for ch in text:
+        if ch in "&%$#_{}":
+            out.append(f"\\{ch}" if ch != "}" else "\\}")
+        elif ch == "~":
+            out.append(r"\textasciitilde{}")
+        elif ch == "^":
+            out.append(r"\textasciicircum{}")
+        elif ch == "\\":
+            out.append(r"\textbackslash{}")
+        else:
+            out.append(ch)
+    return "".join(out)
+
+
 def extract_lean_titles(text: str) -> dict[str, str]:
     titles: dict[str, str] = {}
     lean_starts = [m.start() for m in re.finditer(r"^```lean\s*$", text, re.MULTILINE)]
@@ -191,14 +215,15 @@ def extract_lean_titles(text: str) -> dict[str, str]:
     return titles
 
 
-def replace_fences(text: str) -> tuple[str, dict[str, str]]:
+def replace_fences(text: str, figure_captions: list[str]) -> tuple[str, dict[str, str]]:
     lean_titles = extract_lean_titles(text)
     placeholders: dict[str, str] = {}
     lean_idx = 0
     other_idx = 0
+    figure_idx = 0
 
     def repl(match: re.Match[str]) -> str:
-        nonlocal lean_idx, other_idx
+        nonlocal lean_idx, other_idx, figure_idx
         lang = match.group(1).strip().lower()
         body = match.group(2)
         if lang == "lean":
@@ -217,13 +242,22 @@ def replace_fences(text: str) -> tuple[str, dict[str, str]]:
             return f"\n\n{key}\n\n"
         if lang == "mermaid":
             key = f"FIGINCLUDE{other_idx:03d}"
-            rel_path = render_mermaid(body, other_idx)
+            rel_path = render_mermaid(body, figure_idx)
+            if figure_idx < len(figure_captions):
+                caption = figure_captions[figure_idx]
+            else:
+                caption = f"Dependency diagram {figure_idx + 1}."
+            label = f"fig:scott1964-{figure_idx + 1:02d}"
+            figure_idx += 1
             other_idx += 1
+            cap = escape_latex_caption(caption)
             placeholders[key] = (
-                "\\begin{center}\n"
+                "\\begin{figure}[htbp]\n\\centering\n"
                 f"\\includegraphics[max width=\\linewidth,"
                 f"max totalheight=0.85\\textheight,keepaspectratio]{{{rel_path}}}\n"
-                "\\end{center}\n"
+                f"\\caption{{{cap}}}\n"
+                f"\\label{{{label}}}\n"
+                "\\end{figure}\n"
             )
             return f"\n\n{key}\n\n"
         key = f"CODEINCLUDE{other_idx:03d}"
@@ -317,6 +351,18 @@ def cleanup_pandoc_latex(latex: str) -> str:
     return latex
 
 
+def insert_list_of_figures(latex: str) -> str:
+    """Insert \\listoffigures immediately before the References section."""
+    anchor = r"\hypertarget{references}{%"
+    if anchor not in latex:
+        anchor = r"\section{References}"
+    if anchor not in latex:
+        print("warning: missing References anchor; skipping \\listoffigures", file=sys.stderr)
+        return latex
+    block = "\\clearpage\n\\listoffigures\n\\clearpage\n\n"
+    return latex.replace(anchor, block + anchor, 1)
+
+
 def insert_appendix_command(latex: str) -> str:
     marker = r"\section{Lean module index}"
     if marker not in latex:
@@ -354,7 +400,8 @@ def build_title_page(abstract_latex: str) -> str:
           \\small
           \\textbf{{ORCID:}} {ORCID} \\\\
           \\textbf{{Primary Category:}} math.LO (Logic) \\\\
-          \\textbf{{Secondary Categories:}} econ.TH (Theoretical Economics); cs.LO (Logic in CS)
+          \\textbf{{Secondary (submit):}} cs.LO (Logic in CS) \\\\
+          \\textbf{{Optional cross-list:}} econ.TH (Economics archive; post-submit if endorsed)
         \\end{{center}}
 
         \\begin{{abstract}}
@@ -382,16 +429,18 @@ def main() -> int:
     raw = SRC.read_text(encoding="utf-8")
     body = drop_github_nav(raw)
     body = inject_model_cards(body)
+    figure_captions = parse_figure_captions(body)
     body = strip_html_comments(body)
     body = normalize_appendix_headings(body)
     abstract_md, body = extract_abstract(body)
     body = strip_manual_section_numbers(body)
     body = github_math_to_tex(body)
-    body, placeholders = replace_fences(body)
+    body, placeholders = replace_fences(body, figure_captions)
 
     latex_body = pandoc_to_latex(body, shift=True)
     latex_body = inject_placeholders(latex_body, placeholders)
     latex_body = cleanup_pandoc_latex(latex_body)
+    latex_body = insert_list_of_figures(latex_body)
     latex_body = insert_appendix_command(latex_body)
 
     abstract_latex = pandoc_to_latex(github_math_to_tex(abstract_md), shift=False) if abstract_md else ""

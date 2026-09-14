@@ -20,15 +20,11 @@ vector cancellation, a Kraft--Pratt--Seidenberg counterexample to de Finetti's
 axioms, and a separately labelled modern infinite reconstruction under an
 explicit generalized Kelley condition (not attributed to Scott's unpublished
 announcement). There are no project axioms beyond Mathlib's classical footprint
-`[propext, Quot.sound, Classical.choice]`; deliberate `sorry`s appear only in
-`Challenge.lean` for Palomar, while `Solution.lean` re-exports completed
-proofs. Dana Scott was not involved in or endorsing this work. Lean code was
+`[propext, Quot.sound, Classical.choice]`; the `Scott1964/` library is
+sorry-free under `lake build`. Lean code was
 written by AI agents under the author's direction and review. Proof summaries
 include short Lean fragments; the full library is indexed with hyperlinks to
 https://github.com/catskillsresearch/scott1964.
-
-<!-- AI_MODEL_TOOL_BULLETS -->
-<!-- /AI_MODEL_TOOL_BULLETS -->
 
 ## Introduction
 
@@ -56,8 +52,7 @@ vectors from collapsing into the neutral span. Together these conditions
 separate the strict cone from the neutral subspace and produce
 $\varphi$. Rational coordinates permit positive real coefficients to be
 replaced by integer multiplicities, yielding Scott's unweighted sequence
-conditions. The Palomar statement of record names the core predicates as
-follows:
+conditions. The core predicates are as follows:
 
 ```lean
 def Realizable (X N : Set L) : Prop :=
@@ -106,7 +101,7 @@ re-export module is
 | `Probability/Basic`, `Atoms`, `Finite` | Finitely additive probabilities, atom vectors, signed charges, and Theorem 4.1 |
 | `Probability/KPSCounterexample` | Exact five-atom KPS qualitative order and nonrepresentability |
 | `Probability/Infinite/*` | Universal event space, Hahn–Banach/Kelley machinery, and the modern infinite reconstruction |
-| `Challenge` / `Solution` | Palomar statement of record and sorry-free realization |
+| `Challenge` / `Solution` | Optional stub module and sorry-free re-export of the library |
 
 The published scope is exactly the eight numbered theorems. Supplementary
 results are clearly separated from that inventory:
@@ -181,6 +176,7 @@ or generalized Kelley condition. Those constructions are developed here.
 The main published development follows one linear-inequality core and three
 applications.
 
+<!-- figure-caption: Main published dependency structure: finite separation core and the three applications. -->
 ```mermaid
 flowchart LR
   Sep["Finite separation<br/><i>Separation</i>"]
@@ -206,6 +202,7 @@ available for a future proof routed through the section-1 machinery.
 The finite probability and modern infinite developments have distinct
 foundations:
 
+<!-- figure-caption: Finite subjective probability pipeline and the supplementary infinite reconstruction. -->
 ```mermaid
 flowchart TD
   ST["Theorem 1.3<br/>relation representation"]
@@ -256,11 +253,6 @@ Further source-facing or diagnostic results:
 | Global obstruction | `no_global_real_additive_lex_realization` | Lexicographic $\mathbb{Z}\times\mathbb{Z}$ has no global additive real representation |
 | KPS counterexample | `deFinetti_axioms_insufficient` | Exact five-atom order satisfies bundled de Finetti axioms but has no probability realization |
 | Infinite analogue | `reconstructed_infinite_theorem_4_1` | Modern result under generalized Kelley condition; not attributed to Scott |
-
-The Palomar comparison locks all eight published theorems and the separately
-labelled infinite reconstruction, together with the 28 definitions appearing
-in their types. The Challenge imports only Mathlib; the Solution imports the
-corresponding completed declarations.
 
 ## Proof notes
 
@@ -543,7 +535,7 @@ not part of the Apache-2.0 grant.
 
 Scott writes finite sequences with an exceptional zeroth term. Lean uses
 `Fin (n + 1)` and the named index `finHead n`; this avoids empty-index edge
-cases and stabilizes the statements used by the Palomar Comparator.
+cases and keeps cancellation statements uniform across modules.
 
 Relations are oriented as "at least as preferred/probable." Thus
 `RelationRealizable Y R` states $R\,x\,y \leftrightarrow \varphi\,y \le \varphi\,x$,
@@ -576,41 +568,6 @@ The development is classical. The disclosed axiom footprint is
 - No external mathematical review has been performed. Every proof is checked
   by the Lean kernel, but the project remains self-assessed.
 
-## Palomar statement of record
-
-`Challenge.lean` holds Mathlib-only declarations with deliberate theorem
-holes; `Solution.lean` imports the completed library. `comparator.json`
-compares nine theorems (eight published plus the labelled infinite
-reconstruction) and 28 definitions in their statement closure.
-
-| File | Role |
-| --- | --- |
-| `Challenge.lean` | Mathlib-only statement of record with deliberate `sorry` |
-| `Solution.lean` | Re-exports matching kernel-checked declarations |
-| `comparator.json` | Compared theorem/definition names and permitted axioms |
-| `formalization.yaml` | Scope, source alignment, fidelity, and review metadata |
-| `PROVENANCE.md` | Standalone status and relation to sibling Scott projects |
-| `docs/PALOMAR_EDITORIAL_AUDIT.md` | Mechanical and editorial preflight discipline |
-
-The compared inventory is narrower than the entire library only in the sense
-that supplementary lemmas are reached through the published capstones rather
-than all being named independently. `Solution.lean` and every file below
-`Scott1964/` must remain sorry-free. Representative Palomar theorem
-declarations in `Challenge.lean`:
-
-```lean
-theorem scott_theorem_1_1 {X N : Set L} (hX : X.Finite) (hsym : Symmetric X) :
-    Realizable X N ↔ SignComplete X N ∧ WeightedSequenceCancellation X N := by
-  sorry
-
-theorem theorem_4_1 {B : Type u} [BooleanAlgebra B] [Fintype B]
-    (R : B → B → Prop) :
-    RealizableProbability R ↔
-      ProbNontrivial R ∧ ProbNonneg R ∧
-      ProbTotal R ∧ ProbCancellation R := by
-  sorry
-```
-
 ## Build and preflight
 
 The repository pins Lean and mathlib **v4.33.0**.
@@ -618,17 +575,10 @@ The repository pins Lean and mathlib **v4.33.0**.
 ```bash
 lake exe cache get
 lake build
-bash scripts/palomar_preflight.sh --mechanical-only   # CI / routine
-bash scripts/palomar_preflight.sh                     # before Palomar submission
 bash scripts/generate_arxiv_with_code.sh              # → arxiv_with_code.md
 ```
 
-`lake build` checks the `Scott1964`, `Challenge`, and `Solution` targets.
-Mechanical preflight validates packaging, builds the project, compares
-Challenge/Solution declaration types and closure values, runs Palomar's
-pinned Comparator, scans completed sources for proof holes, checks permitted
-axioms, and checks patch formatting. Full preflight adds policy synchronization
-and the editorial audit.
+`lake build` checks the `Scott1964` library (and optional `Solution` re-export).
 
 `arxiv_with_code.md` is generated (narrative plus Appendix A module index with
 GitHub links). Regenerate when `arxiv.md` or listed sources change; build the
@@ -639,6 +589,26 @@ PDF and arXiv zip with `bash scripts/build_arxiv_pdf.sh`.
 Original Lean code and author-written documentation are Apache-2.0.
 `sources/ScottMeasurement1964.pdf` and its transcription are not
 Apache-2.0; see `NOTICE` and `sources/README.md` for the copyright carve-out.
+
+## Acknowledgments
+
+The author thanks **Prof. Dana Scott** (Carnegie Mellon University) for
+suggesting *Measurement Structures and Linear Inequalities* as a formalization
+target. Scott did not participate in this work and does not endorse it.
+
+### AI-assisted development
+
+Lean in this repository was written by AI agents under the author's direction
+and review. The human author retains sole responsibility for the mathematical
+content, the formalization route, and every formal claim. **No large language
+model is listed as a co-author.**
+
+We gratefully acknowledge assistance from the following tools:
+
+<!-- AI_MODEL_TOOL_BULLETS -->
+<!-- /AI_MODEL_TOOL_BULLETS -->
+
+## References
 
 <!-- AI_MODEL_REFERENCES -->
 <!-- /AI_MODEL_REFERENCES -->

@@ -10,11 +10,29 @@ See the `## Abstract` section in `arxiv.md` (same text appears in the PDF
 
 ## Categories
 
+### What the submit form actually shows
+
+arXiv’s **primary category** picker is organized by **archive** (Mathematics, Computer Science, …). **Economics (`econ.*`) is its own archive**, not a submenu under Math or CS. On a first submission as `math.LO` or `cs.LO`, the dropdown often **does not list any `econ.*` codes**—that is normal, not an error.
+
+Use at submit time:
+
+| Field | Use |
+| --- | --- |
+| **Primary** | `math.LO` (Logic) — recommended for this formalization |
+| **Secondary / cross-list at submit** | `cs.LO` if the UI offers a second category in Math/CS |
+
+**`econ.TH` (Theoretical Economics)** exists on arXiv ([taxonomy](https://arxiv.org/category_taxonomy), [econ.TH listings](https://arxiv.org/list/econ.TH/recent)) but is usually added **after** announcement via the [cross-list tool on your user page](https://info.arxiv.org/help/cross.html), and only if your account is **endorsed for the Economics archive** (same endorsement rules as any new archive). If you are not endorsed for `econ`, Economics will not appear anywhere in the picker.
+
+Do **not** make `econ.TH` the primary category unless you intend a full Economics-archive submission and have (or can obtain) econ endorsement.
+
+For measurement / utility / qualitative probability audience without `econ.TH`, rely on **MSC** (below) and the abstract keywords—not on an econ cross-list.
+
 | System | Recommendation |
 | --- | --- |
-| **arXiv primary** | `math.LO` (Logic) |
-| **arXiv secondary** | `econ.TH` (Theoretical Economics); `cs.LO` (Logic in Computer Science) |
-| **Optional arXiv** | `math.ST` (Statistics Theory) if emphasizing qualitative probability |
+| **arXiv primary (submit)** | `math.LO` |
+| **arXiv secondary (submit, if offered)** | `cs.LO` |
+| **Optional cross-list (post-submit)** | `econ.TH` if endorsed and appropriate |
+| **Optional cross-list (post-submit)** | `math.ST` if emphasizing qualitative probability |
 
 **MSC 2020** (semicolon-separated for arXiv): `91C05; 15A39; 91B16; 68V20`
 
