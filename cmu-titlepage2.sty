@@ -1,0 +1,104 @@
+% CMU School of Computer Science technical-report title page.
+% Report-mode subset of cmu-titlepage2.sty by Hakan Younes (Fall 2004),
+% adapted from cmu-titlepage.sty by R. Harper and D. Long (1989).
+% Canonical source:
+% http://reports-archive.adm.cs.cmu.edu/anon/isri2005/cmu-titlepage2.sty
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{cmu-titlepage2}[2004/09/01 CMU SCS technical-report title page]
+
+\def\title#1{\gdef\@title{#1}}
+\def\author#1{\gdef\@author{#1}}
+\def\date#1{\gdef\@date{#1}}
+\gdef\@date{\today}
+
+\def\keywords#1{\gdef\@keywords{#1}}
+\gdef\@keywords{}
+\def\trnumber#1{\gdef\@trnumber{#1}}
+\gdef\@trnumber{CMU-CS-??-???}
+\def\citationinfo#1{%
+  \gdef\@citationinfo{\vskip 2em\begin{quote}\small #1\end{quote}\par}}
+\gdef\@citationinfo{}
+\def\copyrightnotice#1{%
+  \gdef\@copyrightnotice{\vfill\begin{center}\small #1\end{center}\par}}
+\gdef\@copyrightnotice{}
+\def\abstract#1{\gdef\@abstract{#1}}
+\gdef\@abstract{}
+
+\long\def\unmarkedfootnote#1{%
+  {\xdef\@thefnmark{}\@footnotetext{\small #1}}}
+\def\support#1{%
+  \begingroup
+  \def\protect{\noexpand\protect\noexpand}%
+  \xdef\@support{\@support\protect\unmarkedfootnote{#1}}%
+  \endgroup}
+\gdef\@support{}
+\def\disclaimer#1{%
+  \begingroup
+  \def\protect{\noexpand\protect\noexpand}%
+  \xdef\@disclaimer{\protect\unmarkedfootnote{#1}}%
+  \endgroup}
+
+\def\maketitle{%
+  % Position the title/author box for the standard CMU report-cover cutout.
+  \newlength{\@cutoutvskip}%
+  \setlength{\@cutoutvskip}{2.18750truein}%
+  \addtolength{\@cutoutvskip}{-1truein}%
+  \addtolength{\@cutoutvskip}{-\topmargin}%
+  \addtolength{\@cutoutvskip}{-\headheight}%
+  \addtolength{\@cutoutvskip}{-\headsep}%
+  \newcounter{savetotal}%
+  \setcounter{savetotal}{\value{totalnumber}}%
+  \begin{titlepage}
+    \let\footnoterule\relax
+    \vglue\@cutoutvskip
+    \begin{center}
+      \begin{minipage}[t]{4.75in}
+        \vbox to 2in{%
+          \begin{center}
+            {\Large\bfseries\strut\@title\par}
+            \vfill
+            {\large\bfseries\begin{tabular}[t]{c}\@author\end{tabular}\par}
+            \medskip
+            {\@date\par}
+            {\scshape\@trnumber\par}
+          \end{center}
+          \vfill}
+      \end{minipage}
+    \end{center}
+    \vskip 3em
+    \begin{center}
+      School of Computer Science\\
+      Carnegie Mellon University\\
+      Pittsburgh, PA 15213
+    \end{center}\par
+    \vskip 1.5em
+    \@citationinfo
+    \@thanks
+    \@support
+    \@ifundefined{@disclaimer}{\relax}{\@disclaimer}
+    \setcounter{totalnumber}{0}
+    \begin{figure}[ht]
+      \begin{center}\textbf{Abstract}\end{center}
+      \@abstract
+    \end{figure}\par
+    \@copyrightnotice
+  \end{titlepage}
+  \setcounter{totalnumber}{\value{savetotal}}%
+  \setcounter{page}{2}%
+  {\pagestyle{empty}\vspace*{\fill}\textbf{Keywords:} \@keywords\clearpage}%
+  % Flush the abstract and start the report body on a recto page numbered 1.
+  {\pagestyle{empty}%
+    \ifodd\value{page}\else\mbox{}\newpage\fi
+    \clearpage
+    \setcounter{page}{1}}%
+  \setcounter{footnote}{0}%
+  \setcounter{figure}{0}%
+  \let\support\relax
+  \gdef\@support{}%
+  \gdef\@author{}%
+  \gdef\@title{}%
+  \gdef\@trnumber{}%
+  \gdef\@citationinfo{}%
+  \gdef\@copyrightnotice{}%
+  \let\maketitle\relax}
+

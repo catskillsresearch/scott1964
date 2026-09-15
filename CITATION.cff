@@ -1,15 +1,18 @@
 # Citation File Format — GitHub “Cite this repository.”
-# Authoritative Zenodo metadata (subjects, resource type, relations): .zenodo.json
 
 cff-version: 1.2.0
-title: "A Lean 4 Formalization of Scott's Measurement Structures and Linear Inequalities (1964)"
+title: "Formalization of Scott's Measurement Structures and Linear Inequalities in Lean 4"
 message: "If you use this formalization, please cite it as below."
 type: software
 authors:
   - family-names: Ericson
     given-names: Lars Warren
-    affiliation: Catskills Research Company
+    affiliation: "Independent researcher, d/b/a Catskills Research Company"
+    email: "lars.ericson@catskillsresearch.com"
     orcid: "https://orcid.org/0000-0001-8299-9361"
+  - family-names: Scott
+    given-names: Dana S.
+    affiliation: "Computer Science Department, Carnegie Mellon University, Emeritus"
 abstract: >-
   Machine-checked Lean 4 formalization of Dana Scott's 1964 paper Measurement
   Structures and Linear Inequalities (Journal of Mathematical Psychology 1
@@ -18,8 +21,8 @@ abstract: >-
   formalization of the Kraft–Pratt–Seidenberg obstruction to de Finetti's
   axioms. A separately labelled modern reconstruction treats the infinite
   probability extension that Scott announced but did not state or prove in
-  the paper. Dana Scott was not contacted and did not participate in, review,
-  or endorse this formalization.
+  the paper. The report is prepared for the Carnegie Mellon University School
+  of Computer Science Technical Report series as CMU-CS-26-XXX.
 keywords:
   - Lean 4
   - measurement theory
@@ -34,14 +37,18 @@ repository-code: "https://github.com/catskillsresearch/scott1964"
 license: Apache-2.0
 version: 0.1.0
 date-released: 2026-08-30
-# After Zenodo publish, add preferred-citation.doi here.
 preferred-citation:
-  type: software
-  title: "A Lean 4 Formalization of Scott's Measurement Structures and Linear Inequalities (1964)"
+  type: report
+  title: "Formalization of Scott's Measurement Structures and Linear Inequalities in Lean 4"
   authors:
     - family-names: Ericson
       given-names: Lars Warren
+      affiliation: "Independent researcher, d/b/a Catskills Research Company"
+    - family-names: Scott
+      given-names: Dana S.
+      affiliation: "Computer Science Department, Carnegie Mellon University, Emeritus"
   year: 2026
-  version: 0.1.0
+  institution:
+    name: "School of Computer Science, Carnegie Mellon University"
   url: "https://github.com/catskillsresearch/scott1964"
-  notes: "Deposit dist/scott1964-zenodo.zip on Zenodo for a DOI; source lives on GitHub."
+  notes: "Carnegie Mellon University Computer Science Technical Report CMU-CS-26-XXX."

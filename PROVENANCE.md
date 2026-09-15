@@ -5,9 +5,11 @@ paper *Measurement Structures and Linear Inequalities* (Journal of
 Mathematical Psychology 1 (1964), 233–247). It is not a thin wrapper and not
 a reimplementation of an independent formalization.
 
-Dana Scott did not participate in, review, or endorse this formalization.
-The formalization was produced by Lars Warren Ericson without input from
-Scott. The source paper is cited as literature only.
+Dana S. Scott suggested the paper as a formalization target and is a co-author
+with Lars Warren Ericson of the resulting Carnegie Mellon University School of
+Computer Science technical report. Ericson directed and reviewed the Lean
+development with AI-agent assistance. Scott's coauthorship of the report is
+distinct from an independent external audit of each Lean source file.
 
 Sibling formalizations of related Scott papers:
 
@@ -21,7 +23,9 @@ Sibling formalizations of related Scott papers:
   — Domains for denotational semantics / information systems (1982)
 
 The 1964 measurement paper predates and is mathematically independent of the
-domain-theory siblings above; nothing is imported from them.
+domain-theory siblings above; nothing is imported from them. The report is
+being prepared as **CMU-CS-26-XXX** and will be cross-archived on arXiv under
+cs.LO and math.LO.
 **This repository is submitted to Palomar on its own**, for the 1964 paper
 alone, following the same Challenge / Solution pattern as
 [`catskillsresearch/cardb`](https://github.com/catskillsresearch/cardb) and
@@ -46,7 +50,7 @@ staircase proof; `Preference/Cycle.lean` separately records the local
 cycle-shortening reductions in Scott's 1964 argument.
 
 The bundled `DeFinettiAxioms` counterexample is an integrated formalization of
-the five-atom construction from Kraft, Pratt, and Seidenberg (1958), not an
+the five-atom construction from Kraft, Pratt, and Seidenberg (1959), not an
 additional numbered theorem of Scott's 1964 article. It proves both that the
 exact KPS order satisfies those five axioms and that
 `RealizableProbability` fails.

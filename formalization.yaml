@@ -2,7 +2,7 @@
 version: "v0.4"
 
 project:
-  name: "Scott 1964 Measurement Structures and Linear Inequalities"
+  name: "Formalization of Scott's Measurement Structures and Linear Inequalities in Lean 4"
   description: >-
     A Lean 4 / mathlib formalization of Dana Scott's 1964 paper *Measurement
     Structures and Linear Inequalities* (Journal of Mathematical Psychology 1
@@ -12,12 +12,14 @@ project:
     solvability criterion for finite systems of linear inequalities. The
     development also covers Scott's ordered-group and signed-charge remarks,
     literal vector cancellation, and the KPS obstruction to de Finetti's five
-    axioms. Lean is written by AI agents under the direction and review of the
-    author. Dana Scott did not participate in or endorse this formalization.
-    There is no sorry outside the deliberate holes in Challenge.lean, no
-    project-defined axiom, and Mathlib is the only Lake dependency.
+    axioms. The Lean development was drafted with AI-agent assistance under
+    Lars Warren Ericson's direction and review. Dana S. Scott is a co-author
+    of the formalization report. There is no sorry outside the deliberate
+    holes in Challenge.lean, no project-defined axiom, and Mathlib is the only
+    Lake dependency.
   authors:
     - "Lars Warren Ericson"
+    - "Dana S. Scott"
   license: "Apache-2.0"
   responsible_maintainers:
     - "Lars Warren Ericson"
@@ -26,7 +28,7 @@ repository:
   role: substantive-development
 
 classification:
-  arxiv: [math.LO, econ.TH, cs.LO]
+  arxiv: [cs.LO, math.LO, econ.TH]
   msc2020: ["91C05", "15A39", "91B16", "68V20"]
 
 status:
@@ -74,11 +76,11 @@ sources:
     location: >-
       Journal of Mathematical Psychology, Volume 1, 1964, pages 233-247.
     relationship: formalizes
-    author_endorsement: not-contacted
+    author_endorsement: participated
     note: >-
-      Primary source. Dana Scott was not contacted and did not participate
-      in or endorse this formalization. Working PDF:
-      sources/ScottMeasurement1964.pdf.
+      Primary source. Dana S. Scott suggested the paper as a formalization
+      target and is a co-author of the resulting technical report. Working
+      PDF: sources/ScottMeasurement1964.pdf.
 
 related_formalizations:
   - id: "https://github.com/catskillsresearch/scott1972"
@@ -120,9 +122,9 @@ automation:
     - method: manual
       models: []
       role: >-
-        The author chose the formalization route, reviewed every definition
-        and claim, and takes sole responsibility for the mathematical content.
-        Dana Scott was not consulted.
+        Lars Warren Ericson chose the formalization route and reviewed the
+        Lean development. The human authors take responsibility for the
+        report's mathematical claims.
   notes: >-
     Palomar Challenge / Solution / comparator / formalization.yaml packaging
     follows the scott1972 / scott1976 / cardb template.
@@ -132,9 +134,10 @@ review:
   reviewers:
     - "Lars Warren Ericson"
   notes: >-
-    The author directed and reviewed the development. No external review of
-    the Lean source, and no review or endorsement by Dana Scott. Every proof
-    step is checked by the Lean kernel.
+    Lars Warren Ericson directed and reviewed the Lean development. Dana S.
+    Scott is a co-author of the report; this is not recorded as an independent
+    external review of the Lean source. Every proof step is checked by the
+    Lean kernel.
 
 known_gaps:
   - >-

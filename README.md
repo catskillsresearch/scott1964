@@ -5,6 +5,14 @@
 Lean 4 formalization of Dana Scott's **1964** *Measurement Structures and
 Linear Inequalities* (J. Math. Psychology 1 (1964), 233–247).
 
+The accompanying report, *Formalization of Scott's Measurement Structures
+and Linear Inequalities in Lean 4*, is by **Lars Warren Ericson** (independent
+researcher, d/b/a Catskills Research Company) and **Dana S. Scott** (Computer
+Science Department, Carnegie Mellon University, Emeritus). It is being
+prepared for the Carnegie Mellon University School of Computer Science
+Technical Report series as **CMU-CS-26-XXX**, with cross-archival to arXiv
+under cs.LO and math.LO.
+
 Scott proves four general finite linear-inequality results (Theorems 1.1--1.4)
 and applies them to intransitive indifference (Theorem 2.1), additive utility
 for pairs and ordered differences (Theorems 3.1--3.2), and finite subjective
@@ -56,11 +64,14 @@ The current proof of Theorem 2.1 is the direct finite Scott--Suppes staircase
 construction. `Preference/Cycle.lean` separately formalizes Scott's local
 cycle-shortening reductions from the 1964 argument.
 
-## Files (Palomar)
+## Report and archival files
 
 | File | Role |
 |---|---|
-| `arxiv.md` | Formalization narrative and theorem inventory |
+| `arxiv.md` | CMU technical-report narrative and theorem inventory |
+| `arxiv.pdf` | Built CMU report PDF for cross-archival |
+| `docs/CMU_TECH_REPORT.md` | Report-number, build, and release checklist |
+| `docs/ARXIV_SUBMISSION.md` | arXiv cross-archive metadata |
 | `sources/ScottMeasurement1964.pdf` | Primary source PDF (Scott 1964) |
 | `Scott1964/` | Sorry-free development |
 | `Challenge.lean` | Palomar statement of record |

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-r"""Convert arxiv_with_code.md to arxiv.tex (arXiv-ready).
+r"""Convert arxiv_with_code.md to a CMU SCS technical report (arXiv-ready).
 
 Pipeline:
   1. Drop the GitHub-only navigation preamble (auto-gen note, document map, file index).
@@ -38,11 +38,10 @@ FIGURES_DIR = ROOT / "figures"
 PUPPETEER_CONFIG = SCRIPTS / "puppeteer-config.json"
 LISTING_CHUNK_LINES = 400
 
-AUTHOR = "Lars Warren Ericson"
-COMPANY = "Catskills Research Company"
 GITHUB_URL = r"https://github.com/catskillsresearch/scott1964"
-ORCID = "0000-0001-8299-9361"
-EMAIL = "lars.ericson@catskillsresearch.com"
+REPORT_NUMBER = "CMU-CS-26-XXX"
+REPORT_DATE = "September 2026"
+ERICSON_EMAIL = "lars.ericson@catskillsresearch.com"
 
 
 def find_chrome() -> str | None:
@@ -381,32 +380,41 @@ def cleanup_abstract_latex(latex: str) -> str:
 
 
 def build_title_page(abstract_latex: str) -> str:
+    ericson_email_latex = rf"\texttt{{{ERICSON_EMAIL}}}"
+    github_latex = rf"\url{{{GITHUB_URL}}}"
     return textwrap.dedent(
         f"""
-        \\title{{\\textbf{{{TITLE}}}}}
+        \\title{{{TITLE}}}
 
-        \\author[1]{{\\textbf{{{AUTHOR}}}}}
-        \\affil[1]{{{COMPANY}}}
-        \\affil[1]{{\\url{{{GITHUB_URL}}}}}
-        \\affil[1]{{\\texttt{{{EMAIL}}}}}
+        \\author{{
+          Lars Warren Ericson \\\\
+          {{\\normalfont\\small Independent researcher, d/b/a Catskills Research Company}} \\\\
+          {{\\normalfont\\small {ericson_email_latex}}} \\\\[1.5ex]
+          Dana S. Scott \\\\
+          {{\\normalfont\\small Computer Science Department, Carnegie Mellon University, Emeritus}}
+        }}
 
-        \\date{{\\today}}
+        \\date{{{REPORT_DATE}}}
+        \\trnumber{{{REPORT_NUMBER}}}
+        \\keywords{{Lean 4; formal verification; measurement theory; linear inequalities;
+          cancellation conditions; utility theory; subjective probability}}
+        \\citationinfo{{This report will be cross-archived on arXiv in
+          \\texttt{{cs.LO}} and \\texttt{{math.LO}}.\\\\
+          Source repository: {github_latex}}}
+        \\copyrightnotice{{Copyright \\copyright\\ 2026 Lars Warren Ericson and Dana S. Scott}}
+        \\abstract{{
+        {abstract_latex.strip()}
+        }}
+        \\hypersetup{{
+          pdftitle={{{TITLE}}},
+          pdfauthor={{Lars Warren Ericson; Dana S. Scott}},
+          pdfsubject={{Carnegie Mellon University School of Computer Science Technical Report {REPORT_NUMBER}}},
+          pdfkeywords={{Lean 4, formal verification, measurement theory, linear inequalities}}
+        }}
 
         \\begin{{document}}
 
         \\maketitle
-
-        \\begin{{center}}
-          \\small
-          \\textbf{{ORCID:}} {ORCID} \\\\
-          \\textbf{{Primary Category:}} math.LO (Logic) \\\\
-          \\textbf{{Secondary (submit):}} cs.LO (Logic in CS) \\\\
-          \\textbf{{Optional cross-list:}} econ.TH (Economics archive; post-submit if endorsed)
-        \\end{{center}}
-
-        \\begin{{abstract}}
-        {abstract_latex.strip()}
-        \\end{{abstract}}
         """
     ).strip()
 

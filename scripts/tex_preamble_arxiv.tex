@@ -1,15 +1,19 @@
-\documentclass[11pt,a4paper]{article}
+\documentclass[11pt,letterpaper]{article}
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage[margin=1in]{geometry}
+\usepackage{fullpage}
+\usepackage{times}
+\usepackage{helvet}
+\usepackage{courier}
+\usepackage{cmu-titlepage2}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{amsthm}
 \usepackage{stmaryrd}
 \usepackage{booktabs}
 \usepackage{array}
 \usepackage{tabularx}
-\usepackage{authblk}
 \usepackage{xcolor}
 \usepackage{graphicx}
 \usepackage[export]{adjustbox}
@@ -21,7 +25,12 @@
 \usepackage[colorlinks=true,linkcolor=blue!40!black,citecolor=blue!40!black,urlcolor=blue!40!black]{hyperref}
 \emergencystretch=2em
 
-% Pandoc emits this on compact lists (including the AI model-card bullets in the abstract).
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{axiom}[theorem]{Axiom}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+
+% Pandoc emits this on compact lists (including the AI model-card acknowledgments).
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 

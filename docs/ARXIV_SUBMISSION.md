@@ -1,12 +1,22 @@
-# arXiv submission metadata (Scott 1964 formalization)
+# arXiv cross-archive metadata (CMU-CS-26-XXX)
 
 Copy-paste fields for the arXiv web form. Regenerate the PDF and zip with
 `bash scripts/build_arxiv_pdf.sh` before uploading `dist/arxiv_submit.zip`.
 
+## Title and authors
+
+**Title:** Formalization of Scott's Measurement Structures and Linear
+Inequalities in Lean 4
+
+**Authors:** Lars Warren Ericson and Dana S. Scott
+
+The PDF is the Carnegie Mellon University School of Computer Science technical
+report **CMU-CS-26-XXX**. Replace the placeholder before public release.
+
 ## Abstract (plain text, under 1920 characters)
 
 See the `## Abstract` section in `arxiv.md` (same text appears in the PDF
-`\begin{abstract}` block).
+technical-report abstract).
 
 ## Categories
 
@@ -18,8 +28,8 @@ Use at submit time:
 
 | Field | Use |
 | --- | --- |
-| **Primary** | `math.LO` (Logic) — recommended for this formalization |
-| **Secondary / cross-list at submit** | `cs.LO` if the UI offers a second category in Math/CS |
+| **Primary** | `cs.LO` (Logic in Computer Science) |
+| **Secondary / cross-list at submit** | `math.LO` (Logic) if the UI offers a Mathematics cross-list |
 
 **`econ.TH` (Theoretical Economics)** exists on arXiv ([taxonomy](https://arxiv.org/category_taxonomy), [econ.TH listings](https://arxiv.org/list/econ.TH/recent)) but is usually added **after** announcement via the [cross-list tool on your user page](https://info.arxiv.org/help/cross.html), and only if your account is **endorsed for the Economics archive** (same endorsement rules as any new archive). If you are not endorsed for `econ`, Economics will not appear anywhere in the picker.
 
@@ -29,8 +39,8 @@ For measurement / utility / qualitative probability audience without `econ.TH`, 
 
 | System | Recommendation |
 | --- | --- |
-| **arXiv primary (submit)** | `math.LO` |
-| **arXiv secondary (submit, if offered)** | `cs.LO` |
+| **arXiv primary (submit)** | `cs.LO` |
+| **arXiv secondary (submit, if offered)** | `math.LO` |
 | **Optional cross-list (post-submit)** | `econ.TH` if endorsed and appropriate |
 | **Optional cross-list (post-submit)** | `math.ST` if emphasizing qualitative probability |
 
