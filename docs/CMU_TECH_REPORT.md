@@ -9,7 +9,7 @@ and Linear Inequalities in Lean 4*.
   Report
 - **Number:** `CMU-CS-26-XXX` (placeholder)
 - **Date:** September 2026
-- **Authors:** Lars Warren Ericson and Dana S. Scott
+- **Authors:** Lars Warren Ericson, Dana S. Scott, and Vijay D'Silva
 - **Institutional address:** School of Computer Science, Carnegie Mellon
   University, Pittsburgh, PA 15213
 - **arXiv cross-archive:** `cs.LO` / `math.LO`
@@ -17,7 +17,8 @@ and Linear Inequalities in Lean 4*.
 
 Lars Warren Ericson is an independent researcher, d/b/a Catskills Research
 Company (`lars.ericson@catskillsresearch.com`). Dana S. Scott is affiliated with the
-Computer Science Department, Carnegie Mellon University, Emeritus.
+Computer Science Department, Carnegie Mellon University, Emeritus. Vijay D'Silva
+is affiliated with Google Research.
 
 ## Build
 
@@ -48,7 +49,8 @@ series and arXiv cross-archive.
    Scott” with Dana's approved text.
 4. Confirm the author order, affiliations, September 2026 date, and
    correspondence email.
-5. Run `lake build` and `bash scripts/build_arxiv_pdf.sh`.
+5. Run `python3 scripts/check_concordance.py`, `lake build`, and
+   `bash scripts/build_arxiv_pdf.sh`.
 6. Inspect the cover, abstract, numbered figures, List of Figures,
    acknowledgments, references, and Lean module appendix.
 7. Upload `dist/arxiv_submit.zip` only after deleting prior arXiv submission

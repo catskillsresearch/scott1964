@@ -8,7 +8,7 @@ Copy-paste fields for the arXiv web form. Regenerate the PDF and zip with
 **Title:** Formalization of Scott's Measurement Structures and Linear
 Inequalities in Lean 4
 
-**Authors:** Lars Warren Ericson and Dana S. Scott
+**Authors:** Lars Warren Ericson, Dana S. Scott, and Vijay D'Silva
 
 The PDF is the Carnegie Mellon University School of Computer Science technical
 report **CMU-CS-26-XXX**. Replace the placeholder before public release.

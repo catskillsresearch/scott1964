@@ -30,5 +30,8 @@ jobs:
       - name: Configure Lake cache
         run: lake exe cache get || true
 
+      - name: Check source–Lean concordance
+        run: python3 scripts/check_concordance.py
+
       - name: Run mechanical Palomar preflight
         run: bash scripts/palomar_preflight.sh --mechanical-only

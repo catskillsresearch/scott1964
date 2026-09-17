@@ -5,10 +5,10 @@ paper *Measurement Structures and Linear Inequalities* (Journal of
 Mathematical Psychology 1 (1964), 233–247). It is not a thin wrapper and not
 a reimplementation of an independent formalization.
 
-Dana S. Scott suggested the paper as a formalization target and is a co-author
-with Lars Warren Ericson of the resulting Carnegie Mellon University School of
-Computer Science technical report. Ericson directed and reviewed the Lean
-development with AI-agent assistance. Scott's coauthorship of the report is
+Dana S. Scott suggested the paper as a formalization target and is a co-author,
+with Lars Warren Ericson and Vijay D'Silva, of the resulting Carnegie Mellon
+University School of Computer Science technical report. Ericson directed and
+reviewed the Lean development with AI-agent assistance. Report coauthorship is
 distinct from an independent external audit of each Lean source file.
 
 Sibling formalizations of related Scott papers:

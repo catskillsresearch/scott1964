@@ -92,6 +92,13 @@ TITLE = extract_title()
 
 GITHUB_INLINE_MATH = re.compile(r"\$`([^`\n]+?)`\$")
 HTML_COMMENT = re.compile(r"<!--.*?-->", re.DOTALL)
+CONCORDANCE_OPEN = re.compile(
+    r"<!--\s*scott-concordance:\s*"
+    r"card=(?P<card>[A-Za-z0-9._-]+)\s+"
+    r"source-lines=(?P<lines>[0-9,-]+)\s+"
+    r"lean=(?P<lean>.*?)\s*-->",
+)
+CONCORDANCE_CLOSE = re.compile(r"<!--\s*/scott-concordance\s*-->")
 FENCE_RE = re.compile(r"^```([^\n]*)\n(.*?)^```\s*$", re.MULTILINE | re.DOTALL)
 MANUAL_SECTION_NUM = re.compile(r"^(#{1,6})[ \t]+\d+(?:\.\d+)*\.?[ \t]+", re.MULTILINE)
 NARRATIVE_MARKER = "# Narrative (from arxiv.md)"
@@ -103,11 +110,56 @@ FIGURE_CAPTION_RE = re.compile(
 
 
 def github_math_to_tex(text: str) -> str:
+    text = text.replace(r"\textcircled{\geqslant}", r"\scottcircledgeq")
     return GITHUB_INLINE_MATH.sub(r"$\1$", text)
 
 
 def strip_html_comments(text: str) -> str:
     return HTML_COMMENT.sub("", text)
+
+
+QUOTED_ATX_HEADING = re.compile(
+    r"^(?P<prefix>[ \t]*>[ \t]*)(?P<hashes>#{1,6})(?P<rest>[ \t].*)?$",
+    re.MULTILINE,
+)
+
+
+def escape_quoted_markdown_headings(text: str) -> str:
+    """Keep Scott quotations from becoming real section headings."""
+
+    def repl(match: re.Match[str]) -> str:
+        escaped = "".join("\\" + ch for ch in match.group("hashes"))
+        return f"{match.group('prefix')}{escaped}{match.group('rest') or ''}"
+
+    return QUOTED_ATX_HEADING.sub(repl, text)
+
+
+def render_concordance_markers(text: str) -> tuple[str, dict[str, str]]:
+    """Leave card interiors as Markdown; wrap them after pandoc."""
+    placeholders: dict[str, str] = {}
+    open_idx = 0
+    close_idx = 0
+
+    def opening(match: re.Match[str]) -> str:
+        nonlocal open_idx
+        key = f"CONCORDANCEOPEN{open_idx:03d}"
+        card = escape_latex_caption(match.group("card"))
+        lines = escape_latex_caption(match.group("lines"))
+        title = f"{card} (source lines {lines})"
+        placeholders[key] = f"\\begin{{concordancebox}}[{title}]\n"
+        open_idx += 1
+        return f"\n\n{key}\n\n"
+
+    def closing(_match: re.Match[str]) -> str:
+        nonlocal close_idx
+        key = f"CONCORDANCECLOSE{close_idx:03d}"
+        placeholders[key] = "\\end{concordancebox}\n"
+        close_idx += 1
+        return f"\n\n{key}\n\n"
+
+    text = CONCORDANCE_OPEN.sub(opening, text)
+    text = CONCORDANCE_CLOSE.sub(closing, text)
+    return escape_quoted_markdown_headings(text), placeholders
 
 
 def strip_manual_section_numbers(text: str) -> str:
@@ -391,7 +443,9 @@ def build_title_page(abstract_latex: str) -> str:
           {{\\normalfont\\small Independent researcher, d/b/a Catskills Research Company}} \\\\
           {{\\normalfont\\small {ericson_email_latex}}} \\\\[1.5ex]
           Dana S. Scott \\\\
-          {{\\normalfont\\small Computer Science Department, Carnegie Mellon University, Emeritus}}
+          {{\\normalfont\\small Computer Science Department, Carnegie Mellon University, Emeritus}} \\\\[1.5ex]
+          Vijay D'Silva \\\\
+          {{\\normalfont\\small Google Research}}
         }}
 
         \\date{{{REPORT_DATE}}}
@@ -401,13 +455,13 @@ def build_title_page(abstract_latex: str) -> str:
         \\citationinfo{{This report will be cross-archived on arXiv in
           \\texttt{{cs.LO}} and \\texttt{{math.LO}}.\\\\
           Source repository: {github_latex}}}
-        \\copyrightnotice{{Copyright \\copyright\\ 2026 Lars Warren Ericson and Dana S. Scott}}
+        \\copyrightnotice{{Copyright \\copyright\\ 2026 Lars Warren Ericson, Dana S. Scott, and Vijay D'Silva}}
         \\abstract{{
         {abstract_latex.strip()}
         }}
         \\hypersetup{{
           pdftitle={{{TITLE}}},
-          pdfauthor={{Lars Warren Ericson; Dana S. Scott}},
+          pdfauthor={{Lars Warren Ericson; Dana S. Scott; Vijay D'Silva}},
           pdfsubject={{Carnegie Mellon University School of Computer Science Technical Report {REPORT_NUMBER}}},
           pdfkeywords={{Lean 4, formal verification, measurement theory, linear inequalities}}
         }}
@@ -438,12 +492,14 @@ def main() -> int:
     body = drop_github_nav(raw)
     body = inject_model_cards(body)
     figure_captions = parse_figure_captions(body)
+    body, concordance_placeholders = render_concordance_markers(body)
     body = strip_html_comments(body)
     body = normalize_appendix_headings(body)
     abstract_md, body = extract_abstract(body)
     body = strip_manual_section_numbers(body)
     body = github_math_to_tex(body)
     body, placeholders = replace_fences(body, figure_captions)
+    placeholders.update(concordance_placeholders)
 
     latex_body = pandoc_to_latex(body, shift=True)
     latex_body = inject_placeholders(latex_body, placeholders)

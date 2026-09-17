@@ -21,6 +21,7 @@
 \usepackage{calc}
 \usepackage{newunicodechar}
 \usepackage{listings}
+\usepackage[most]{tcolorbox}
 \usepackage{xurl}
 \usepackage[colorlinks=true,linkcolor=blue!40!black,citecolor=blue!40!black,urlcolor=blue!40!black]{hyperref}
 \emergencystretch=2em
@@ -29,6 +30,29 @@
 \newtheorem{axiom}[theorem]{Axiom}
 \theoremstyle{definition}
 \newtheorem{definition}[theorem]{Definition}
+
+% Source-to-Lean concordance cards.  The Markdown source remains readable on
+% GitHub; build_arxiv_tex.py turns hidden card markers into this breakable box.
+% Scott writes a circled order relation; \textcircled is a text command.
+\newcommand{\scottcircledgeq}{\mathbin{\text{\normalfont\textcircled{\raisebox{-0.12ex}{$\scriptstyle\geqslant$}}}}}
+
+\newtcolorbox{concordancebox}[1][]{
+  enhanced,
+  breakable,
+  colback=black!1,
+  colframe=black!35,
+  boxrule=0.45pt,
+  arc=1mm,
+  left=2mm,
+  right=2mm,
+  top=1mm,
+  bottom=1mm,
+  before skip=0.8\baselineskip,
+  after skip=0.8\baselineskip,
+  title={#1},
+  fonttitle=\bfseries\small,
+  before upper={\sloppy\setlength{\emergencystretch}{6em}}
+}
 
 % Pandoc emits this on compact lists (including the AI model-card acknowledgments).
 \providecommand{\tightlist}{%

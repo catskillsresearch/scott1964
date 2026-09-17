@@ -13,13 +13,14 @@ project:
     development also covers Scott's ordered-group and signed-charge remarks,
     literal vector cancellation, and the KPS obstruction to de Finetti's five
     axioms. The Lean development was drafted with AI-agent assistance under
-    Lars Warren Ericson's direction and review. Dana S. Scott is a co-author
-    of the formalization report. There is no sorry outside the deliberate
+    Lars Warren Ericson's direction and review. Dana S. Scott and Vijay
+    D'Silva are co-authors of the formalization report. There is no sorry outside the deliberate
     holes in Challenge.lean, no project-defined axiom, and Mathlib is the only
     Lake dependency.
   authors:
     - "Lars Warren Ericson"
     - "Dana S. Scott"
+    - "Vijay D'Silva"
   license: "Apache-2.0"
   responsible_maintainers:
     - "Lars Warren Ericson"
@@ -60,7 +61,12 @@ fidelity:
   divergences: >-
     Working source: sources/ScottMeasurement1964.pdf (a vision transcription
     sources/ScottMeasurement1964_vision.md is produced by
-    scripts/ocr_pdf_pipeline.sh). Challenge.lean renders Scott's condition
+    scripts/ocr_pdf_pipeline.sh). Section 4 of arxiv.md is an exhaustive
+    paper-order concordance (verbatim Scott passage, exact Lean fragment or
+    an explicit gap, and a Lean-driven mathematical reconstruction). Coverage,
+    quotations, and declaration names are checked by
+    scripts/check_concordance.py; cards are emitted by
+    scripts/emit_concordance.py. Challenge.lean renders Scott's condition
     (4_B) with the atom-counting reading of the algebraic sum of
     characteristic functions, which Scott gives in words immediately after
     the theorem; theorem_4_1_vector separately proves the equivalent literal
@@ -79,8 +85,9 @@ sources:
     author_endorsement: participated
     note: >-
       Primary source. Dana S. Scott suggested the paper as a formalization
-      target and is a co-author of the resulting technical report. Working
-      PDF: sources/ScottMeasurement1964.pdf.
+      target and is a co-author, with Lars Warren Ericson and Vijay D'Silva,
+      of the resulting technical report. Working PDF:
+      sources/ScottMeasurement1964.pdf.
 
 related_formalizations:
   - id: "https://github.com/catskillsresearch/scott1972"
@@ -135,9 +142,9 @@ review:
     - "Lars Warren Ericson"
   notes: >-
     Lars Warren Ericson directed and reviewed the Lean development. Dana S.
-    Scott is a co-author of the report; this is not recorded as an independent
-    external review of the Lean source. Every proof step is checked by the
-    Lean kernel.
+    Scott and Vijay D'Silva are co-authors of the report; this is not recorded
+    as an independent external review of the Lean source. Every proof step is
+    checked by the Lean kernel.
 
 known_gaps:
   - >-
@@ -206,4 +213,4 @@ alignment:
       lean: "Probability.Infinite.reconstructed_infinite_theorem_4_1"
       module: "Scott1964.MeasurementStructures.Probability.Infinite.Reconstructed"
       status: proved
-      note: "Modern reconstruction; not attributed as Scott's unpublished theorem."
+      note: "Modern reconstruction; not attributed as Scott's unpublished theorem. Exhaustive passage-level alignment of the 1964 source lives in arxiv.md §4 rather than as additional compared theorems."

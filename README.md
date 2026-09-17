@@ -7,11 +7,12 @@ Linear Inequalities* (J. Math. Psychology 1 (1964), 233–247).
 
 The accompanying report, *Formalization of Scott's Measurement Structures
 and Linear Inequalities in Lean 4*, is by **Lars Warren Ericson** (independent
-researcher, d/b/a Catskills Research Company) and **Dana S. Scott** (Computer
-Science Department, Carnegie Mellon University, Emeritus). It is being
-prepared for the Carnegie Mellon University School of Computer Science
-Technical Report series as **CMU-CS-26-XXX**, with cross-archival to arXiv
-under cs.LO and math.LO.
+researcher, d/b/a Catskills Research Company), **Dana S. Scott** (Computer
+Science Department, Carnegie Mellon University, Emeritus), and **Vijay D'Silva**
+(Google Research).
+It is being prepared for the Carnegie Mellon University School of Computer
+Science Technical Report series as **CMU-CS-26-XXX**, with cross-archival to
+arXiv under cs.LO and math.LO.
 
 Scott proves four general finite linear-inequality results (Theorems 1.1--1.4)
 and applies them to intransitive indifference (Theorem 2.1), additive utility
@@ -68,7 +69,9 @@ cycle-shortening reductions from the 1964 argument.
 
 | File | Role |
 |---|---|
-| `arxiv.md` | CMU technical-report narrative and theorem inventory |
+| `arxiv.md` | CMU technical-report narrative, theorem inventory, and §4 concordance |
+| `scripts/check_concordance.py` | Coverage, quotation, and Lean-name check for §4 cards |
+| `scripts/emit_concordance.py` | Regenerates the §4 card body from source spans |
 | `arxiv.pdf` | Built CMU report PDF for cross-archival |
 | `docs/CMU_TECH_REPORT.md` | Report-number, build, and release checklist |
 | `docs/ARXIV_SUBMISSION.md` | arXiv cross-archive metadata |
@@ -103,6 +106,13 @@ bash scripts/palomar_preflight.sh
 ```
 
 See `docs/PALOMAR_EDITORIAL_AUDIT.md` for packaging checklist and auth.
+
+The report's exhaustive Scott–Lean concordance has a separate coverage and
+declaration-reference check:
+
+```bash
+python3 scripts/check_concordance.py
+```
 
 ## Source OCR
 
