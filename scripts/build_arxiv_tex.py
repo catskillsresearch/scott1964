@@ -41,7 +41,6 @@ LISTING_CHUNK_LINES = 400
 GITHUB_URL = r"https://github.com/catskillsresearch/scott1964"
 REPORT_NUMBER = "CMU-CS-26-XXX"
 REPORT_DATE = "September 2026"
-ERICSON_EMAIL = "lars.ericson@catskillsresearch.com"
 
 
 def find_chrome() -> str | None:
@@ -435,7 +434,6 @@ def cleanup_abstract_latex(latex: str) -> str:
 
 
 def build_title_page(abstract_latex: str) -> str:
-    ericson_email_latex = rf"\texttt{{{ERICSON_EMAIL}}}"
     github_latex = rf"\url{{{GITHUB_URL}}}"
     return textwrap.dedent(
         f"""
@@ -443,23 +441,20 @@ def build_title_page(abstract_latex: str) -> str:
 
         \\author{{
           Lars Warren Ericson \\\\
-          {{\\normalfont\\small Independent researcher, d/b/a Catskills Research Company}} \\\\
-          {{\\normalfont\\small {ericson_email_latex}}} \\\\[1.5ex]
+          {{\\normalfont\\small Catskills Research Company}} \\\\[0.5ex]
           Dana S. Scott \\\\
-          {{\\normalfont\\small Computer Science Department, Carnegie Mellon University, Emeritus}} \\\\[1.5ex]
+          {{\\normalfont\\small Computer Science Department, Carnegie Mellon University, Emeritus}} \\\\[0.5ex]
           Vijay D'Silva \\\\
-          {{\\normalfont\\small Google Research}} \\\\[1.5ex]
+          {{\\normalfont\\small Google Research}} \\\\[0.5ex]
           Brian Milnes \\\\
-          {{\\normalfont\\small Independent Researcher, XBRLCloud}}
+          {{\\normalfont\\small XBRLCloud}}
         }}
 
         \\date{{{REPORT_DATE}}}
         \\trnumber{{{REPORT_NUMBER}}}
         \\keywords{{Lean 4; formal verification; measurement theory; linear inequalities;
           cancellation conditions; utility theory; subjective probability}}
-        \\citationinfo{{This report will be cross-archived on arXiv in
-          \\texttt{{cs.LO}} and \\texttt{{math.LO}}.\\\\
-          Source repository: {github_latex}}}
+        \\citationinfo{{Source repository: {github_latex}}}
         \\copyrightnotice{{Copyright \\copyright\\ 2026 Lars Warren Ericson, Dana S. Scott, Vijay D'Silva, and Brian Milnes}}
         \\abstract{{
         {abstract_latex.strip()}
