@@ -448,7 +448,9 @@ def build_title_page(abstract_latex: str) -> str:
           Dana S. Scott \\\\
           {{\\normalfont\\small Computer Science Department, Carnegie Mellon University, Emeritus}} \\\\[1.5ex]
           Vijay D'Silva \\\\
-          {{\\normalfont\\small Google Research}}
+          {{\\normalfont\\small Google Research}} \\\\[1.5ex]
+          Brian Milnes \\\\
+          {{\\normalfont\\small Independent Researcher, XBRLCloud}}
         }}
 
         \\date{{{REPORT_DATE}}}
@@ -458,13 +460,13 @@ def build_title_page(abstract_latex: str) -> str:
         \\citationinfo{{This report will be cross-archived on arXiv in
           \\texttt{{cs.LO}} and \\texttt{{math.LO}}.\\\\
           Source repository: {github_latex}}}
-        \\copyrightnotice{{Copyright \\copyright\\ 2026 Lars Warren Ericson, Dana S. Scott, and Vijay D'Silva}}
+        \\copyrightnotice{{Copyright \\copyright\\ 2026 Lars Warren Ericson, Dana S. Scott, Vijay D'Silva, and Brian Milnes}}
         \\abstract{{
         {abstract_latex.strip()}
         }}
         \\hypersetup{{
           pdftitle={{{TITLE}}},
-          pdfauthor={{Lars Warren Ericson; Dana S. Scott; Vijay D'Silva}},
+          pdfauthor={{Lars Warren Ericson; Dana S. Scott; Vijay D'Silva; Brian Milnes}},
           pdfsubject={{Carnegie Mellon University School of Computer Science Technical Report {REPORT_NUMBER}}},
           pdfkeywords={{Lean 4, formal verification, measurement theory, linear inequalities}}
         }}

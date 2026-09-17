@@ -2,8 +2,8 @@
 
 **Authors.** Lars Warren Ericson (independent researcher, d/b/a Catskills
 Research Company; lars.ericson@catskillsresearch.com), Dana S. Scott (Computer Science
-Department, Carnegie Mellon University, Emeritus), and Vijay D'Silva (Google
-Research).
+Department, Carnegie Mellon University, Emeritus), Vijay D'Silva (Google
+Research), and Brian Milnes (Independent Researcher, XBRLCloud).
 **Technical report.** CMU-CS-26-XXX, School of Computer Science, Carnegie
 Mellon University, Pittsburgh, PA 15213.
 **Source paper.** Dana S. Scott, *Measurement Structures and Linear

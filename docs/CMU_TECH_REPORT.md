@@ -9,7 +9,7 @@ and Linear Inequalities in Lean 4*.
   Report
 - **Number:** `CMU-CS-26-XXX` (placeholder)
 - **Date:** September 2026
-- **Authors:** Lars Warren Ericson, Dana S. Scott, and Vijay D'Silva
+- **Authors:** Lars Warren Ericson, Dana S. Scott, Vijay D'Silva, and Brian Milnes
 - **Institutional address:** School of Computer Science, Carnegie Mellon
   University, Pittsburgh, PA 15213
 - **arXiv cross-archive:** `cs.LO` / `math.LO`
@@ -18,7 +18,8 @@ and Linear Inequalities in Lean 4*.
 Lars Warren Ericson is an independent researcher, d/b/a Catskills Research
 Company (`lars.ericson@catskillsresearch.com`). Dana S. Scott is affiliated with the
 Computer Science Department, Carnegie Mellon University, Emeritus. Vijay D'Silva
-is affiliated with Google Research.
+is affiliated with Google Research. Brian Milnes is an Independent Researcher
+affiliated with XBRLCloud.
 
 ## Build
 

@@ -13,14 +13,16 @@ project:
     development also covers Scott's ordered-group and signed-charge remarks,
     literal vector cancellation, and the KPS obstruction to de Finetti's five
     axioms. The Lean development was drafted with AI-agent assistance under
-    Lars Warren Ericson's direction and review. Dana S. Scott and Vijay
-    D'Silva are co-authors of the formalization report. There is no sorry outside the deliberate
+    Lars Warren Ericson's direction and review. Dana S. Scott, Vijay
+    D'Silva, and Brian Milnes are co-authors of the formalization report.
+    There is no sorry outside the deliberate
     holes in Challenge.lean, no project-defined axiom, and Mathlib is the only
     Lake dependency.
   authors:
     - "Lars Warren Ericson"
     - "Dana S. Scott"
     - "Vijay D'Silva"
+    - "Brian Milnes"
   license: "Apache-2.0"
   responsible_maintainers:
     - "Lars Warren Ericson"
@@ -85,8 +87,8 @@ sources:
     author_endorsement: participated
     note: >-
       Primary source. Dana S. Scott suggested the paper as a formalization
-      target and is a co-author, with Lars Warren Ericson and Vijay D'Silva,
-      of the resulting technical report. Working PDF:
+      target and is a co-author, with Lars Warren Ericson, Vijay D'Silva,
+      and Brian Milnes, of the resulting technical report. Working PDF:
       sources/ScottMeasurement1964.pdf.
 
 related_formalizations:
@@ -148,9 +150,9 @@ review:
     - "Lars Warren Ericson"
   notes: >-
     Lars Warren Ericson directed and reviewed the Lean development. Dana S.
-    Scott and Vijay D'Silva are co-authors of the report; this is not recorded
-    as an independent external review of the Lean source. Every proof step is
-    checked by the Lean kernel.
+    Scott, Vijay D'Silva, and Brian Milnes are co-authors of the report; this
+    is not recorded as an independent external review of the Lean source.
+    Every proof step is checked by the Lean kernel.
 
 known_gaps:
   - >-
