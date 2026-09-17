@@ -52,7 +52,8 @@ series and arXiv cross-archive.
 5. Run `python3 scripts/check_concordance.py`, `lake build`, and
    `bash scripts/build_arxiv_pdf.sh`.
 6. Inspect the cover, abstract, numbered figures, List of Figures,
-   acknowledgments, references, and Lean module appendix.
+   acknowledgments, references, Concordance methodology appendix, and Lean
+   module appendix.
 7. Upload `dist/arxiv_submit.zip` only after deleting prior arXiv submission
    files so the source set is replaced rather than merged.
 

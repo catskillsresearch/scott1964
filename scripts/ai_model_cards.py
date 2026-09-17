@@ -77,6 +77,21 @@ MODEL_CARDS: tuple[ModelCard, ...] = (
             "(accessed 2026)."
         ),
     ),
+    ModelCard(
+        label="OpenAI GPT 5.6",
+        cite_key="GPT56",
+        tool_note=(
+            "used to produce the source–Lean concordance in Section 4: partitioning "
+            "Scott 1964, aligning each passage to Lean declarations or an explicit gap, "
+            "and writing Lean-driven mathematical reconstructions rather than tactic "
+            "decompilations. The working method is recorded in the Concordance "
+            "methodology appendix."
+        ),
+        reference=(
+            "OpenAI. *GPT-5.6*. Model documentation as integrated in Cursor, "
+            "<https://cursor.com/docs/models> (accessed 2026)."
+        ),
+    ),
 )
 
 TOOL_BULLETS_BEGIN = "<!-- AI_MODEL_TOOL_BULLETS -->"

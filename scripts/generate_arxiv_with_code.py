@@ -126,20 +126,22 @@ def main() -> None:
     parts.append(
         "**Review copy.** The narrative body matches [`arxiv.md`](arxiv.md) "
         "(excluding the title block through the first `---`). "
-        "This file appends **Appendix A: Lean module index** with GitHub links "
-        "to every library file (no inlined full source).\n\n"
+        "This file appends **Appendix B: Lean module index** with GitHub links "
+        "to every library file (no inlined full source). Appendix A is the "
+        "Concordance methodology section from `arxiv.md`.\n\n"
     )
     parts.append("---\n\n")
     parts.append("## Document map\n\n")
     parts.append("| Part | Contents |\n")
     parts.append("| --- | --- |\n")
     parts.append("| **Narrative** | Full `arxiv.md` body with inline Lean gists |\n")
-    parts.append("| **Appendix A** | Hyperlinked module index |\n\n")
+    parts.append("| **Appendix A** | Concordance methodology |\n")
+    parts.append("| **Appendix B** | Hyperlinked module index |\n\n")
     parts.append("---\n\n")
     parts.append("# Narrative (from arxiv.md)\n\n")
     parts.append(body)
     parts.append("\n\n---\n\n")
-    parts.append("# Appendix A: Lean module index\n\n")
+    parts.append("# Appendix B: Lean module index\n\n")
     parts.append(
         f"Checked by `lake build`. Complete sources: [{GITHUB}]({GITHUB}). "
         "Each subsection links to the corresponding file on GitHub.\n\n"

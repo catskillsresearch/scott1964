@@ -640,7 +640,9 @@ Quoted passages remain under the source-material copyright carve-out in
 Republication of this report requires clearance for the verbatim 1964 text.
 
 Source-span coverage, quotation fidelity, card structure, and referenced
-declaration names are checked by `scripts/check_concordance.py`.
+declaration names are checked by `scripts/check_concordance.py`. The working
+method used to produce the cards is recorded in the appendix Concordance
+methodology.
 
 <!-- CONCORDANCE_BODY -->
 
@@ -2455,9 +2457,10 @@ bash scripts/generate_arxiv_with_code.sh              # → arxiv_with_code.md
 
 `lake build` checks the `Scott1964` library (and optional `Solution` re-export).
 
-`arxiv_with_code.md` is generated (narrative plus Appendix A module index with
-GitHub links). Regenerate when `arxiv.md` or listed sources change; build the
-PDF and arXiv zip with `bash scripts/build_arxiv_pdf.sh`.
+`arxiv_with_code.md` is generated (narrative, Concordance methodology
+appendix, and Lean module index with GitHub links). Regenerate when
+`arxiv.md` or listed sources change; build the PDF and arXiv zip with
+`bash scripts/build_arxiv_pdf.sh`.
 
 The source-fidelity workflow begins with
 `sources/ScottMeasurement1964.pdf`. The reproducible OCR command
@@ -2564,3 +2567,91 @@ We gratefully acknowledge assistance from the following tools:
 
 <!-- AI_MODEL_REFERENCES -->
 <!-- /AI_MODEL_REFERENCES -->
+
+## Concordance methodology
+
+This appendix records the method used to write Section 4. It is a public
+version of the working plan that guided the concordance: a paper-order
+alignment of Scott 1964 with the Lean development, together with a readable
+reconstruction of each formal definition or proof. GPT 5.6 was used for that
+alignment and drafting. The cards themselves remain in Section 4, not here.
+
+### Report form and controls
+
+Section 4, *Source–Lean Concordance and Mathematical Reconstruction*, is a
+numbered main-matter section of this report, placed before the verification
+section. It is not an appendix.
+
+Each card uses one repeatable three-part format: **Scott 1964 (verbatim)**,
+**Lean 4 correspondence (exact source)**, and **Mathematical reconstruction
+from Lean**. Every card carries a stable identifier, a source-line span in
+`sources/ScottMeasurement1964_vision.md`, and a Lean declaration field (or
+`none`).
+
+The Markdown cards remain readable in `arxiv.md`. The PDF build turns the
+hidden card markers into breakable boxes via `scripts/tex_preamble_arxiv.tex`
+and `scripts/build_arxiv_tex.py`.
+
+The expository model is the Liquid Tensor Experiment blueprint: motivation,
+precise informal mathematics, proof architecture, and unobtrusive Lean
+attribution, without tactic-by-tactic narration
+(<https://leanprover-community.github.io/liquid/>,
+<https://leanprover-community.github.io/liquid/BD_orig.html>).
+
+### Exhaustive alignment method
+
+The vision transcription is partitioned in paper order at sentence, displayed
+formula, definition, proof-step, example, and bibliographic-entry boundaries.
+The partition covers the title, abstract, introductory problems, Sections
+I–IV, closing remarks, and references. OCR front matter and reconciliation
+metadata are identified separately from the paper text.
+
+For each unit, the relevant declaration and its proof dependencies in
+`Scott1964/MeasurementStructures` are inspected. The Lean panel quotes the
+actual definition, theorem, or proof fragment, including helper declarations
+from other modules when they carry the mathematical argument.
+
+No correspondence is invented. For historical prose, motivation, citations, or
+unformalized steps, the Lean panel says **No direct Lean counterpart** and
+identifies only the nearest genuine formal object. Alternate routes and gaps
+are marked in place—especially Theorem 2.1’s staircase proof versus Scott’s
+unassembled linear/cycle route, the partial ordered-group example, and the
+modern infinite theorem.
+
+The third panel is written from the formal proof’s mathematical structure: the
+objects, invariants, reductions, imported Mathlib results, and why the
+conclusion follows. Tactic names are avoided unless a named lemma materially
+identifies the mathematics.
+
+### Paper-order drafting passes
+
+- Introduction and Section I: definitions, Theorems 1.1–1.4, separation,
+  rationalization, relation cancellation, additive closure, the
+  non-Archimedean warning, and the finite ordered-group embedding.
+- Sections II–III: intransitive indifference and the printed cycle prose; the
+  Scott–Suppes staircase proof actually used by `theorem_2_1`; pair incidence
+  vectors, permutation extraction, and the single-utility difference
+  construction.
+- Section IV and the references: de Finetti axioms, atom vectors, Theorem 4.1,
+  signed charges, the KPS counterexample, the unpublished infinite
+  announcement versus the labelled modern reconstruction, and
+  bibliography-only cards.
+
+### Traceability and verification
+
+Stable card identifiers and source-span metadata are embedded in `arxiv.md`.
+`scripts/check_concordance.py` reports omitted or duplicated source spans and
+stale or missing Lean declaration references. `scripts/emit_concordance.py`
+regenerates the card body from those spans so quotations cannot drift from
+the transcription. The OCR transcription is a navigation aid; doubtful
+quotations are checked against the source PDF.
+
+The report’s source-fidelity discussion and `formalization.yaml` point to the
+exhaustive concordance and keep the existing divergence disclosures. Compared
+Lean declarations and generated report artifacts are not edited by hand.
+
+The concordance checker, `lake build`, mechanical Palomar preflight, and the
+PDF build are run after regeneration. Card page breaks, code wrapping,
+cross-references, and first-to-last-paper coverage are inspected. The
+source-material licensing carve-out is preserved; verbatim republication of
+the 1964 text requires publication-rights clearance before release.

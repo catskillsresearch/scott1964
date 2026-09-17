@@ -126,6 +126,12 @@ automation:
       models: ["Anthropic Claude Opus 4.8 (high reasoning)"]
       framework: "Cursor"
       role: "Heaviest proof work."
+    - method: agent
+      models: ["OpenAI GPT 5.6"]
+      framework: "Cursor"
+      role: >-
+        Source–Lean concordance in arxiv.md Section 4: paper-order alignment,
+        gap disclosure, and Lean-driven reconstructions.
     - method: manual
       models: []
       role: >-

@@ -175,7 +175,7 @@ def drop_github_nav(text: str) -> str:
 
 def normalize_appendix_headings(text: str) -> str:
     text = re.sub(
-        r"^#\s+Appendix A: (?:Complete Lean source|Lean module index)\s*$",
+        r"^#\s+Appendix [AB]: (?:Complete Lean source|Lean module index)\s*$",
         "## Lean module index",
         text,
         flags=re.MULTILINE,
@@ -384,17 +384,17 @@ def cleanup_pandoc_latex(latex: str) -> str:
             latex,
         )
     latex = re.sub(
-        r"\\section\{Appendix A\. Lean source index\}",
+        r"\\section\{Appendix [AB]\. Lean source index\}",
         "",
         latex,
     )
     latex = re.sub(
-        r"\\section\{Appendix A: (?:Complete Lean source|Lean module index)\}",
+        r"\\section\{Appendix [AB]: (?:Complete Lean source|Lean module index)\}",
         r"\\section{Lean module index}",
         latex,
     )
     latex = re.sub(
-        r"\\section\{Appendix A\. Lean module index\}",
+        r"\\section\{Appendix [AB]\. Lean module index\}",
         r"\\section{Lean module index}",
         latex,
     )
@@ -415,10 +415,13 @@ def insert_list_of_figures(latex: str) -> str:
 
 
 def insert_appendix_command(latex: str) -> str:
-    marker = r"\section{Lean module index}"
-    if marker not in latex:
-        raise RuntimeError(f"missing {marker!r} in LaTeX output")
-    return latex.replace(marker, r"\appendix" + "\n" + marker, 1)
+    for marker in (
+        r"\section{Concordance methodology}",
+        r"\section{Lean module index}",
+    ):
+        if marker in latex:
+            return latex.replace(marker, r"\appendix" + "\n" + marker, 1)
+    raise RuntimeError("missing appendix section in LaTeX output")
 
 
 def cleanup_abstract_latex(latex: str) -> str:
