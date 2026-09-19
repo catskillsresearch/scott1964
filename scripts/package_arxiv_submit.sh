@@ -7,6 +7,7 @@ cd "$ROOT"
 
 TEX="arxiv.tex"
 CMU_STYLE="cmu-titlepage2.sty"
+SCOTT_PDF="sources/ScottMeasurement1964.pdf"
 LISTINGS_DIR="lean-listings"
 FIGURES_DIR="figures"
 OUT_DIR="dist"
@@ -31,6 +32,10 @@ if [[ ! -f "$TEX" ]]; then
 fi
 if [[ ! -f "$CMU_STYLE" ]]; then
   echo "error: missing $CMU_STYLE" >&2
+  missing=1
+fi
+if [[ ! -f "$SCOTT_PDF" ]]; then
+  echo "error: missing $SCOTT_PDF" >&2
   missing=1
 fi
 if [[ ! -d "$LISTINGS_DIR" ]]; then
@@ -67,6 +72,7 @@ from pathlib import Path
 sources = [
     {"filename": "arxiv.tex", "usage": "toplevel"},
     {"filename": "cmu-titlepage2.sty", "usage": "include"},
+    {"filename": "sources/ScottMeasurement1964.pdf", "usage": "include"},
 ]
 for path in sorted(p for p in Path("lean-listings").iterdir() if p.is_file()):
     sources.append({"filename": path.as_posix(), "usage": "include"})
@@ -88,6 +94,7 @@ zip -r "$ZIP" \
   00README.json \
   "$TEX" \
   "$CMU_STYLE" \
+  "$SCOTT_PDF" \
   "$LISTINGS_DIR" \
   "${LEAN_FILES[@]}" \
   "${FIGURE_PNGS[@]}"

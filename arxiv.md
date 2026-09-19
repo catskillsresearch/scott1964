@@ -57,9 +57,9 @@ a target for mechanization.
 
 ### 1.2 Retrospective Remarks by Dana S. Scott
 
-> **Editorial placeholder.** Prof. Scott's approved retrospective remarks will
-> be inserted here before publication. No language is attributed to him in this
-> draft.
+For some time a group of colleagues of mine have been helping get PDFs of my old papers in shape to archive in the CMU Library. Two of them, Brian Milnes and Lars Ericson, are long ago CMU students from the 1980s.  As a result of hearing a recent Milnes' Zoom talk from CMU, I arranged for him to give his talk in Berkeley at the Topos Institute.  Subsequently he and I started a collaboration so I could learn to use an AI Agent, and that is how we discovered recent work of Ericson when the agent did a literature search.
+
+As an example of some easy-to-understand mathematics, I asked Ericson to use AI Agents to formalize in Lean 4 this old paper of mine from 1964. This report is on how the formalization was done and verified, and — more importantly — on how a human can read it and understand the results and the whole process. We hope this can then be a good model for presenting other formalization work.
 
 ## 2. Mathematical Background
 
@@ -2458,7 +2458,8 @@ bash scripts/generate_arxiv_with_code.sh              # → arxiv_with_code.md
 `lake build` checks the `Scott1964` library (and optional `Solution` re-export).
 
 `arxiv_with_code.md` is generated (narrative, Concordance methodology
-appendix, and Lean module index with GitHub links). Regenerate when
+appendix, Lean module index with GitHub links, and the Scott 1964 source
+PDF as Appendix C). Regenerate when
 `arxiv.md` or listed sources change; build the PDF and arXiv zip with
 `bash scripts/build_arxiv_pdf.sh`.
 

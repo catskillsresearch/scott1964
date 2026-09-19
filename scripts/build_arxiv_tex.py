@@ -180,6 +180,12 @@ def normalize_appendix_headings(text: str) -> str:
         flags=re.MULTILINE,
     )
     text = re.sub(
+        r"^#\s+Appendix C: Scott 1964 source paper\s*$",
+        "## Scott 1964 source paper",
+        text,
+        flags=re.MULTILINE,
+    )
+    text = re.sub(
         r"^##\s+`(Scott1964(?:\.lean|/[^`]+))`\s*$",
         r"### \1",
         text,
@@ -397,20 +403,43 @@ def cleanup_pandoc_latex(latex: str) -> str:
         r"\\section{Lean module index}",
         latex,
     )
+    latex = re.sub(
+        r"\\section\{Appendix C:?\s*Scott 1964 source paper\}",
+        r"\\section{Scott 1964 source paper}",
+        latex,
+    )
     latex = re.sub(r"\n{3,}", "\n\n", latex)
     return latex
 
 
-def insert_list_of_figures(latex: str) -> str:
-    """Insert \\listoffigures immediately before the References section."""
-    anchor = r"\hypertarget{references}{%"
-    if anchor not in latex:
-        anchor = r"\section{References}"
-    if anchor not in latex:
-        print("warning: missing References anchor; skipping \\listoffigures", file=sys.stderr)
-        return latex
-    block = "\\clearpage\n\\listoffigures\n\\clearpage\n\n"
-    return latex.replace(anchor, block + anchor, 1)
+def insert_front_matter_lists(latex: str) -> str:
+    """Put the table of contents and list of figures at the start of the body."""
+    block = (
+        "\\tableofcontents\n"
+        "\\clearpage\n"
+        "\\listoffigures\n"
+        "\\clearpage\n\n"
+    )
+    return block + latex
+
+
+SCOTT_SOURCE_PDF = ROOT / "sources" / "ScottMeasurement1964.pdf"
+SCOTT_SOURCE_SECTION = r"\section{Scott 1964 source paper}"
+
+
+def insert_scott_source_pdf(latex: str) -> str:
+    """Glue the 1964 journal PDF on after the Appendix C heading."""
+    if SCOTT_SOURCE_SECTION not in latex:
+        raise RuntimeError("missing Scott 1964 source appendix in LaTeX output")
+    if not SCOTT_SOURCE_PDF.is_file():
+        raise RuntimeError(f"missing {SCOTT_SOURCE_PDF}")
+    include = textwrap.dedent(
+        r"""
+        \clearpage
+        \includepdf[pages=-,width=\textwidth,height=0.95\textheight,keepaspectratio,pagecommand={\thispagestyle{plain}}]{sources/ScottMeasurement1964.pdf}
+        """
+    ).strip()
+    return latex.rstrip() + "\n\n" + include + "\n"
 
 
 def insert_appendix_command(latex: str) -> str:
@@ -504,8 +533,9 @@ def main() -> int:
     latex_body = pandoc_to_latex(body, shift=True)
     latex_body = inject_placeholders(latex_body, placeholders)
     latex_body = cleanup_pandoc_latex(latex_body)
-    latex_body = insert_list_of_figures(latex_body)
+    latex_body = insert_front_matter_lists(latex_body)
     latex_body = insert_appendix_command(latex_body)
+    latex_body = insert_scott_source_pdf(latex_body)
 
     abstract_latex = pandoc_to_latex(github_math_to_tex(abstract_md), shift=False) if abstract_md else ""
     abstract_latex = cleanup_abstract_latex(abstract_latex)

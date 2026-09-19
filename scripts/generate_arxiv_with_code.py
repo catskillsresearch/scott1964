@@ -127,8 +127,9 @@ def main() -> None:
         "**Review copy.** The narrative body matches [`arxiv.md`](arxiv.md) "
         "(excluding the title block through the first `---`). "
         "This file appends **Appendix B: Lean module index** with GitHub links "
-        "to every library file (no inlined full source). Appendix A is the "
-        "Concordance methodology section from `arxiv.md`.\n\n"
+        "to every library file (no inlined full source) and **Appendix C: "
+        "Scott 1964 source paper**. Appendix A is the Concordance methodology "
+        "section from `arxiv.md`.\n\n"
     )
     parts.append("---\n\n")
     parts.append("## Document map\n\n")
@@ -136,7 +137,8 @@ def main() -> None:
     parts.append("| --- | --- |\n")
     parts.append("| **Narrative** | Full `arxiv.md` body with inline Lean gists |\n")
     parts.append("| **Appendix A** | Concordance methodology |\n")
-    parts.append("| **Appendix B** | Hyperlinked module index |\n\n")
+    parts.append("| **Appendix B** | Hyperlinked module index |\n")
+    parts.append("| **Appendix C** | Scott 1964 source PDF |\n\n")
     parts.append("---\n\n")
     parts.append("# Narrative (from arxiv.md)\n\n")
     parts.append(body)
@@ -158,6 +160,16 @@ def main() -> None:
 
     total_lines = sum(len((ROOT / f).read_text().splitlines()) for f in FILES)
     parts.append(f"**Total:** {len(FILES)} modules, {total_lines} lines of Lean.\n\n")
+    parts.append("---\n\n")
+    parts.append("# Appendix C: Scott 1964 source paper\n\n")
+    parts.append(
+        "The following pages reproduce the working source used throughout this "
+        "report: Dana S. Scott, *Measurement Structures and Linear Inequalities*, "
+        "Journal of Mathematical Psychology **1** (1964), 233--247, from "
+        "`sources/ScottMeasurement1964.pdf`. The journal PDF is not licensed "
+        "under this repository's Apache-2.0 terms; see `NOTICE` and "
+        "`sources/README.md`.\n\n"
+    )
 
     out = ROOT / "arxiv_with_code.md"
     out.write_text("".join(parts))

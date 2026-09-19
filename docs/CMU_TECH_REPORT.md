@@ -52,9 +52,9 @@ series and arXiv cross-archive.
    correspondence email.
 5. Run `python3 scripts/check_concordance.py`, `lake build`, and
    `bash scripts/build_arxiv_pdf.sh`.
-6. Inspect the cover, abstract, numbered figures, List of Figures,
-   acknowledgments, references, Concordance methodology appendix, and Lean
-   module appendix.
+6. Inspect the cover, abstract, table of contents, List of Figures,
+   numbered figures, acknowledgments, references, Concordance methodology
+   appendix, Lean module appendix, and the Scott 1964 source-paper appendix.
 7. Upload `dist/arxiv_submit.zip` only after deleting prior arXiv submission
    files so the source set is replaced rather than merged.
 
