@@ -39,21 +39,61 @@ build pipeline are publicly available with this report.
 
 ### 1.1 Historical context
 
-Measurement theory asks when qualitative comparisons can be represented by
-real numbers. A relation on alternatives might be represented by utility
-differences, a relation on pairs might be represented by the sum of two
-utilities, and a relation on events might be represented by a finitely
-additive probability. The difficult direction is sufficiency: given only
-qualitative axioms, why must a numerical representation exist?
+Measurement theory studies how observed or judged structure can be expressed
+numerically. Here “measurement” need not involve a physical instrument.
+The starting data may instead be statements such as “$x$ is definitely
+preferred to $y$,” “the change from $y$ to $x$ is at least as large as the
+change from $w$ to $z$,” or “event $E$ is at least as likely as event $F$.”
+A numerical representation assigns real numbers while preserving exactly
+those comparisons. This question is broad: it connects the foundations of
+measurement with utility theory, mathematical psychology, decision theory,
+and probability.
 
-Published in the first volume of the *Journal of Mathematical Psychology* in
-1964 **[Sco64]**, Scott's paper organizes several such representation questions around a
-single theory of finite systems of homogeneous linear inequalities. Its
-applications link abstract cancellation principles to utility and probability
-representations, making the paper an early common foundation for topics now
-spread across mathematical psychology, decision theory, and formal methods.
-This formalization was undertaken after Dana S. Scott suggested the paper as
-a target for mechanization.
+The three applications in Scott's paper illustrate different forms that such
+a representation can take. For alternatives, imagine that two objects count
+as discernibly different only when their scores differ by at least one unit:
+$xPy$ is represented by $f(x)\geq f(y)+1$. Nearby scores can then model
+indifference even when that indifference is not transitive. For pairs, imagine
+bundles containing one item of each of two kinds; comparing
+$(x,x')$ with $(y,y')$ by
+$f(x)+f'(x')\geq f(y)+f'(y')$ says that the two components contribute
+additively. For events, a judgment such as “rain is at least as likely as a
+train delay” is represented by $\mu(E)\geq\mu(F)$, where $\mu$ is a finitely
+additive probability. In each case qualitative data are being translated into
+arithmetic, but the arithmetic has a different interpretation.
+
+Representation theorems have two directions. **Necessity** asks which
+qualitative laws must hold whenever a numerical representation already
+exists; this direction is usually checked by calculating with the proposed
+numbers. **Sufficiency** starts only from those qualitative laws and proves
+that some suitable numerical assignment must exist. Sufficiency is the harder
+and more consequential direction: without it, a list of axioms describes
+properties of a model one hopes to have, but does not show that the model can
+be constructed. A necessary-and-sufficient theorem therefore identifies
+exactly when qualitative observations admit the intended numerical reading.
+
+Scott's article belongs to a developing program in representational
+measurement. Luce's work on semiorders supplied the initial setting for
+intransitive indifference **[Luc56]**, and Scott and Suppes had already given
+a complete finite representation theorem for that problem **[SS58]**.
+Kraft, Pratt, and Seidenberg had treated finite qualitative probability
+**[KPS59]**, while work on additive and conjoint measurement provided the
+setting for comparisons of pairs and differences **[LT64]**. Published in the
+first volume of the *Journal of Mathematical Psychology* in 1964
+**[Sco64]**, Scott's paper did more than collect these questions: it showed
+that a common finite linear-inequality method could generate their
+representation conditions. Cancellation axioms, additive representations,
+and separation arguments subsequently became standard themes in systematic
+treatments of measurement theory **[KLS71]**.
+
+That unification makes the article a particularly informative formalization
+target. It has a reusable mathematical core, three applications with familiar
+interpretations, and proofs that move between qualitative relations,
+finite-dimensional geometry, and explicit numerical models. A proof assistant
+must make every move in that passage precise, while a useful report must also
+recover the human meaning of the resulting definitions and proof terms. This
+formalization was undertaken after Dana S. Scott suggested the paper as a
+target for mechanization.
 
 ### 1.2 Retrospective Remarks by Dana S. Scott
 
@@ -65,9 +105,35 @@ As an example of some easy-to-understand mathematics, I asked Ericson to use AI 
 
 ### 2.1 Finite linear inequalities and cancellation
 
-Scott's paper gives a common answer. Encode each qualitative comparison as a
-linear inequality between vectors, then apply a finite separation theorem.
-For a finite symmetric set $X$ in a real vector space and a chosen
+The common question behind the examples is this: when does a finite
+qualitative relation agree *exactly* with inequalities produced by one
+real-valued function? “Exactly” requires both directions. Every declared
+comparison must become a valid inequality, and every valid inequality among
+the encoded objects must correspond to a declared comparison. Solving the
+question directly and separately for each kind of relation would hide their
+shared structure.
+
+Scott's answer is to encode each qualitative comparison as a vector and ask
+for one linear functional that gives every vector the prescribed sign. A
+utility comparison between $a$ and $b$, for example, can be encoded by the
+difference of their coordinate vectors; applying a functional produces
+$f(a)-f(b)$. A comparison of two-component bundles is encoded by adding the
+coordinates of their components, and an event is encoded by its $0/1$
+incidence vector on the underlying atoms. After these translations, preference,
+additive utility, and comparative probability all become finite systems of
+homogeneous linear inequalities.
+
+The obstruction also has a qualitative interpretation. If positively judged
+comparisons can be added with positive weights to obtain the zero vector, then
+any representing functional must assign zero to the whole sum. It cannot make
+one summand strictly positive while keeping all the others nonnegative.
+**Cancellation** rules out precisely such contradictory ledgers of
+comparisons. A finite separation theorem then turns the absence of a
+contradictory ledger into a functional that separates strict comparisons from
+neutral ones. Thus necessity is obtained by applying a functional to a
+vanishing sum, while sufficiency is supplied by geometric separation.
+
+Formally, for a finite symmetric set $X$ in a real vector space and a chosen
 "nonnegative" part $N\subseteq X$, a realization is a linear functional
 $\varphi$ satisfying
 
@@ -100,21 +166,79 @@ def WeightedSequenceCancellation (X N : Set L) : Prop :=
 ### 2.2 Solvable measurement structures
 
 The three applications use different incidence vectors but the same engine.
+The informal questions and their numerical answers are:
 
 1. **Intransitive indifference.** A strict relation $P$ on a finite set is
-   represented by $xPy\iff f(x)\geq f(y)+1$.
+   interpreted as “noticeably preferred.” It is represented by
+   $xPy\iff f(x)\geq f(y)+1$. Two alternatives less than one unit apart are
+   indifferent; because “within one unit” need not be transitive, the model
+   captures limited discrimination rather than forcing indifference classes.
 2. **Ordered differences.** Comparisons of pairs are represented first by
-   $f(x)+f'(x')$, then reversal combines the two scales into one utility
-   difference $f(x)-f(y)$.
+   an additive score $f(x)+f'(x')$. When a four-place relation instead asks
+   whether the change from $y$ to $x$ is at least the change from $w$ to $z$,
+   reversal combines the two scales into the single utility difference
+   $f(x)-f(y)$.
 3. **Subjective probability.** An event in a finite Boolean algebra is sent
-   to its $0/1$ incidence vector on atoms. A separating functional gives
-   atom weights, which normalize to a probability.
+   to its $0/1$ incidence vector on atoms. Qualitative comparisons of events
+   become comparisons of sums of atom weights. A separating functional gives
+   those weights, which normalize to a finitely additive probability.
 
 The formalization follows this mathematical decomposition rather than
 treating the eight theorems as unrelated endpoints. It also records where a
 proof route differs from Scott's exposition: most importantly, Theorem 2.1
 currently uses a direct finite Scott–Suppes staircase construction, while
 Scott's local cycle reductions are formalized separately.
+
+### 2.3 A proof-development lifecycle
+
+This case study also illustrates why a mathematically inclined reader might
+formalize an existing proof. Formalized mathematics can be viewed as an
+emerging **proof-development lifecycle**, analogous—but not identical—to the
+software development lifecycle. A theorem must be stated against precise
+interfaces, decomposed into reusable components, checked continuously as those
+components change, and delivered with enough documentation and provenance for
+another person to audit it. Proof development differs from ordinary
+programming in two important respects: discovering a proof can be the central
+difficulty, and a successful kernel check gives unusually strong assurance
+about the formal statement while still leaving humans responsible for whether
+that statement faithfully expresses the intended mathematics.
+
+Several layers make such a lifecycle practical here:
+
+1. Lean provides the basic language of types, propositions, functions,
+   quantifiers, and equality.
+2. The elaborator and common proof tools provide routine reasoning support,
+   including rewriting, simplification, and certified arithmetic automation.
+3. Mathlib provides domain-independent mathematical infrastructure: finite
+   sums and permutations, finite-dimensional linear algebra, convexity and
+   separation, quotient orders, and finite Boolean algebras.
+4. This repository supplies the measurement-specific layer absent from the
+   general library: cancellation predicates, incidence-vector encodings,
+   Scott–Suppes preference constructions, and the interfaces for utility and
+   probability representations.
+
+The boundaries between these layers are mathematically informative. A
+reference used in the 1964 proof need not already exist in a library under the
+same name or formulation. The formalizer can identify the property actually
+needed, derive it from available results, and isolate the new
+domain-specific argument. In this development, for example, Mathlib's
+compact-closed separation theorem replaces Scott's cited finite-polyhedral
+separation result, while the measurement-theoretic reductions are proved
+locally.
+
+AI-assisted drafting can reduce the cost of searching libraries, proposing
+encodings, and translating informal proof steps, but it does not remove the
+need for source comparison, theorem design, or kernel verification. Moreover,
+**autoformalization**—moving from prose to formal statements and proofs—is
+only half of the communication problem. The reverse movement, sometimes
+called **deformalization**, explains machine-checked objects in ordinary
+mathematical language and relates them back to the source question. This
+report makes that return path explicit: its architecture and theorem
+inventory expose the formal interfaces, its proof narratives explain the
+mathematics, and the source–Lean concordance places Scott's text, exact Lean
+declarations, and human-readable reconstructions side by side. That
+combination of formal certificate and readable reconstruction is the model
+for presenting formalization work tested by this article.
 
 ## 3. Lean 4 Architecture and Design Decisions
 
@@ -204,6 +328,12 @@ What mathlib does not supply is Scott's measurement-theoretic interface:
 the sign and cancellation conditions, relation-difference encoding,
 Scott–Suppes weak order, pair permutation principle, atom-vector transport,
 or generalized Kelley condition. Those constructions are developed here.
+This division of labor is also reflected in the exposition. Each major result
+is presented first as a question about qualitative structure, then as a
+mathematical reduction, and finally as a checked Lean declaration. The code
+shows what the machine verifies; the surrounding proof narrative explains why
+the definitions express Scott's question and why the reduction works. Section
+4 closes the loop by aligning both views with the source text.
 
 ### 3.3 Proof dependency structure
 
@@ -2486,6 +2616,15 @@ environment under the pinned version of Mathlib. The human authors remain
 responsible for the selection and interpretation of mathematical claims; no
 large language model is listed as an author.
 
+Verification and explanation therefore serve different, complementary roles.
+Lean checks that a proof term establishes the formal theorem from its stated
+assumptions. Human review checks the other direction of the translation:
+that the theorem is neither weaker nor stronger than the source claim, that
+its definitions carry the intended interpretation, and that divergences are
+reported rather than hidden. The concordance and mathematical
+reconstructions make this human-facing check inspectable instead of treating
+formal source code as self-explanatory.
+
 ## 6. Discussion and Future Work
 
 The formalization shows that Scott's common linear-inequality engine can be
@@ -2494,6 +2633,16 @@ distinct combinatorics of preference, utility-difference, and probability
 applications. The verified equivalence between atom-count and literal
 characteristic-vector cancellation is especially useful for separating the
 paper's mathematical content from representational choices made in Lean.
+
+Formalization of pure mathematics already provides many examples of
+machine-checked proof. The additional opportunity in this case is
+presentational: Scott's examples are understandable outside the specialty,
+yet they exercise a nontrivial stack of order theory, combinatorics, linear
+algebra, convex separation, and probability. The layered account used here
+can therefore serve as a model for reports aimed at both formalization experts
+and mathematically interested readers: state the motivating question, expose
+the reusable library boundary, show the formal certificate, and translate the
+certificate back into a source-facing argument.
 
 Two proof-development questions remain open. First,
 `Preference/Cycle.lean` records Scott's local cycle-shortening lemmas, but a
@@ -2556,8 +2705,8 @@ We gratefully acknowledge assistance from the following tools:
 
 ## References
 
-- **[Sco64]** D. S. Scott. *Measurement Structures and Linear Inequalities*.
-  Journal of Mathematical Psychology **1** (1964), 233–247.
+- **[Luc56]** R. D. Luce. *Semiorders and a Theory of Utility
+  Discrimination*. Econometrica **24** (1956), 178–191.
 - **[SS58]** D. Scott and P. Suppes. *Foundational Aspects of Theories of
   Measurement*. Journal of Symbolic Logic **23** (1958), 113–128.
 - **[KPS59]** C. H. Kraft, J. W. Pratt, and A. Seidenberg. *Intuitive
@@ -2565,6 +2714,14 @@ We gratefully acknowledge assistance from the following tools:
   (1959), 408–419.
 - **[Kel59]** J. L. Kelley. *Measures on Boolean Algebras*. Pacific Journal of
   Mathematics **9** (1959), 1165–1177.
+- **[LT64]** R. D. Luce and J. W. Tukey. *Simultaneous Conjoint Measurement:
+  A New Type of Fundamental Measurement*. Journal of Mathematical Psychology
+  **1** (1964), 1–27.
+- **[Sco64]** D. S. Scott. *Measurement Structures and Linear Inequalities*.
+  Journal of Mathematical Psychology **1** (1964), 233–247.
+- **[KLS71]** D. H. Krantz, R. D. Luce, P. Suppes, and A. Tversky.
+  *Foundations of Measurement, Volume I: Additive and Polynomial
+  Representations*. Academic Press, 1971.
 
 <!-- AI_MODEL_REFERENCES -->
 <!-- /AI_MODEL_REFERENCES -->
