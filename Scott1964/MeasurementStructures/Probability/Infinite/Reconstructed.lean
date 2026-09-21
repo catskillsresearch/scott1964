@@ -4,14 +4,18 @@ import Scott1964.MeasurementStructures.Probability.Infinite.Kelley
 /-!
 # A modern reconstruction of the infinite probability theorem
 
-Scott's published 1964 paper states and proves the finite theorem.  The result
-below is a modern functional-analytic reconstruction of the corresponding
-infinite statement; it is not presented as Scott's unpublished theorem.
+Scott's published 1964 paper states and proves the finite theorem, then only
+announces an unstated infinite extension. The result below is a new, stronger
+modern `iff` characterization first presented in this project; it is not
+presented as Scott's unpublished theorem.
 
 Weak comparisons generate a closed cone in the universal event span, expressed
 here by its continuous dual polar.  The additional generalized Kelley condition
 gives a countable cover of the strict comparisons by closed convex upper sets.
-The real Hahn--Banach theorem in `HahnBanach.lean`, through
+This adapts the countable-cover/separation method of J. L. Kelley, *Measures on
+Boolean Algebras* (1959), but the event-span formulation, condition, and theorem
+statement are not attributed to Kelley. The real Hahn--Banach theorem in
+`HahnBanach.lean`, through
 `KelleyCover.exists_combined_separator`, then supplies one functional which is
 nonnegative on every weak comparison and positive on every strict comparison.
 -/
@@ -201,9 +205,9 @@ private theorem generalizedKelley_realizable
         linarith
       exact (not_lt_of_ge hμxy) hlt
 
-/-- Modern reconstruction of an infinite analogue of Scott's Theorem 4.1.
-This is deliberately documented as a reconstruction, not as an attribution of
-an unpublished theorem to Scott. -/
+/-- New modern `iff` characterization for an infinite analogue of Scott's
+Theorem 4.1, first stated in this project and adapting Kelley's 1959 separation
+method. It is not an attribution of an unpublished theorem to Scott. -/
 theorem reconstructed_infinite_theorem_4_1 (R : B → B → Prop) :
     RealizableProbability R ↔
       ProbNontrivial R ∧ ProbNonneg R ∧ ProbTotal R ∧

@@ -28,7 +28,8 @@ formalizes the rational-to-integer reduction underlying finite sequence
 conditions, and verifies the incidence-vector constructions used by the three
 applications. Supplementary results include the
 Kraft--Pratt--Seidenberg counterexample to de Finetti's axioms and a clearly
-labelled modern infinite reconstruction under a generalized Kelley condition.
+labelled, stronger modern infinite `iff` characterization—first presented
+here and adapting Kelley's 1959 method—under a generalized Kelley condition.
 The Lean library is sorry-free and introduces no project axioms beyond
 Mathlib's classical footprint. Large-language-model assistance was used in
 drafting and proof development, but every accepted declaration is checked by
@@ -268,8 +269,9 @@ results are clearly separated from that inventory:
 - `scott_p15_signed_charge` and its vector form formalize the p. 15
   signed-measure characterization;
 - `deFinetti_axioms_insufficient` integrates the KPS five-atom obstruction;
-- `reconstructed_infinite_theorem_4_1` is a modern theorem motivated by, but
-  not identified with, Scott's closing announcement.
+- `reconstructed_infinite_theorem_4_1` is a new modern theorem first presented
+  here, adapting Kelley's method and motivated by, but not identified with,
+  Scott's closing announcement.
 
 The project is standalone. It imports none of the sibling formalizations of
 Scott's later domain-theory papers.
@@ -416,7 +418,7 @@ Further source-facing or diagnostic results:
 | Ordered-group remark | `finite_local_real_embedding` | Proved for each finite subset |
 | Global obstruction | `no_global_real_additive_lex_realization` | Lexicographic $\mathbb{Z}\times\mathbb{Z}$ has no global additive real representation |
 | KPS counterexample | `deFinetti_axioms_insufficient` | Exact five-atom order satisfies bundled de Finetti axioms but has no probability realization |
-| Infinite analogue | `reconstructed_infinite_theorem_4_1` | Modern result under generalized Kelley condition; not attributed to Scott |
+| Infinite analogue | `reconstructed_infinite_theorem_4_1` | New modern `iff` result adapting Kelley; not attributed to Scott |
 
 ### 3.5 Formal proof architecture
 
@@ -447,7 +449,13 @@ theorem scott_theorem_1_1 {X N : Set L}
       SignComplete X N ∧ WeightedSequenceCancellation X N
 ```
 
-The necessary direction is elementary: apply a realizing functional to a
+The two sides are exact. `Realizable X N` asks for one linear functional that
+is nonnegative precisely on the vectors declared to be in $N$.
+`SignComplete` says that each vector in the symmetric test set has at least
+one weak sign: $x\in N$ or $-x\in N$. `WeightedSequenceCancellation` says that
+if vectors in $N$, each multiplied by a strictly positive real coefficient,
+sum to zero, then every summand is neutral—its negative also belongs to $N$.
+The necessary direction is elementary: apply a realizing functional to such a
 positive dependence and compare signs.
 
 #### Theorem 1.2 — rationalization
@@ -470,6 +478,13 @@ theorem scott_theorem_1_2 {S : Type*} [Fintype S] {X N : Set (S → ℝ)}
     Realizable X N ↔ SignComplete X N ∧ UnweightedSequenceCancellation X N
 ```
 
+Here `UnweightedSequenceCancellation` has the same conclusion as the weighted
+condition, but its hypothesis is simply that a nonempty finite sequence of
+vectors in $N$ sums to zero. Repetition supplies integer multiplicity. The
+rational-coordinate and finite-dimensional hypotheses are what permit the
+positive real coefficients of Theorem 1.1 to be replaced by rational
+coefficients, cleared denominators, and finally repetitions.
+
 #### Theorems 1.3 and 1.4 — relations and additive closure
 
 For a relation $R$ on a finite set $Y$, Theorem 1.3 moves from points to
@@ -477,8 +492,8 @@ differences $x-y$. Completeness gives sign completeness of the difference
 set. Scott's paired equal-sums condition gives unweighted cancellation:
 
 $$
-\sum_i x_i=\sum_i y_i,\quad x_i R y_i\ (i\neq 0)
-\quad\Longrightarrow\quad y_0 R x_0.
+\sum_i x_i=\sum_i y_i,\quad x_i R y_i\ \text{for every }i
+\quad\Longrightarrow\quad y_i R x_i\ \text{for every }i.
 $$
 
 The proof constructs the symmetric rational difference set and applies
@@ -508,6 +523,14 @@ theorem scott_theorem_1_4 {S : Type*} [Fintype S]
         ExtendsOn Y (additiveClosure Y) R Rplus ∧
         StrictlyMonotonic (additiveClosure Y) Rplus
 ```
+
+On the right side of Theorem 1.4, `ExtendsOn` requires agreement with $R$ on
+the original set. `StrictlyMonotonic` requires the extension to be complete,
+to preserve two comparisons when their respective sides are added, and to
+cancel an equal-total equation: if $x_0+x_1=y_0+y_1$ and $x_1$ is weakly above
+$y_1$, then $y_0$ is weakly above $x_0$. Thus the theorem characterizes the
+same linear-functional representation by an explicitly additive relational
+extension.
 
 #### Theorem 2.1 — intransitive indifference
 
@@ -563,15 +586,29 @@ theorem theorem_3_1 {A : Type u} {A' : Type v}
     RealizableUtilityPair V ↔ PairTotal V ∧ PairPermutation V
 ```
 
+`PairTotal` says that every two mixed pairs are comparable.
+`PairPermutation` takes a finite list $(x_i,x'_i)$ and independently permutes
+its first coordinates by $\pi$ and second coordinates by $\sigma$. If, at
+every index except the distinguished index $0$, the original pair is weakly
+above $(x_{\pi(i)},x'_{\sigma(i)})$, then the distinguished comparison must
+hold in reverse. This is the cancellation condition equivalent to exact
+representation by the additive score $f(x)+f'(x')$.
+
 Theorem 3.2 treats a difference comparison $D(x,y,z,w)$ first as a pair
 comparison represented by $g(x)+q(y)$. Reversal supplies the second
 inequality needed to combine the scales. The function $f(x)=g(x)-q(x)$
 then represents the ordered differences. Thus the sufficiency proof is a
 short application of Theorem 3.1 plus `difference_of_pair_and_reversal`.
 
-Condition `(2_D)` remains an infinite scheme: Lean quantifies over every
-`n : ℕ` and both permutations of `Fin (n + 1)`. No finite truncation is
-claimed.
+The right side of Theorem 3.2 consists of three requirements. `DiffTotal`
+makes every two ordered differences comparable. `DiffPermutation` is the
+analogous distinguished-index cancellation rule after independently
+permuting the left and right entries of a finite list of ordered pairs.
+`DiffReversal` says
+$D(x,y,z,w)\Rightarrow D(w,z,y,x)$, as required when both differences are
+multiplied by $-1$. The permutation condition remains an infinite scheme:
+Lean quantifies over every `n : ℕ` and both permutations of
+`Fin (n + 1)`. No finite truncation is claimed.
 
 #### Theorem 4.1 — finite subjective probability
 
@@ -604,6 +641,18 @@ theorem theorem_4_1 {B : Type u} [BooleanAlgebra B] [Fintype B]
       ProbNontrivial R ∧ ProbNonneg R ∧
       ProbTotal R ∧ ProbCancellation R
 ```
+
+The left side requires one normalized, nonnegative, finitely additive
+probability $\mu$ such that $R(x,y)$ holds exactly when
+$\mu(x)\geq\mu(y)$. The four conditions on the right are:
+
+1. **Nontriviality:** $\top$ is weakly above $\bot$, but $\bot$ is not weakly
+   above $\top$.
+2. **Nonnegativity:** every event is weakly above $\bot$.
+3. **Totality:** every two events are comparable.
+4. **Cancellation:** for two nonempty finite event lists in which every atom
+   occurs equally often on both sides, comparisons at all
+   non-distinguished positions force the distinguished comparison in reverse.
 
 The structure `IsProbability` includes zero at $\bot$, normalization at
 $\top$, finite additivity on disjoint events, and nonnegativity.
@@ -662,16 +711,24 @@ theorem deFinetti_axioms_insufficient :
 Scott's final paragraph announces an extension to infinite Boolean algebras
 but gives neither a theorem statement nor hypotheses. The repository
 therefore does not attempt to recover or attribute that unpublished result.
-Instead it proves a modern analogue under a fully explicit condition.
+Instead it first states and proves a new modern `iff` characterization. It is
+stronger and more explicit than the bare existence announcement recoverable
+from Scott's sentence, and its formulation uses modern normed-space
+infrastructure not present in the 1964 article.
 
 `EventSpace.lean` embeds each event into the normed span of its evaluation
 function over all finitely additive probabilities. Stone-point indicators
 prove that this encoding is faithful. Weak comparisons generate a closed
-cone, described by its continuous-dual polar. Strict comparison vectors are
-covered by countably many closed convex upper sets avoiding zero—the
-`GeneralizedKelleyCondition`.
+cone, described by its continuous-dual polar: a vector belongs to the cone
+when every continuous linear functional that is nonnegative on all declared
+weak comparisons is also nonnegative on that vector. A strict-comparison
+vector is $e(x)-e(y)$ when the reverse weak comparison $R(y,x)$ fails.
+`GeneralizedKelleyCondition` requires all such strict vectors to lie in the
+weak cone and to be covered by countably many layers. Each layer must be
+closed, convex, exclude zero, and remain closed upward when any weak-cone
+vector is added.
 
-Following Kelley's measure-existence method **[Kel59]**, `Kelley.lean`
+Adapting Kelley's measure-existence method **[Kel59]**, `Kelley.lean`
 separates each layer from zero and combines the separators with
 summable positive coefficients. The resulting continuous functional is
 nonnegative on every weak comparison and strictly positive on every strict
@@ -685,8 +742,12 @@ theorem reconstructed_infinite_theorem_4_1 (R : B → B → Prop) :
         GeneralizedKelleyCondition R
 ```
 
-This theorem is a supplementary reconstruction, not a ninth theorem of
-Scott's published paper.
+The left side is exact representation on an arbitrary Boolean algebra by a
+normalized, nonnegative, finitely additive probability. The right side
+requires nontriviality, nonnegativity, totality, and the Kelley-cover condition
+just described. The theorem is a supplementary original result of this
+project, adapting Kelley's proof method; it is not a ninth theorem of Scott's
+published paper and is not identified with his unstated future result.
 
 ### 3.6 Source fidelity
 
@@ -728,8 +789,10 @@ The development is classical. The disclosed axiom footprint is
   `theorem_4_1_vector` separately proves the equivalent literal equality of
   characteristic-vector sums.
 - Scott's closing paragraph does not state his infinite theorem.
-  `reconstructed_infinite_theorem_4_1` is explicitly a modern
-  Hahn–Banach/Kelley reconstruction under `GeneralizedKelleyCondition`.
+  `reconstructed_infinite_theorem_4_1` is a new, stronger modern `iff`
+  characterization first stated here under a generalized Kelley condition.
+  It adapts Kelley's 1959 countable-cover and separation method but is not
+  attributed to Kelley or identified with Scott's unstated result.
 - The KPS development formalizes an external 1959 counterexample used to
   delimit the strength of de Finetti's axioms; it is not a numbered theorem
   of Scott's article.

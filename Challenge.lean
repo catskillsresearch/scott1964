@@ -14,6 +14,30 @@ This Mathlib-only module states Scott's eight published theorems 1.1--1.4,
 reconstruction of the infinite probability result mentioned, but not stated
 or proved, in Scott's closing paragraph.
 
+The characterizations below all have the same orientation: the left side says
+that one real-valued numerical model represents the qualitative relation
+exactly; the right side lists the qualitative conditions equivalent to the
+existence of that model. In particular:
+
+* Theorems 1.1 and 1.2 characterize a prescribed nonnegative sign pattern by
+  sign completeness and weighted or repeated-summand cancellation.
+* Theorem 1.3 characterizes a complete relation by equal-sum sequence
+  cancellation, and Theorem 1.4 gives the equivalent extension to an additive
+  closure with addition and cancellation laws.
+* Theorem 2.1 characterizes unit-threshold preference by irreflexivity and two
+  four-alternative axioms.
+* Theorems 3.1 and 3.2 characterize additive pair utility and ordered utility
+  differences by totality, independent-permutation cancellation, and, for
+  differences, reversal.
+* Theorem 4.1 characterizes finite probability representation by
+  nontriviality, bottom-minimality, totality, and atom-count cancellation.
+* The final theorem is a new modern `iff` characterization first presented in
+  this project. It adapts Kelley's 1959 countable-cover/separation method and
+  uses Mathlib's modern locally convex separation theory. It is stronger and
+  more explicit than the bare existence announcement in Scott's last
+  paragraph, and is not attributed to Scott as a published or recoverable
+  theorem.
+
 The deliberate `sorry`s are the Palomar challenge holes. `Solution.lean`
 re-exports the sorry-free development with matching declarations.
 -/
@@ -26,17 +50,26 @@ variable {L : Type*} [AddCommGroup L] [Module ℝ L]
 
 def Symmetric (X : Set L) : Prop := ∀ ⦃x⦄, x ∈ X → -x ∈ X
 
+/-- A sign assignment `N ⊆ X` is realizable when one linear functional is
+nonnegative exactly on the vectors declared to lie in `N`. -/
 def Realizable (X N : Set L) : Prop :=
   ∃ φ : Module.Dual ℝ L, ∀ x ∈ X, x ∈ N ↔ 0 ≤ φ x
 
+/-- Every vector in the symmetric test set has at least one declared weak sign:
+the vector itself or its negative lies in `N`. -/
 def SignComplete (X N : Set L) : Prop :=
   ∀ ⦃x⦄, x ∈ X → x ∈ N ∨ -x ∈ N
 
+/-- Weighted cancellation says that if declared-nonnegative vectors with
+strictly positive real weights sum to zero, then every summand is neutral:
+its negative is declared nonnegative too. -/
 def WeightedSequenceCancellation (X N : Set L) : Prop :=
   ∀ (n : ℕ) (x : Fin (n + 1) → L) (c : Fin (n + 1) → ℝ),
     (∀ i, x i ∈ X) → (∀ i, x i ∈ N) → (∀ i, 0 < c i) →
     ∑ i, c i • x i = 0 → ∀ i, -x i ∈ N
 
+/-- Unweighted cancellation is the same zero-sum test with unit coefficients;
+repetition of a vector supplies positive integer multiplicity. -/
 def UnweightedSequenceCancellation (X N : Set L) : Prop :=
   ∀ (n : ℕ) (x : Fin (n + 1) → L),
     (∀ i, x i ∈ X) → (∀ i, x i ∈ N) →
@@ -48,12 +81,18 @@ def IsRationalVector {S : Type*} (x : S → ℝ) : Prop :=
 def IsRationalSet {S : Type*} (X : Set (S → ℝ)) : Prop :=
   ∀ ⦃x⦄, x ∈ X → IsRationalVector x
 
+/-- A relation is realizable when one linear functional represents it exactly
+as weak numerical comparison on `Y`. -/
 def RelationRealizable (Y : Set L) (R : L → L → Prop) : Prop :=
   ∃ φ : Module.Dual ℝ L, ∀ x ∈ Y, ∀ y ∈ Y, R x y ↔ φ y ≤ φ x
 
+/-- Every two members of `Y` are comparable by `R`. -/
 def RelationComplete (Y : Set L) (R : L → L → Prop) : Prop :=
   ∀ ⦃x⦄, x ∈ Y → ∀ ⦃y⦄, y ∈ Y → R x y ∨ R y x
 
+/-- Relational cancellation says that termwise comparisons between two finite
+sequences with equal vector sums must all be ties: every comparison also holds
+in reverse. -/
 def RelationSequenceCancellation (Y : Set L) (R : L → L → Prop) : Prop :=
   ∀ (n : ℕ) (x y : Fin (n + 1) → L),
     (∀ i, x i ∈ Y) → (∀ i, y i ∈ Y) → (∀ i, R (x i) (y i)) →
@@ -119,6 +158,8 @@ def finHead (n : ℕ) : Fin (n + 1) :=
 theorem finHead_eq_zero (n : ℕ) : finHead n = 0 :=
   Fin.ext rfl
 
+/-- A preference relation is realizable when one score function represents it
+exactly as a gap of at least one unit. -/
 def RealizablePreference {A : Type u} (P : A → A → Prop) : Prop :=
   ∃ f : A → ℝ, ∀ x y, P x y ↔ f x ≥ f y + 1
 
@@ -135,15 +176,22 @@ theorem theorem_2_1 {A : Type u} [Fintype A] [Nonempty A] (P : A → A → Prop)
     RealizablePreference P ↔ PrefIrrefl P ∧ PrefQuadA P ∧ PrefQuadB P := by
   sorry
 
+/-- A mixed-pair relation is realizable when two utility functions represent
+it exactly by comparing their additive scores. -/
 def RealizableUtilityPair {A : Type u} {A' : Type v}
     (V : A → A' → A → A' → Prop) : Prop :=
   ∃ f : A → ℝ, ∃ f' : A' → ℝ,
     ∀ x x' y y', V x x' y y' ↔ f x + f' x' ≥ f y + f' y'
 
+/-- Every two mixed pairs are comparable. -/
 def PairTotal {A : Type u} {A' : Type v}
     (V : A → A' → A → A' → Prop) : Prop :=
   ∀ x x' y y', V x x' y y' ∨ V y y' x x'
 
+/-- Pair-permutation cancellation independently permutes the first and second
+coordinates of a finite list of pairs. If every comparison except the
+distinguished one goes from the original pair to its permuted pair, the
+remaining comparison must go in the reverse direction. -/
 def PairPermutation {A : Type u} {A' : Type v}
     (V : A → A' → A → A' → Prop) : Prop :=
   ∀ (n : ℕ) (x : Fin (n + 1) → A) (x' : Fin (n + 1) → A')
@@ -157,17 +205,25 @@ theorem theorem_3_1 {A : Type u} {A' : Type v}
     RealizableUtilityPair V ↔ PairTotal V ∧ PairPermutation V := by
   sorry
 
+/-- A difference relation is realizable when one utility function represents
+it exactly by comparing `f x - f y` with `f z - f w`. -/
 def RealizableDifference {A : Type u} (D : A → A → A → A → Prop) : Prop :=
   ∃ f : A → ℝ, ∀ x y z w, D x y z w ↔ f x - f y ≥ f z - f w
 
 def DiffTotal {A : Type u} (D : A → A → A → A → Prop) : Prop :=
   ∀ x y z w, D x y z w ∨ D z w x y
 
+/-- Difference-permutation cancellation applies the same distinguished-term
+rule after independently permuting the left and right entries of a finite
+list of ordered pairs. -/
 def DiffPermutation {A : Type u} (D : A → A → A → A → Prop) : Prop :=
   ∀ (n : ℕ) (x y : Fin (n + 1) → A) (π σ : Equiv.Perm (Fin (n + 1))),
     (∀ i, i ≠ finHead n → D (x i) (y i) (x (π i)) (y (σ i))) →
       D (x (π (finHead n))) (y (σ (finHead n))) (x (finHead n)) (y (finHead n))
 
+/-- Reversal says that if the difference from `y` to `x` is at least that from
+`w` to `z`, then the oppositely oriented second difference is at least the
+oppositely oriented first one. -/
 def DiffReversal {A : Type u} (D : A → A → A → A → Prop) : Prop :=
   ∀ x y z w, D x y z w → D w z y x
 
@@ -176,6 +232,8 @@ theorem theorem_3_2 {A : Type u} [Fintype A] [Nonempty A]
     RealizableDifference D ↔ DiffTotal D ∧ DiffPermutation D ∧ DiffReversal D := by
   sorry
 
+/-- A finite-additive probability is zero at bottom, one at top, additive on
+disjoint joins, and nonnegative on every event. -/
 structure IsProbability {B : Type u} [BooleanAlgebra B] (μ : B → ℝ) : Prop where
   bot : μ ⊥ = 0
   top : μ ⊤ = 1
@@ -220,21 +278,29 @@ theorem IsProbability.le_one {B : Type u} [BooleanAlgebra B]
     {μ : B → ℝ} (hμ : IsProbability μ) (x : B) : μ x ≤ 1 :=
   hμ.le_one_of_nonnegative hμ.nonnegative x
 
+/-- A qualitative event relation is realizable when one finitely additive
+probability represents it exactly by numerical comparison. -/
 def RealizableProbability {B : Type u} [BooleanAlgebra B] (R : B → B → Prop) : Prop :=
   ∃ μ : B → ℝ, IsProbability μ ∧ ∀ x y, R x y ↔ μ x ≥ μ y
 
 def StrictlyPreferred {B : Type u} (R : B → B → Prop) (x y : B) : Prop :=
   ¬R y x
 
+/-- The certain event is weakly above the impossible event, but not conversely. -/
 def ProbNontrivial {B : Type u} [BooleanAlgebra B] (R : B → B → Prop) : Prop :=
   R ⊤ ⊥ ∧ ¬R ⊥ ⊤
 
+/-- Every event is weakly above the impossible event. -/
 def ProbNonneg {B : Type u} [BooleanAlgebra B] (R : B → B → Prop) : Prop :=
   ∀ x, R x ⊥
 
+/-- Every two events are comparable. -/
 def ProbTotal {B : Type u} [BooleanAlgebra B] (R : B → B → Prop) : Prop :=
   ∀ x y, R x y ∨ R y x
 
+/-- Finite probability cancellation compares two event lists in which each
+atom occurs equally often. If all non-distinguished comparisons go from the
+left list to the right, the distinguished comparison must reverse. -/
 def ProbCancellation {B : Type u} [BooleanAlgebra B] [Fintype B]
     (R : B → B → Prop) : Prop :=
   ∀ (n : ℕ) (x y : Fin (n + 1) → B),
@@ -327,6 +393,9 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
 def ConeUpperSet (C : ProperCone ℝ E) (K : Set E) : Prop :=
   ∀ ⦃x c⦄, x ∈ K → c ∈ C → x + c ∈ K
 
+/-- A Kelley cover places the strict-comparison set inside the weak cone and
+covers it by countably many closed convex sets. Every layer avoids zero and is
+upper-closed under addition of vectors from the weak cone. -/
 structure KelleyCover (C : ProperCone ℝ E) (S : Set E) where
   layer : ℕ → Set E
   strictInCone : S ⊆ C
@@ -341,14 +410,22 @@ variable {B : Type u} [BooleanAlgebra B]
 def comparisonVector (B : Type u) [BooleanAlgebra B] (x y : B) : EventSpan B :=
   event B x - event B y
 
+/-- The weak-comparison cone is the intersection of all continuous-dual closed
+half-spaces that contain every declared weak-comparison vector. Equivalently,
+a vector is in the cone when every continuous linear functional nonnegative
+on all declared weak comparisons is also nonnegative on that vector. -/
 def weakComparisonCone (R : B → B → Prop) : ProperCone ℝ (EventSpan B) :=
   ⨅ (L : StrongDual ℝ (EventSpan B))
     (_hL : ∀ x y, R x y → 0 ≤ L (comparisonVector B x y)),
       (ProperCone.positive ℝ ℝ).comap L
 
+/-- The strict set consists of `event x - event y` whenever the reverse weak
+comparison `R y x` fails. -/
 def strictComparisonSet (R : B → B → Prop) : Set (EventSpan B) :=
   {v | ∃ x y, StrictlyPreferred R x y ∧ v = comparisonVector B x y}
 
+/-- The generalized Kelley condition requires a countable Kelley cover of the
+strict-comparison vectors above the closed weak-comparison cone. -/
 def GeneralizedKelleyCondition (R : B → B → Prop) : Prop :=
   Nonempty (KelleyCover (weakComparisonCone R) (strictComparisonSet R))
 

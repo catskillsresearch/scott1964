@@ -39,7 +39,13 @@ Boolean algebras. Scott's final paragraph only announces an infinite
 extension without stating or proving it; this repository does not attribute
 its `reconstructed_infinite_theorem_4_1` to Scott. That theorem is a modern
 Hahn--Banach/Kelley reconstruction under the explicit
-`GeneralizedKelleyCondition`.
+`GeneralizedKelleyCondition`. Its precise statement is first presented and
+proved in this project. It is a stronger, explicit `iff` characterization on
+arbitrary Boolean algebras, not a recovery of Scott's unpublished statement.
+The proof adapts the countable-cover and Hahn--Banach separation method of
+J. L. Kelley, *Measures on Boolean Algebras*, Pacific Journal of Mathematics
+9 (1959), 1165--1177. The universal event span, weak-comparison cone, and
+generalized Kelley condition used here are not attributed to Kelley.
 
 Beyond the eight numbered theorems, the development formalizes source-facing
 material that is not promoted to a ninth published theorem: Scott's

@@ -43,8 +43,66 @@ modern infinite reconstruction.
 The probability development also includes the finite
 Kraft--Pratt--Seidenberg counterexample. The infinite theorem is not attributed
 to Scott as a published result: Scott only announced an extension in 1964,
-whereas this repository proves a modern Hahn--Banach/Kelley reconstruction
-under an explicit generalized Kelley condition.
+whereas this repository first states and proves a stronger modern
+Hahn--Banach/Kelley `iff` characterization under an explicit generalized
+Kelley condition. Its proof adapts Kelley's 1959 separation method; its exact
+statement is not attributed to either Scott or Kelley.
+
+## Compared characterizations in plain language
+
+Every compared theorem is an equivalence. Its left side says that one
+real-valued numerical model represents the qualitative data exactly; its right
+side gives the conditions under which that model exists.
+
+- **Theorem 1.1.** A linear functional realizes the chosen nonnegative part
+  `N` of a finite symmetric vector set exactly when every vector has at least
+  one weak sign and cancellation holds. Weighted cancellation says that
+  declared-nonnegative vectors with strictly positive real weights cannot sum
+  to zero unless every participating vector is neutral—its negative is also
+  declared nonnegative.
+- **Theorem 1.2.** For finite rational-coordinate vectors, the same
+  representation is equivalent to sign completeness and unweighted
+  cancellation. Repeating a vector supplies an integer multiplicity, replacing
+  the positive real weights of Theorem 1.1.
+- **Theorem 1.3.** A linear functional represents a relation on a finite
+  rational set exactly when the relation is complete and has relational
+  cancellation: if two finite sequences have equal vector sums and every
+  left term is related to its right term, then all those comparisons also hold
+  in reverse.
+- **Theorem 1.4.** The same representation exists exactly when the relation
+  extends to the additive closure of the original set as a complete relation
+  that preserves comparisons under addition and cancels equal totals.
+- **Theorem 2.1.** A finite preference relation has a unit-threshold
+  representation `xPy ↔ f(x) ≥ f(y)+1` exactly when it is irreflexive and
+  satisfies Scott's two four-alternative axioms.
+- **Theorem 3.1.** A relation on mixed pairs is represented exactly by
+  `f(x)+f'(x')` iff it is total and satisfies pair-permutation cancellation.
+  Independently permute the first and second coordinates of a finite list; if
+  every non-distinguished original pair is at least its permuted pair, the
+  distinguished comparison must hold in reverse.
+- **Theorem 3.2.** A four-place relation is represented exactly by comparing
+  utility differences `f(x)-f(y)` iff it is total, satisfies the analogous
+  independent-permutation cancellation scheme, and satisfies reversal:
+  `D(x,y,z,w)` implies `D(w,z,y,x)`.
+- **Theorem 4.1.** A relation on a finite Boolean algebra is represented
+  exactly by a normalized, nonnegative, finitely additive probability iff:
+  the certain event is weakly above the impossible event but not conversely;
+  every event is weakly above the impossible event; every two events are
+  comparable; and atom-count cancellation holds. The last condition compares
+  two finite event lists in which every atom occurs equally often: all
+  non-distinguished comparisons force the distinguished comparison in reverse.
+- **Modern infinite characterization.** On an arbitrary Boolean algebra,
+  probability representation is equivalent to the first three probability
+  conditions above and `GeneralizedKelleyCondition`. Event differences form a
+  normed universal event span. The weak-comparison cone is the closed
+  dual-polar cone forced nonnegative by all continuous linear functionals that
+  are nonnegative on the declared weak comparisons. Strict-comparison vectors
+  must lie in this cone and be covered by countably many closed convex layers,
+  each avoiding zero and closed upward under addition of weak-cone vectors.
+  This is a new, stronger modern `iff` theorem first stated and proved here.
+  It adapts Kelley's 1959 countable-cover/Hahn--Banach method; Scott's final
+  paragraph contains only an announcement, so the theorem is not attributed
+  to him as a published or recoverable statement.
 
 Additional source-facing results include:
 

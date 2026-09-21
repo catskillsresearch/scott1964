@@ -12,8 +12,14 @@ project:
     solvability criterion for finite systems of linear inequalities. The
     development also covers Scott's ordered-group and signed-charge remarks,
     literal vector cancellation, and the KPS obstruction to de Finetti's five
-    axioms. The Lean development was drafted with AI-agent assistance under
-    Lars Warren Ericson's direction and review. Dana S. Scott, Vijay
+    axioms. Every compared equivalence is described predicate-by-predicate in
+    Challenge.lean and the README, including its numerical-representation side
+    and its qualitative cancellation, permutation, reversal, probability, or
+    Kelley-cover side. The additional infinite theorem is a new, stronger
+    modern characterization first stated in this project; it adapts Kelley's
+    1959 countable-cover/separation method and is not attributed to Scott.
+    The Lean development was drafted with AI-agent assistance under Lars
+    Warren Ericson's direction and review. Dana S. Scott, Vijay
     D'Silva, and Brian Milnes are co-authors of the formalization report.
     There is no sorry outside the deliberate
     holes in Challenge.lean, no project-defined axiom, and Mathlib is the only
@@ -41,6 +47,12 @@ status:
     Palomar proof holes, while Solution.lean re-exports all proofs. A ninth
     compared result is explicitly labelled as a modern reconstruction of the
     infinite probability theorem Scott announced but did not publish here.
+    It is an iff characterization for arbitrary Boolean algebras, not merely
+    an existence implication: finite-additive probability representation is
+    equivalent to nontriviality, bottom-minimality, totality, and an explicit
+    generalized Kelley cover of strict-comparison vectors over the closed
+    weak-comparison cone. Scott's final sentence contains no recoverable
+    theorem statement against which to identify this stronger result.
     Supplementary results cover finite local embeddings of linearly ordered
     abelian groups and the lexicographic global obstruction, literal vector
     cancellation and signed charges, and an integrated KPS counterexample to
@@ -75,7 +87,11 @@ fidelity:
     vector-sum form. Theorem 2.1 currently uses the direct Scott–Suppes
     staircase construction, while Scott's local cycle reductions are
     formalized separately. Exact divergences are listed in known_gaps and in
-    arxiv.md.
+    arxiv.md. The reconstructed infinite theorem is first stated and proved in
+    this project. Its countable-cover and separator-combination argument adapts
+    Kelley's 1959 measure-existence method, but its universal event-span
+    formulation, weak-comparison cone, generalized Kelley condition, and iff
+    statement are not claimed to occur in Kelley or Scott.
 
 sources:
   - title: "Measurement Structures and Linear Inequalities"
@@ -90,6 +106,20 @@ sources:
       target and is a co-author, with Lars Warren Ericson, Vijay D'Silva,
       and Brian Milnes, of the resulting technical report. Working PDF:
       sources/ScottMeasurement1964.pdf.
+  - title: "Measures on Boolean Algebras"
+    authors: ["J. L. Kelley"]
+    type: "paper"
+    location: >-
+      Pacific Journal of Mathematics, Volume 9, 1959, pages 1165-1177.
+    relationship: adapts
+    note: >-
+      The modern infinite reconstruction adapts Kelley's use of a countable
+      cover and Hahn-Banach separation to obtain a strictly positive measure.
+      The precise universal event-span construction, weak-comparison cone,
+      GeneralizedKelleyCondition, and necessary-and-sufficient theorem are
+      first stated and proved in this project. They are not attributed to
+      Kelley and are not identified with the theorem Scott announced but did
+      not state in his closing paragraph.
 
 related_formalizations:
   - id: "https://github.com/catskillsresearch/scott1972"
@@ -158,9 +188,10 @@ known_gaps:
   - >-
     Scott's closing paragraph does not state the hypotheses or conclusion of
     his announced infinite extension. The repository's infinite result is a
-    modern Hahn–Banach/Kelley reconstruction under an explicit generalized
-    Kelley condition, not a recovery or attribution of Scott's unpublished
-    theorem.
+    new, stronger modern Hahn–Banach/Kelley iff characterization under an
+    explicit generalized Kelley condition. It adapts the method of Kelley
+    (1959), but its exact statement is first presented here; it is not a
+    recovery or attribution of Scott's unpublished theorem.
   - >-
     Theorem 2.1 is proved by the direct finite Scott–Suppes construction.
     Scott's 1964 local cycle-shortening lemmas are formalized, but there is no
@@ -181,27 +212,59 @@ alignment:
       lean: "LinearInequalities.scott_theorem_1_1 through scott_theorem_1_4"
       module: "Scott1964.MeasurementStructures.LinearInequalities.ScottTheorems"
       status: proved
-      note: "General, rational, relational, and strictly monotonic-extension forms."
+      note: >-
+        On the numerical side, one linear functional must reproduce exactly
+        the prescribed nonnegative vectors or weak relation. Theorem 1.1's
+        qualitative side is sign completeness plus cancellation of every
+        positive-real-weighted zero sum: each participating vector must also
+        have its negative declared nonnegative. Theorem 1.2 assumes finite
+        rational coordinates and replaces positive weights by unweighted
+        repeated summands. Theorem 1.3 requires completeness and says that
+        termwise-related finite sequences with equal vector sums must be ties,
+        so every termwise comparison reverses. Theorem 1.4 instead requires an
+        extension to the additive closure that is complete, preserves
+        comparison under addition, and cancels equal totals.
     - source: "Theorem 2.1 (intransitive indifference)"
       lean: "theorem_2_1"
       module: "Scott1964.MeasurementStructures.Preference.Intransitive"
       status: proved
-      note: "Realizability of P by f with xPy iff f(x) >= f(y) + 1."
+      note: >-
+        The numerical side is xPy iff f(x) >= f(y) + 1. The qualitative side
+        is irreflexivity plus the two displayed four-alternative axioms
+        PrefQuadA and PrefQuadB.
     - source: "Theorem 3.1 (additive utility for pairs)"
       lean: "theorem_3_1"
       module: "Scott1964.MeasurementStructures.Differences.Pair"
       status: proved
-      note: "Representation by the sum of two utility functions."
+      note: >-
+        The numerical side represents each mixed pair by f(x)+f'(x'). The
+        qualitative side requires totality and independent-permutation
+        cancellation: after independently permuting the first and second
+        coordinates of a finite list, comparisons at every non-distinguished
+        position force the remaining comparison in reverse.
     - source: "Theorem 3.2 (ordered differences)"
       lean: "theorem_3_2"
       module: "Scott1964.MeasurementStructures.Differences.Ordered"
       status: proved
-      note: "Realizability of a quaternary D by a single utility function."
+      note: >-
+        The numerical side represents D(x,y,z,w) exactly by
+        f(x)-f(y) >= f(z)-f(w). The qualitative side requires totality, the
+        analogous independent-permutation cancellation scheme, and reversal:
+        D(x,y,z,w) implies D(w,z,y,x).
     - source: "Theorem 4.1 (subjective probability)"
       lean: "theorem_4_1"
       module: "Scott1964.MeasurementStructures.Probability.Finite"
       status: proved
-      note: "Atom-count form; theorem_4_1_vector proves the equivalent literal vector form."
+      note: >-
+        The numerical side is exact representation by a nonnegative,
+        normalized, finitely additive probability. The four qualitative
+        conditions are: top is weakly above bottom but not conversely; every
+        event is weakly above bottom; every two events are comparable; and
+        atom-count cancellation. The last condition says that, for two finite
+        event lists in which every atom occurs equally often on both sides,
+        comparisons at all non-distinguished positions force the distinguished
+        comparison in reverse. theorem_4_1_vector proves the equivalent
+        literal characteristic-vector form.
     - source: "Page 15 signed-measure characterization"
       lean: "scott_p15_signed_charge; scott_p15_signed_charge_vector"
       module: "Scott1964.MeasurementStructures.Probability.Finite"
@@ -221,4 +284,20 @@ alignment:
       lean: "Probability.Infinite.reconstructed_infinite_theorem_4_1"
       module: "Scott1964.MeasurementStructures.Probability.Infinite.Reconstructed"
       status: proved
-      note: "Modern reconstruction; not attributed as Scott's unpublished theorem. Exhaustive passage-level alignment of the 1964 source lives in arxiv.md §4 rather than as additional compared theorems."
+      note: >-
+        New modern iff characterization first presented here, adapting
+        Kelley's 1959 countable-cover/separation method; not attributed as
+        Scott's unpublished theorem. The numerical side is exact
+        representation on an arbitrary Boolean algebra by a nonnegative,
+        normalized, finitely additive probability. Besides nontriviality,
+        bottom-minimality, and totality, the qualitative side requires a
+        GeneralizedKelleyCondition. Event differences x-y are embedded in the
+        normed span of evaluation functions over all finitely additive
+        probabilities. The weak-comparison cone is the closed dual-polar cone
+        forced nonnegative by every continuous linear functional that is
+        nonnegative on declared weak comparisons. Strict comparisons are the
+        vectors x-y for which the reverse weak comparison fails. They must lie
+        in the weak cone and admit a countable cover by closed convex layers,
+        each avoiding zero and upper-closed under addition of weak-cone
+        vectors. Exhaustive passage-level alignment of the 1964 source lives
+        in arxiv.md §4 rather than as additional compared theorems.

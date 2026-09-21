@@ -177,6 +177,14 @@ manifest.
   TOML Lakefile must be valid TOML.
 - Commit `lake-manifest.json`. It is mandatory for a `lakefile.lean` project.
   The narrow exception for a TOML project without a manifest is in section 6.3.
+- If the project uses canonical Mathlib, the selected project toolchain must
+  exactly match the `lean-toolchain` in the resolved, authenticated Mathlib
+  revision, including the patch version and release-candidate suffix. A tag's
+  spelling in `inputRev` does not override the resolved revision. Palomar checks
+  this before cache retrieval and trusted dependency builds. On a mismatch,
+  align the project toolchain and Mathlib pin, regenerate `lake-manifest.json`,
+  and submit the resulting commit. Projects without Mathlib are unaffected.
+
 
 ### 2.2 Challenge and Solution modules
 
@@ -1023,10 +1031,16 @@ mathematical sources, or related formalizations.
 Such a correction must retain the exact repository, source commit, selected
 project path, `formalization.yaml` path, and Comparator configuration path of
 the current active version. It reuses that version's mechanical verification,
-render, preservation, and trust evidence, and receives a new automated review
-of the corrected effective metadata. The public record identifies the
-inherited evidence, lists the exact fields changed, and gives a required public
-plain-text explanation under the attribution “Palomar / Registry correction”.
+render, preservation, trust evidence, editorial review, and private review
+scores. It does not receive a new automated review: the maintainer's authority
+and the correction-validation report are the basis for changing the descriptive
+metadata, while the unchanged mathematical assessment remains the assessment
+of record. Before registration, Palomar gives the maintainer a deterministic
+correction decision that identifies the exact baseline, changed fields, and
+inherited review, and requires separate consent to those bytes. The public
+record identifies the inherited evidence, lists the exact fields changed, and
+gives a required public plain-text explanation under the attribution “Palomar /
+Registry correction”.
 The operator's account remains private. Technical Maintainer authority may be
 established either by the protected browser sign-in or by the agent protocol:
 a fresh secret GitHub gist binds the intake challenge to its GitHub-set owner,
