@@ -413,14 +413,55 @@ def cleanup_pandoc_latex(latex: str) -> str:
 
 
 def insert_front_matter_lists(latex: str) -> str:
-    """Put the table of contents and list of figures at the start of the body."""
+    """Table of contents and list of figures after CMU front matter (unnumbered)."""
     block = (
+        "{\\pagestyle{empty}\n"
         "\\tableofcontents\n"
         "\\clearpage\n"
         "\\listoffigures\n"
-        "\\clearpage\n\n"
+        "\\clearpage\n"
+        "}\n"
+        "\\pagestyle{plain}\n\n"
     )
     return block + latex
+
+
+REFERENCES_ITEMIZE = re.compile(
+    r"(\\hypertarget\{references\}\{%\n\\section\{References\}\\label\{references\}\}\s*\n\n)"
+    r"\\begin\{itemize\}\s*\n(.*?)\n\\end\{itemize\}",
+    re.DOTALL,
+)
+REFERENCE_KEY = re.compile(r"\{\[\}(?P<key>[A-Za-z0-9]+)\{]\}")
+
+
+def format_references_cmu(latex: str) -> str:
+    """CMU SCS reports use a numbered thebibliography, not an itemize list."""
+
+    def repl(match: re.Match[str]) -> str:
+        header = match.group(1)
+        items = match.group(2)
+        bibitems: list[str] = []
+        for chunk in re.split(r"(?=\\item\s)", items):
+            chunk = chunk.strip()
+            if not chunk.startswith("\\item"):
+                continue
+            key_m = REFERENCE_KEY.search(chunk)
+            if not key_m:
+                raise RuntimeError(f"could not parse reference item: {chunk[:120]!r}")
+            body = chunk[key_m.end() :].strip()
+            if body.startswith("}"):
+                body = body[1:].strip()
+            body = re.sub(r"\s+\n", " ", body)
+            bibitems.append(f"\\bibitem{{{key_m.group('key')}}} {body}")
+        if not bibitems:
+            raise RuntimeError("References section itemize was empty or not parseable")
+        joined = "\n\n".join(bibitems)
+        return f"{header}\\begin{{thebibliography}}{{99}}\n{joined}\n\\end{{thebibliography}}\n"
+
+    updated, count = REFERENCES_ITEMIZE.subn(repl, latex)
+    if count != 1:
+        raise RuntimeError("expected exactly one References itemize block in LaTeX output")
+    return updated
 
 
 SCOTT_SOURCE_PDF = ROOT / "sources" / "ScottMeasurement1964.pdf"
@@ -463,27 +504,20 @@ def cleanup_abstract_latex(latex: str) -> str:
 
 
 def build_title_page(abstract_latex: str) -> str:
-    github_latex = rf"\url{{{GITHUB_URL}}}"
     return textwrap.dedent(
         f"""
         \\title{{{TITLE}}}
 
         \\author{{
-          Lars Warren Ericson \\\\
-          {{\\normalfont\\small Catskills Research Company}} \\\\[0.5ex]
-          Dana S. Scott \\\\
-          {{\\normalfont\\small Computer Science Department, Carnegie Mellon University, Emeritus}} \\\\[0.5ex]
-          Vijay D'Silva \\\\
-          {{\\normalfont\\small Google Research}} \\\\[0.5ex]
-          Brian Milnes \\\\
-          {{\\normalfont\\small XBRLCloud}}
+          Lars Warren Ericson$^\\dagger$, Dana S. Scott, Vijay D'Silva$^\\ddagger$,\\\\
+          Brian Milnes
         }}
+        \\disclaimer{{$^\\dagger$ Catskills Research Company, $^\\ddagger$ Google Research}}
 
         \\date{{{REPORT_DATE}}}
         \\trnumber{{{REPORT_NUMBER}}}
         \\keywords{{Lean 4; formal verification; measurement theory; linear inequalities;
           cancellation conditions; utility theory; subjective probability}}
-        \\citationinfo{{Source repository: {github_latex}}}
         \\copyrightnotice{{Copyright \\copyright\\ 2026 Lars Warren Ericson, Dana S. Scott, Vijay D'Silva, and Brian Milnes}}
         \\abstract{{
         {abstract_latex.strip()}
@@ -533,6 +567,7 @@ def main() -> int:
     latex_body = pandoc_to_latex(body, shift=True)
     latex_body = inject_placeholders(latex_body, placeholders)
     latex_body = cleanup_pandoc_latex(latex_body)
+    latex_body = format_references_cmu(latex_body)
     latex_body = insert_front_matter_lists(latex_body)
     latex_body = insert_appendix_command(latex_body)
     latex_body = insert_scott_source_pdf(latex_body)

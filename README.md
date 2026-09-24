@@ -9,7 +9,7 @@ The accompanying report, *Formalization of Scott's Measurement Structures
 and Linear Inequalities in Lean 4*, is by **Lars Warren Ericson** (independent
 researcher, d/b/a Catskills Research Company), **Dana S. Scott** (Computer
 Science Department, Carnegie Mellon University, Emeritus), **Vijay D'Silva**
-(Google Research), and **Brian Milnes** (Independent Researcher, XBRLCloud).
+(Google Research), and **Brian Milnes** (Unaffiliated).
 It is being prepared for the Carnegie Mellon University School of Computer
 Science Technical Report series as **CMU-CS-26-XXX**, with cross-archival to
 arXiv under cs.LO and math.LO.

@@ -18,8 +18,7 @@ and Linear Inequalities in Lean 4*.
 Lars Warren Ericson is an independent researcher, d/b/a Catskills Research
 Company (`lars.ericson@catskillsresearch.com`). Dana S. Scott is affiliated with the
 Computer Science Department, Carnegie Mellon University, Emeritus. Vijay D'Silva
-is affiliated with Google Research. Brian Milnes is an Independent Researcher
-affiliated with XBRLCloud.
+is affiliated with Google Research. Brian Milnes is unaffiliated.
 
 ## Build
 
