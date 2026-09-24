@@ -510,15 +510,14 @@ def build_title_page(abstract_latex: str) -> str:
 
         \\author{{
           Lars Warren Ericson$^\\dagger$, Dana S. Scott, Vijay D'Silva$^\\ddagger$,\\\\
-          Brian Milnes
+          Brian Milnes$^\\S$
         }}
-        \\disclaimer{{$^\\dagger$ Catskills Research Company, $^\\ddagger$ Google Research}}
+        \\disclaimer{{$^\\dagger$ Catskills Research Company, $^\\ddagger$ Google Research, $^\\S$ Unaffiliated}}
 
         \\date{{{REPORT_DATE}}}
         \\trnumber{{{REPORT_NUMBER}}}
         \\keywords{{Lean 4; formal verification; measurement theory; linear inequalities;
           cancellation conditions; utility theory; subjective probability}}
-        \\copyrightnotice{{Copyright \\copyright\\ 2026 Lars Warren Ericson, Dana S. Scott, Vijay D'Silva, and Brian Milnes}}
         \\abstract{{
         {abstract_latex.strip()}
         }}
