@@ -1,4 +1,4 @@
-# arXiv cross-archive metadata (CMU-CS-26-XXX)
+# arXiv cross-archive metadata (CMU-CS-26-133)
 
 Copy-paste fields for the arXiv web form. Regenerate the PDF and zip with
 `bash scripts/build_arxiv_pdf.sh` before uploading `dist/arxiv_submit.zip`.
@@ -11,7 +11,7 @@ Inequalities in Lean 4
 **Authors:** Lars Warren Ericson, Dana S. Scott, Vijay D'Silva, and Brian Milnes
 
 The PDF is the Carnegie Mellon University School of Computer Science technical
-report **CMU-CS-26-XXX**. Replace the placeholder before public release.
+report **CMU-CS-26-133**.
 
 ## Abstract (plain text, under 1920 characters)
 

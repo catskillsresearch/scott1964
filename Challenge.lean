@@ -31,12 +31,13 @@ existence of that model. In particular:
   differences, reversal.
 * Theorem 4.1 characterizes finite probability representation by
   nontriviality, bottom-minimality, totality, and atom-count cancellation.
-* The final theorem is a new modern `iff` characterization first presented in
-  this project. It adapts Kelley's 1959 countable-cover/separation method and
-  uses Mathlib's modern locally convex separation theory. It is stronger and
-  more explicit than the bare existence announcement in Scott's last
-  paragraph, and is not attributed to Scott as a published or recoverable
-  theorem.
+* The final theorem adapts Kelley's 1959 countable-cover/separation method and
+  uses Mathlib's modern locally convex separation theory. It is more explicit
+  than the bare existence announcement in Scott's last paragraph, and is not
+  attributed to Scott as a published or recoverable theorem. Based on the
+  literature audit in the report, Section 3.5.10, this characterization
+  provides the first explicit, self-contained realization of Scott's
+  announced infinite extension in the published literature.
 
 The deliberate `sorry`s are the Palomar challenge holes. `Solution.lean`
 re-exports the sorry-free development with matching declarations.

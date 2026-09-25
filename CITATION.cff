@@ -22,7 +22,7 @@ abstract: >-
   axioms. A separately labelled modern reconstruction treats the infinite
   probability extension that Scott announced but did not state or prove in
   the paper. The report is prepared for the Carnegie Mellon University School
-  of Computer Science Technical Report series as CMU-CS-26-XXX.
+  of Computer Science Technical Report series as CMU-CS-26-133.
 keywords:
   - Lean 4
   - measurement theory
@@ -51,4 +51,4 @@ preferred-citation:
   institution:
     name: "School of Computer Science, Carnegie Mellon University"
   url: "https://github.com/catskillsresearch/scott1964"
-  notes: "Carnegie Mellon University Computer Science Technical Report CMU-CS-26-XXX."
+  notes: "Carnegie Mellon University Computer Science Technical Report CMU-CS-26-133."

@@ -11,7 +11,7 @@ researcher, d/b/a Catskills Research Company), **Dana S. Scott** (Computer
 Science Department, Carnegie Mellon University, Emeritus), **Vijay D'Silva**
 (Google Research), and **Brian Milnes** (Unaffiliated).
 It is being prepared for the Carnegie Mellon University School of Computer
-Science Technical Report series as **CMU-CS-26-XXX**, with cross-archival to
+Science Technical Report series as **CMU-CS-26-133**, with cross-archival to
 arXiv under cs.LO and math.LO.
 
 Scott proves four general finite linear-inequality results (Theorems 1.1--1.4)
@@ -43,7 +43,7 @@ The probability development also includes the finite
 Kraft--Pratt--Seidenberg counterexample. The infinite theorem is not attributed
 to Scott as a published result: Scott only announced an extension in 1964,
 whereas this repository first states and proves a stronger modern
-Hahn--Banach/Kelley `iff` characterization under an explicit generalized
+Hahn--Banach/Kelley if-and-only-if characterization under an explicit generalized
 Kelley condition. Its proof adapts Kelley's 1959 separation method; its exact
 statement is not attributed to either Scott or Kelley.
 
@@ -98,10 +98,12 @@ side gives the conditions under which that model exists.
   are nonnegative on the declared weak comparisons. Strict-comparison vectors
   must lie in this cone and be covered by countably many closed convex layers,
   each avoiding zero and closed upward under addition of weak-cone vectors.
-  This is a new, stronger modern `iff` theorem first stated and proved here.
   It adapts Kelley's 1959 countable-cover/Hahn--Banach method; Scott's final
   paragraph contains only an announcement, so the theorem is not attributed
-  to him as a published or recoverable statement.
+  to him as a published or recoverable statement. Based on the literature
+  audit in arxiv.md Section 3.5.10, this characterization provides the first
+  explicit, self-contained realization of Scott's announced infinite
+  extension in the published literature.
 
 Additional source-facing results include:
 

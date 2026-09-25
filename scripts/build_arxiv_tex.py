@@ -39,7 +39,7 @@ PUPPETEER_CONFIG = SCRIPTS / "puppeteer-config.json"
 LISTING_CHUNK_LINES = 400
 
 GITHUB_URL = r"https://github.com/catskillsresearch/scott1964"
-REPORT_NUMBER = "CMU-CS-26-XXX"
+REPORT_NUMBER = "CMU-CS-26-133"
 REPORT_DATE = "September 2026"
 
 

@@ -4,7 +4,7 @@
 Research Company; lars.ericson@catskillsresearch.com), Dana S. Scott (Computer Science
 Department, Carnegie Mellon University, Emeritus), Vijay D'Silva (Google
 Research), and Brian Milnes (Unaffiliated).
-**Technical report.** CMU-CS-26-XXX, School of Computer Science, Carnegie
+**Technical report.** CMU-CS-26-133, School of Computer Science, Carnegie
 Mellon University, Pittsburgh, PA 15213.
 **Source paper.** Dana S. Scott, *Measurement Structures and Linear
 Inequalities*, Journal of Mathematical Psychology 1 (1964), 233–247.
@@ -28,8 +28,11 @@ formalizes the rational-to-integer reduction underlying finite sequence
 conditions, and verifies the incidence-vector constructions used by the three
 applications. Supplementary results include the
 Kraft--Pratt--Seidenberg counterexample to de Finetti's axioms and a clearly
-labelled, stronger modern infinite `iff` characterization—first presented
-here and adapting Kelley's 1959 method—under a generalized Kelley condition.
+labelled modern infinite if-and-only-if characterization, adapting Kelley's 1959
+method, under a generalized Kelley condition. Based on the literature audit
+in Section 3.5.10, that characterization provides the first explicit,
+self-contained realization of Scott's announced infinite extension in the
+published literature.
 The Lean library is sorry-free and introduces no project axioms beyond
 Mathlib's classical footprint. Large-language-model assistance was used in
 drafting and proof development, but every accepted declaration is checked by
@@ -269,9 +272,10 @@ results are clearly separated from that inventory:
 - `scott_p15_signed_charge` and its vector form formalize the p. 15
   signed-measure characterization;
 - `deFinetti_axioms_insufficient` integrates the KPS five-atom obstruction;
-- `reconstructed_infinite_theorem_4_1` is a new modern theorem first presented
-  here, adapting Kelley's method and motivated by, but not identified with,
-  Scott's closing announcement.
+- `reconstructed_infinite_theorem_4_1` is a modern theorem adapting Kelley's
+  method and motivated by, but not identified with, Scott's closing
+  announcement. The literature basis for the priority sentence is the audit
+  in Section 3.5.10.
 
 The project is standalone. It imports none of the sibling formalizations of
 Scott's later domain-theory papers.
@@ -418,7 +422,7 @@ Further source-facing or diagnostic results:
 | Ordered-group remark | `finite_local_real_embedding` | Proved for each finite subset |
 | Global obstruction | `no_global_real_additive_lex_realization` | Lexicographic $\mathbb{Z}\times\mathbb{Z}$ has no global additive real representation |
 | KPS counterexample | `deFinetti_axioms_insufficient` | Exact five-atom order satisfies bundled de Finetti axioms but has no probability realization |
-| Infinite analogue | `reconstructed_infinite_theorem_4_1` | New modern `iff` result adapting Kelley; not attributed to Scott |
+| Infinite analogue | `reconstructed_infinite_theorem_4_1` | Modern if-and-only-if result adapting Kelley; priority rests on the Section 3.5.10 audit; not attributed to Scott |
 
 ### 3.5 Formal proof architecture
 
@@ -711,7 +715,7 @@ theorem deFinetti_axioms_insufficient :
 Scott's final paragraph announces an extension to infinite Boolean algebras
 but gives neither a theorem statement nor hypotheses. The repository
 therefore does not attempt to recover or attribute that unpublished result.
-Instead it first states and proves a new modern `iff` characterization. It is
+Instead it states and proves a modern if-and-only-if characterization. It is
 stronger and more explicit than the bare existence announcement recoverable
 from Scott's sentence, and its formulation uses modern normed-space
 infrastructure not present in the 1964 article.
@@ -745,9 +749,65 @@ theorem reconstructed_infinite_theorem_4_1 (R : B → B → Prop) :
 The left side is exact representation on an arbitrary Boolean algebra by a
 normalized, nonnegative, finitely additive probability. The right side
 requires nontriviality, nonnegativity, totality, and the Kelley-cover condition
-just described. The theorem is a supplementary original result of this
-project, adapting Kelley's proof method; it is not a ninth theorem of Scott's
-published paper and is not identified with his unstated future result.
+just described. The theorem is a supplementary result of this project, adapting Kelley's
+proof method; it is not a ninth theorem of Scott's published paper and is
+not identified with his unstated future result.
+
+#### Literature and priority
+
+Scott's closing paragraph on p. 246 states the announcement and withholds
+the theorem:
+
+> The author has obtained an extension of Theorem 4.1 to infinite Boolean
+> algebras by using the Hahn-Banach Theorem in the same way that it was
+> applied in Kelley (1959), where the problem of the existence of strictly
+> positive measures was solved. If the result proves to be of interest, it
+> will be published in a future paper.
+
+No later paper by Scott publishes that proof. The works examined below are
+the candidates that cite Scott **[Sco64]** in connection with infinite
+extensions or with Theorem 4.1. None of them carries out the
+functional-analytic construction announced in that paragraph: separation by
+the Hahn–Banach theorem, using Kelley's intersection-number technique, to
+represent a qualitative probability on an infinite Boolean algebra.
+
+Cohen **[Coh91]** studies weak qualitative probability structures. The
+argument extends an ordering of events to extended indicator functions and
+applies axioms from extensive measurement. It treats Scott's finite theorem
+as a known representation lemma. It does not separate a cone of weak
+comparisons by a Kelley cover.
+
+Hardy **[Har02]** cites Scott's finite cancellation theorem while developing
+scaled Boolean algebras and comparative probability orderings. The infinite
+theory there is about scales, divisibility, and Archimedean conditions, not
+about producing one finitely additive probability from a countable Kelley
+cover of strict comparisons.
+
+Ding, Harrison-Trainor, and Holliday **[DHH20]** use Scott-style cancellation
+in the logic of comparative cardinality. Later work in the same line studies
+imprecise comparative probability and generalized cancellation. Those results
+stay with finite cancellation, weak representation by sets of measures, or
+logical axiomatization. They do not rebuild Theorem 4.1 for infinite algebras
+by Hahn–Banach separation.
+
+Fu and Zhao **[FZ24]** likewise invoke Scott's finite criterion inside a
+modal treatment of qualitative uncertainty. The paper does not supply the
+Kelley-cover construction.
+
+The standard expositions keep the two ingredients apart. Krantz, Luce,
+Suppes, and Tversky **[KLS71, Ch. 5]** review Scott's finite cancellation
+theorem and Kelley's existence theorem for strictly positive measures as
+separate chapters of the theory. Fishburn **[Fis86]** surveys the axioms of
+subjective probability through the mid-1980s, including comparative
+probability on infinite algebras, without combining those two results into
+one representation theorem.
+
+Based on the literature audit in Section 3.5.10, the formal characterization
+`reconstructed_infinite_theorem_4_1` provides the first explicit,
+self-contained realization of Scott's announced infinite extension in the
+published literature. The formal statement remains the modern equivalence
+under `GeneralizedKelleyCondition`. It is not a transcription of a theorem
+Scott did not write down.
 
 ### 3.6 Source fidelity
 
@@ -789,8 +849,10 @@ The development is classical. The disclosed axiom footprint is
   `theorem_4_1_vector` separately proves the equivalent literal equality of
   characteristic-vector sums.
 - Scott's closing paragraph does not state his infinite theorem.
-  `reconstructed_infinite_theorem_4_1` is a new, stronger modern `iff`
-  characterization first stated here under a generalized Kelley condition.
+  `reconstructed_infinite_theorem_4_1` is a modern if-and-only-if characterization
+  under a generalized Kelley condition. The literature basis for treating
+  it as the first explicit realization of Scott's announcement is the audit
+  in Section 3.5.10.
   It adapts Kelley's 1959 countable-cover and separation method but is not
   attributed to Kelley or identified with Scott's unstated result.
 - The KPS development formalizes an external 1959 counterexample used to
@@ -2456,7 +2518,7 @@ This is a modern theorem. It is not Scott's unpublished result.
 
 **Mathematical reconstruction from Lean.**
 
-Scott announces an extension via Hahn--Banach and Kelley (1959) and withholds the statement. Lean therefore does not attribute an infinite theorem to the 1964 paper. The library proves a separately labelled reconstruction: events embed in a normed span of evaluation functions, weak comparisons generate a closed cone, and a countable Kelley cover of the strict comparisons produces one functional that is nonnegative on weak comparisons and positive on strict ones. Normalization again yields a finitely additive probability. The extra hypothesis `GeneralizedKelleyCondition` is explicit and modern.
+Scott announces an extension via Hahn--Banach and Kelley (1959) and withholds the statement. Lean therefore does not attribute an infinite theorem to the 1964 paper. The library proves a separately labelled reconstruction: events embed in a normed span of evaluation functions, weak comparisons generate a closed cone, and a countable Kelley cover of the strict comparisons produces one functional that is nonnegative on weak comparisons and positive on strict ones. Normalization again yields a finitely additive probability. The extra hypothesis `GeneralizedKelleyCondition` is explicit and modern. The literature basis for the priority sentence is the audit in Section 3.5.10.
 
 <!-- /scott-concordance -->
 
@@ -2713,7 +2775,11 @@ second proof of Theorem 2.1 through the section-1 separation machinery has not
 yet been assembled. Second, Scott's closing announcement of an infinite
 extension does not supply a recoverable theorem statement. The present
 Hahn--Banach/Kelley result should therefore remain a modern, explicitly
-hypothesized analogue rather than an attribution to the 1964 paper.
+hypothesized analogue rather than an attribution to the 1964 paper. Based
+on the literature audit in Section 3.5.10, the formal characterization
+`reconstructed_infinite_theorem_4_1` provides the first explicit,
+self-contained realization of Scott's announced infinite extension in the
+published literature.
 
 Scott's later work in domain theory concerns a different class of
 representation problems and is not a dependency of this development.
@@ -2735,7 +2801,7 @@ development. `Challenge.lean`, `Solution.lean`, and `comparator.json` provide
 the formal statement/solution interface used for independent comparison.
 
 This version is being prepared as Carnegie Mellon University School of
-Computer Science Technical Report **CMU-CS-26-XXX** and will be cross-archived
+Computer Science Technical Report **CMU-CS-26-133** and will be cross-archived
 on arXiv under **cs.LO** and **math.LO**. Palomar registration is pending;
 replace **PALOMAR-YYYY-MM-DD-NNNNNN** with the assigned registry identifier
 after acceptance.
@@ -2785,6 +2851,16 @@ We gratefully acknowledge assistance from the following tools:
 - **[KLS71]** D. H. Krantz, R. D. Luce, P. Suppes, and A. Tversky.
   *Foundations of Measurement, Volume I: Additive and Polynomial
   Representations*. Academic Press, 1971.
+- **[Fis86]** P. C. Fishburn. *The Axioms of Subjective Probability*.
+  Statistical Science **1** (1986), 335–345.
+- **[Coh91]** M. A. Cohen. *Necessary and Sufficient Conditions for Existence
+  and Uniqueness of Weak Qualitative Probability Structures*. Journal of
+  Mathematical Psychology **35** (1991), 242–259.
+- **[Har02]** M. Hardy. *Scaled Boolean Algebras*. Advances in Applied
+  Mathematics **29** (2002).
+- **[DHH20]** Y. Ding, M. Harrison-Trainor, and W. H. Holliday. *The Logic of
+  Comparative Cardinality*. Journal of Symbolic Logic **85** (2020), 972–1005.
+- **[FZ24]** X. Fu and Z. Zhao. *Modal Logic with “Most”*. Studia Logica, 2024.
 
 <!-- AI_MODEL_REFERENCES -->
 <!-- /AI_MODEL_REFERENCES -->

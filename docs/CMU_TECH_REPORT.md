@@ -7,7 +7,7 @@ and Linear Inequalities in Lean 4*.
 
 - **Series:** Carnegie Mellon University School of Computer Science Technical
   Report
-- **Number:** `CMU-CS-26-XXX` (placeholder)
+- **Number:** `CMU-CS-26-133`
 - **Date:** September 2026
 - **Authors:** Lars Warren Ericson, Dana S. Scott, Vijay D'Silva, and Brian Milnes
 - **Institutional address:** School of Computer Science, Carnegie Mellon
@@ -42,18 +42,16 @@ series and arXiv cross-archive.
 
 ## Before public release
 
-1. Replace every `CMU-CS-26-XXX` occurrence with the assigned CMU report
-   number.
-2. Replace every `PALOMAR-YYYY-MM-DD-NNNNNN` occurrence after registration.
-3. Replace the editorial placeholder in “Retrospective Remarks by Dana S.
+1. Replace every `PALOMAR-YYYY-MM-DD-NNNNNN` occurrence after registration.
+2. Replace the editorial placeholder in “Retrospective Remarks by Dana S.
    Scott” with Dana's approved text.
-4. Confirm the author order, affiliations, September 2026 date, and
+3. Confirm the author order, affiliations, September 2026 date, and
    correspondence email.
-5. Run `python3 scripts/check_concordance.py`, `lake build`, and
+4. Run `python3 scripts/check_concordance.py`, `lake build`, and
    `bash scripts/build_arxiv_pdf.sh`.
-6. Inspect the cover, abstract, table of contents, List of Figures,
+5. Inspect the cover, abstract, table of contents, List of Figures,
    numbered figures, acknowledgments, references, Concordance methodology
    appendix, Lean module appendix, and the Scott 1964 source-paper appendix.
-7. Upload `dist/arxiv_submit.zip` only after deleting prior arXiv submission
+6. Upload `dist/arxiv_submit.zip` only after deleting prior arXiv submission
    files so the source set is replaced rather than merged.
 

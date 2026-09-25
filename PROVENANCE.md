@@ -25,7 +25,7 @@ Sibling formalizations of related Scott papers:
 
 The 1964 measurement paper predates and is mathematically independent of the
 domain-theory siblings above; nothing is imported from them. The report is
-being prepared as **CMU-CS-26-XXX** and will be cross-archived on arXiv under
+being prepared as **CMU-CS-26-133** and will be cross-archived on arXiv under
 cs.LO and math.LO.
 **This repository is submitted to Palomar on its own**, for the 1964 paper
 alone, following the same Challenge / Solution pattern as
@@ -39,9 +39,11 @@ Boolean algebras. Scott's final paragraph only announces an infinite
 extension without stating or proving it; this repository does not attribute
 its `reconstructed_infinite_theorem_4_1` to Scott. That theorem is a modern
 Hahn--Banach/Kelley reconstruction under the explicit
-`GeneralizedKelleyCondition`. Its precise statement is first presented and
-proved in this project. It is a stronger, explicit `iff` characterization on
+`GeneralizedKelleyCondition`. It is an explicit if-and-only-if characterization on
 arbitrary Boolean algebras, not a recovery of Scott's unpublished statement.
+Based on the literature audit in arxiv.md Section 3.5.10, this characterization
+provides the first explicit, self-contained realization of Scott's announced
+infinite extension in the published literature.
 The proof adapts the countable-cover and Hahn--Banach separation method of
 J. L. Kelley, *Measures on Boolean Algebras*, Pacific Journal of Mathematics
 9 (1959), 1165--1177. The universal event span, weak-comparison cone, and

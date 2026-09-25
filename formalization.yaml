@@ -15,9 +15,12 @@ project:
     axioms. Every compared equivalence is described predicate-by-predicate in
     Challenge.lean and the README, including its numerical-representation side
     and its qualitative cancellation, permutation, reversal, probability, or
-    Kelley-cover side. The additional infinite theorem is a new, stronger
-    modern characterization first stated in this project; it adapts Kelley's
-    1959 countable-cover/separation method and is not attributed to Scott.
+    Kelley-cover side. The additional infinite theorem adapts Kelley's 1959
+    countable-cover/separation method and is not attributed to Scott. Based
+    on the literature audit in arxiv.md Section 3.5.10, the formal
+    characterization reconstructed_infinite_theorem_4_1 provides the first
+    explicit, self-contained realization of Scott's announced infinite
+    extension in the published literature.
     The Lean development was drafted with AI-agent assistance under Lars
     Warren Ericson's direction and review. Dana S. Scott, Vijay
     D'Silva, and Brian Milnes are co-authors of the formalization report.
@@ -87,16 +90,18 @@ fidelity:
     vector-sum form. Theorem 2.1 currently uses the direct Scott–Suppes
     staircase construction, while Scott's local cycle reductions are
     formalized separately. Exact divergences are listed in known_gaps and in
-    arxiv.md. The reconstructed infinite theorem is first stated and proved in
-    this project. Its countable-cover and separator-combination argument adapts
+    arxiv.md. Its countable-cover and separator-combination argument adapts
     Kelley's 1959 measure-existence method, but its universal event-span
     formulation, weak-comparison cone, generalized Kelley condition, and iff
-    statement are not claimed to occur in Kelley or Scott.
+    statement are not claimed to occur in Kelley or Scott. Based on the
+    literature audit in arxiv.md Section 3.5.10, reconstructed_infinite_theorem_4_1
+    provides the first explicit, self-contained realization of Scott's
+    announced infinite extension in the published literature.
 
 sources:
   - title: "Measurement Structures and Linear Inequalities"
     authors: ["Dana S. Scott"]
-    type: "article"
+    type: "paper"
     location: >-
       Journal of Mathematical Psychology, Volume 1, 1964, pages 233-247.
     relationship: formalizes
@@ -117,9 +122,73 @@ sources:
       cover and Hahn-Banach separation to obtain a strictly positive measure.
       The precise universal event-span construction, weak-comparison cone,
       GeneralizedKelleyCondition, and necessary-and-sufficient theorem are
-      first stated and proved in this project. They are not attributed to
-      Kelley and are not identified with the theorem Scott announced but did
-      not state in his closing paragraph.
+      not attributed to Kelley and are not identified with the theorem Scott
+      announced but did not state in his closing paragraph. Priority relative
+      to the later literature is the audit in arxiv.md Section 3.5.10, not this
+      citation alone.
+  - title: "Foundations of Measurement, Volume I"
+    authors:
+      - "D. H. Krantz"
+      - "R. D. Luce"
+      - "P. Suppes"
+      - "A. Tversky"
+    type: "book"
+    location: "Academic Press, 1971, Chapter 5."
+    relationship: background
+    note: >-
+      Literature-audit source for arxiv.md Section 3.5.10. Reviews Scott's finite
+      cancellation theorem and Kelley's measure-existence theorem separately,
+      without a combined infinite qualitative-probability representation.
+  - title: "The Axioms of Subjective Probability"
+    authors: ["P. C. Fishburn"]
+    type: "paper"
+    location: "Statistical Science, Volume 1, 1986, pages 335-345."
+    relationship: background
+    note: >-
+      Literature-audit source for arxiv.md Section 3.5.10. Surveys subjective
+      probability through the mid-1980s without the Hahn–Banach/Kelley
+      construction formalized here.
+  - title: >-
+      Necessary and Sufficient Conditions for Existence and Uniqueness of
+      Weak Qualitative Probability Structures
+    authors: ["M. A. Cohen"]
+    type: "paper"
+    location: >-
+      Journal of Mathematical Psychology, Volume 35, 1991, pages 242-259.
+    relationship: background
+    note: >-
+      Literature-audit source for arxiv.md Section 3.5.10. Uses Scott's finite
+      theorem as a known lemma and does not separate a Kelley cover.
+  - title: "Scaled Boolean Algebras"
+    authors: ["M. Hardy"]
+    type: "paper"
+    location: "Advances in Applied Mathematics, Volume 29, 2002."
+    relationship: background
+    note: >-
+      Literature-audit source for arxiv.md Section 3.5.10. Cites Scott's finite
+      cancellation theorem; its infinite theory is about scales and
+      Archimedean conditions, not a Kelley cover of strict comparisons.
+  - title: "The Logic of Comparative Cardinality"
+    authors:
+      - "Y. Ding"
+      - "M. Harrison-Trainor"
+      - "W. H. Holliday"
+    type: "paper"
+    location: "Journal of Symbolic Logic, Volume 85, 2020, pages 972-1005."
+    relationship: background
+    note: >-
+      Literature-audit source for arxiv.md Section 3.5.10. Uses Scott-style
+      cancellation for comparative cardinality, not the infinite Hahn–Banach
+      construction.
+  - title: "Modal Logic with “Most”"
+    authors: ["X. Fu", "Z. Zhao"]
+    type: "paper"
+    location: "Studia Logica, 2024."
+    relationship: background
+    note: >-
+      Literature-audit source for arxiv.md Section 3.5.10. Invokes Scott's finite
+      criterion in a modal setting and does not supply the Kelley-cover
+      construction.
 
 related_formalizations:
   - id: "https://github.com/catskillsresearch/scott1972"
@@ -188,10 +257,13 @@ known_gaps:
   - >-
     Scott's closing paragraph does not state the hypotheses or conclusion of
     his announced infinite extension. The repository's infinite result is a
-    new, stronger modern Hahn–Banach/Kelley iff characterization under an
-    explicit generalized Kelley condition. It adapts the method of Kelley
-    (1959), but its exact statement is first presented here; it is not a
-    recovery or attribution of Scott's unpublished theorem.
+    modern Hahn–Banach/Kelley iff characterization under an explicit
+    generalized Kelley condition. It adapts the method of Kelley (1959) and
+    is not a recovery or attribution of Scott's unpublished theorem. Based
+    on the literature audit in arxiv.md Section 3.5.10, the formal
+    characterization reconstructed_infinite_theorem_4_1 provides the first
+    explicit, self-contained realization of Scott's announced infinite
+    extension in the published literature.
   - >-
     Theorem 2.1 is proved by the direct finite Scott–Suppes construction.
     Scott's 1964 local cycle-shortening lemmas are formalized, but there is no
@@ -285,9 +357,12 @@ alignment:
       module: "Scott1964.MeasurementStructures.Probability.Infinite.Reconstructed"
       status: proved
       note: >-
-        New modern iff characterization first presented here, adapting
-        Kelley's 1959 countable-cover/separation method; not attributed as
-        Scott's unpublished theorem. The numerical side is exact
+        Modern iff characterization adapting Kelley's 1959
+        countable-cover/separation method; not attributed as Scott's
+        unpublished theorem. Based on the literature audit in arxiv.md
+        Section 3.5.10, this characterization provides the first explicit,
+        self-contained realization of Scott's announced infinite extension
+        in the published literature. The numerical side is exact
         representation on an arbitrary Boolean algebra by a nonnegative,
         normalized, finitely additive probability. Besides nontriviality,
         bottom-minimality, and totality, the qualitative side requires a

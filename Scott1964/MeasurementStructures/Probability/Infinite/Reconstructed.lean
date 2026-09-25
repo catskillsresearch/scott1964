@@ -5,9 +5,11 @@ import Scott1964.MeasurementStructures.Probability.Infinite.Kelley
 # A modern reconstruction of the infinite probability theorem
 
 Scott's published 1964 paper states and proves the finite theorem, then only
-announces an unstated infinite extension. The result below is a new, stronger
-modern `iff` characterization first presented in this project; it is not
-presented as Scott's unpublished theorem.
+announces an unstated infinite extension. The result below adapts Kelley's
+method and is not presented as Scott's unpublished theorem. Based on the
+literature audit in the report, Section 3.5.10, it provides the first
+explicit, self-contained realization of Scott's announced infinite extension
+in the published literature.
 
 Weak comparisons generate a closed cone in the universal event span, expressed
 here by its continuous dual polar.  The additional generalized Kelley condition
@@ -205,9 +207,11 @@ private theorem generalizedKelley_realizable
         linarith
       exact (not_lt_of_ge hμxy) hlt
 
-/-- New modern `iff` characterization for an infinite analogue of Scott's
-Theorem 4.1, first stated in this project and adapting Kelley's 1959 separation
-method. It is not an attribution of an unpublished theorem to Scott. -/
+/-- If-and-only-if characterization of an infinite analogue of Scott's Theorem 4.1,
+adapting Kelley's 1959 separation method. It is not an attribution of an
+unpublished theorem to Scott. Based on the literature audit in the report,
+Section 3.5.10, it provides the first explicit, self-contained realization of
+Scott's announced infinite extension in the published literature. -/
 theorem reconstructed_infinite_theorem_4_1 (R : B → B → Prop) :
     RealizableProbability R ↔
       ProbNontrivial R ∧ ProbNonneg R ∧ ProbTotal R ∧
