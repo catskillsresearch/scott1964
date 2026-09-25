@@ -9,8 +9,6 @@ Mellon University, Pittsburgh, PA 15213.
 **Source paper.** Dana S. Scott, *Measurement Structures and Linear
 Inequalities*, Journal of Mathematical Psychology 1 (1964), 233–247.
 **Repository.** https://github.com/catskillsresearch/scott1964
-**Cross-archive.** This report will also be deposited on arXiv in cs.LO and
-math.LO.
 
 ---
 
@@ -78,17 +76,17 @@ exactly when qualitative observations admit the intended numerical reading.
 
 Scott's article belongs to a developing program in representational
 measurement. Luce's work on semiorders supplied the initial setting for
-intransitive indifference **[Luc56]**, and Scott and Suppes had already given
-a complete finite representation theorem for that problem **[SS58]**.
+intransitive indifference \cite{Luc56}, and Scott and Suppes had already given
+a complete finite representation theorem for that problem \cite{SS58}.
 Kraft, Pratt, and Seidenberg had treated finite qualitative probability
-**[KPS59]**, while work on additive and conjoint measurement provided the
-setting for comparisons of pairs and differences **[LT64]**. Published in the
+\cite{KPS59}, while work on additive and conjoint measurement provided the
+setting for comparisons of pairs and differences \cite{LT64}. Published in the
 first volume of the *Journal of Mathematical Psychology* in 1964
-**[Sco64]**, Scott's paper did more than collect these questions: it showed
+\cite{Sco64}, Scott's paper did more than collect these questions: it showed
 that a common finite linear-inequality method could generate their
 representation conditions. Cancellation axioms, additive representations,
 and separation arguments subsequently became standard themes in systematic
-treatments of measurement theory **[KLS71]**.
+treatments of measurement theory \cite{KLS71}.
 
 That unification makes the article a particularly informative formalization
 target. It has a reusable mathematical core, three applications with familiar
@@ -547,7 +545,7 @@ $$
 
 The forward implications to irreflexivity and the two quadruple axioms are
 linear arithmetic. The completed converse uses a direct finite
-Scott–Suppes construction **[SS58]**. `ScottWeakOrder` compares alternatives by their
+Scott–Suppes construction \cite{SS58}. `ScottWeakOrder` compares alternatives by their
 strict-preference profiles. The quadruple axioms make it a total preorder;
 `Antisymmetrization` quotients alternatives with identical profiles. On the
 finite quotient, lower sections are nested, and
@@ -692,7 +690,7 @@ contradiction.
 #### The Kraft–Pratt–Seidenberg counterexample
 
 `Probability/KPSCounterexample.lean` encodes the exact 32-event order on a
-five-atom powerset from Kraft, Pratt, and Seidenberg **[KPS59]**. Finite decidability is
+five-atom powerset from Kraft, Pratt, and Seidenberg \cite{KPS59}. Finite decidability is
 used to verify comparability, transitivity, bottom minimality, and de
 Finetti's disjoint-union invariance. These are bundled as `DeFinettiAxioms`.
 
@@ -732,7 +730,7 @@ weak cone and to be covered by countably many layers. Each layer must be
 closed, convex, exclude zero, and remain closed upward when any weak-cone
 vector is added.
 
-Adapting Kelley's measure-existence method **[Kel59]**, `Kelley.lean`
+Adapting Kelley's measure-existence method \cite{Kel59}, `Kelley.lean`
 separates each layer from zero and combines the separators with
 summable positive coefficients. The resulting continuous functional is
 nonnegative on every weak comparison and strictly positive on every strict
@@ -765,39 +763,39 @@ the theorem:
 > will be published in a future paper.
 
 No later paper by Scott publishes that proof. The works examined below are
-the candidates that cite Scott **[Sco64]** in connection with infinite
+the candidates that cite Scott \cite{Sco64} in connection with infinite
 extensions or with Theorem 4.1. None of them carries out the
 functional-analytic construction announced in that paragraph: separation by
 the Hahn–Banach theorem, using Kelley's intersection-number technique, to
 represent a qualitative probability on an infinite Boolean algebra.
 
-Cohen **[Coh91]** studies weak qualitative probability structures. The
+Cohen \cite{Coh91} studies weak qualitative probability structures. The
 argument extends an ordering of events to extended indicator functions and
 applies axioms from extensive measurement. It treats Scott's finite theorem
 as a known representation lemma. It does not separate a cone of weak
 comparisons by a Kelley cover.
 
-Hardy **[Har02]** cites Scott's finite cancellation theorem while developing
+Hardy \cite{Har02} cites Scott's finite cancellation theorem while developing
 scaled Boolean algebras and comparative probability orderings. The infinite
 theory there is about scales, divisibility, and Archimedean conditions, not
 about producing one finitely additive probability from a countable Kelley
 cover of strict comparisons.
 
-Ding, Harrison-Trainor, and Holliday **[DHH20]** use Scott-style cancellation
+Ding, Harrison-Trainor, and Holliday \cite{DHH20} use Scott-style cancellation
 in the logic of comparative cardinality. Later work in the same line studies
 imprecise comparative probability and generalized cancellation. Those results
 stay with finite cancellation, weak representation by sets of measures, or
 logical axiomatization. They do not rebuild Theorem 4.1 for infinite algebras
 by Hahn–Banach separation.
 
-Fu and Zhao **[FZ24]** likewise invoke Scott's finite criterion inside a
+Fu and Zhao \cite{FZ24} likewise invoke Scott's finite criterion inside a
 modal treatment of qualitative uncertainty. The paper does not supply the
 Kelley-cover construction.
 
 The standard expositions keep the two ingredients apart. Krantz, Luce,
-Suppes, and Tversky **[KLS71, Ch. 5]** review Scott's finite cancellation
+Suppes, and Tversky \cite[Ch.~5]{KLS71} review Scott's finite cancellation
 theorem and Kelley's existence theorem for strictly positive measures as
-separate chapters of the theory. Fishburn **[Fis86]** surveys the axioms of
+separate chapters of the theory. Fishburn \cite{Fis86} surveys the axioms of
 subjective probability through the mid-1980s, including comparative
 probability on infinite algebras, without combining those two results into
 one representation theorem.
@@ -2792,23 +2790,28 @@ with formalized decision theory are also natural next steps.
 
 ## Code Availability and Archival
 
+### GitHub repository
+
 The complete Lean development, report source, build scripts, and source
 alignment documentation are available at
-https://github.com/catskillsresearch/scott1964. The principal machine-checked
+https://github.com/catskillsresearch/scott1964 \cite{Eri26}. The principal machine-checked
 artifact is the sorry-free `Scott1964/MeasurementStructures/` library;
 `Scott1964/MeasurementStructures/Basic.lean` re-exports the complete
 development. `Challenge.lean`, `Solution.lean`, and `comparator.json` provide
 the formal statement/solution interface used for independent comparison.
 
-This version is being prepared as Carnegie Mellon University School of
-Computer Science Technical Report **CMU-CS-26-133** and will be cross-archived
-on arXiv under **cs.LO** and **math.LO**. Palomar registration is pending;
-replace **PALOMAR-YYYY-MM-DD-NNNNNN** with the assigned registry identifier
-after acceptance.
-
 The generated review copy appends a hyperlinked index of all Lean modules.
-The report build creates both the PDF and the complete arXiv source bundle,
-including sanitized Lean listings and pre-rendered dependency figures.
+The report build creates the PDF, including sanitized Lean listings and
+pre-rendered dependency figures.
+
+### Palomar registry
+
+The compared statements are registered with Palomar as
+**PALOMAR-2026-09-25-000015**, version 1
+\cite{Pal26}. That registry entry records a Mathlib-only statement of
+*Formalization of Scott's Measurement Structures and Linear Inequalities in
+Lean 4*, by Lars Warren Ericson, Dana S. Scott, Vijay D'Silva, and Brian
+Milnes.
 
 ### License and source PDF
 
@@ -2834,36 +2837,10 @@ We gratefully acknowledge assistance from the following tools:
 
 ## References
 
-- **[Luc56]** R. D. Luce. *Semiorders and a Theory of Utility
-  Discrimination*. Econometrica **24** (1956), 178–191.
-- **[SS58]** D. Scott and P. Suppes. *Foundational Aspects of Theories of
-  Measurement*. Journal of Symbolic Logic **23** (1958), 113–128.
-- **[KPS59]** C. H. Kraft, J. W. Pratt, and A. Seidenberg. *Intuitive
-  Probability on Finite Sets*. Annals of Mathematical Statistics **30**
-  (1959), 408–419.
-- **[Kel59]** J. L. Kelley. *Measures on Boolean Algebras*. Pacific Journal of
-  Mathematics **9** (1959), 1165–1177.
-- **[LT64]** R. D. Luce and J. W. Tukey. *Simultaneous Conjoint Measurement:
-  A New Type of Fundamental Measurement*. Journal of Mathematical Psychology
-  **1** (1964), 1–27.
-- **[Sco64]** D. S. Scott. *Measurement Structures and Linear Inequalities*.
-  Journal of Mathematical Psychology **1** (1964), 233–247.
-- **[KLS71]** D. H. Krantz, R. D. Luce, P. Suppes, and A. Tversky.
-  *Foundations of Measurement, Volume I: Additive and Polynomial
-  Representations*. Academic Press, 1971.
-- **[Fis86]** P. C. Fishburn. *The Axioms of Subjective Probability*.
-  Statistical Science **1** (1986), 335–345.
-- **[Coh91]** M. A. Cohen. *Necessary and Sufficient Conditions for Existence
-  and Uniqueness of Weak Qualitative Probability Structures*. Journal of
-  Mathematical Psychology **35** (1991), 242–259.
-- **[Har02]** M. Hardy. *Scaled Boolean Algebras*. Advances in Applied
-  Mathematics **29** (2002).
-- **[DHH20]** Y. Ding, M. Harrison-Trainor, and W. H. Holliday. *The Logic of
-  Comparative Cardinality*. Journal of Symbolic Logic **85** (2020), 972–1005.
-- **[FZ24]** X. Fu and Z. Zhao. *Modal Logic with “Most”*. Studia Logica, 2024.
-
 <!-- AI_MODEL_REFERENCES -->
 <!-- /AI_MODEL_REFERENCES -->
+
+<!-- The numbered list is generated from references.bib. -->
 
 ## Concordance methodology
 

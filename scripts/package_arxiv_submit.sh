@@ -71,6 +71,7 @@ from pathlib import Path
 
 sources = [
     {"filename": "arxiv.tex", "usage": "toplevel"},
+    {"filename": "references.bib", "usage": "include"},
     {"filename": "cmu-titlepage2.sty", "usage": "include"},
     {"filename": "sources/ScottMeasurement1964.pdf", "usage": "include"},
 ]
@@ -93,6 +94,7 @@ echo "==> Packaging"
 zip -r "$ZIP" \
   00README.json \
   "$TEX" \
+  references.bib \
   "$CMU_STYLE" \
   "$SCOTT_PDF" \
   "$LISTINGS_DIR" \

@@ -435,7 +435,11 @@ REFERENCE_KEY = re.compile(r"\{\[\}(?P<key>[A-Za-z0-9]+)\{]\}")
 
 
 def format_references_cmu(latex: str) -> str:
-    """CMU SCS reports use a numbered thebibliography, not an itemize list."""
+    """Number citations from references.bib; keep a manual list as a fallback."""
+    marker = r"\section{References}\label{references}}"
+    bib = "\n\\bibliographystyle{unsrt}\n\\bibliography{references}\n"
+    if marker in latex and r"\bibliography{references}" not in latex:
+        latex = latex.replace(marker, marker + bib, 1)
 
     def repl(match: re.Match[str]) -> str:
         header = match.group(1)
@@ -459,8 +463,10 @@ def format_references_cmu(latex: str) -> str:
         return f"{header}\\begin{{thebibliography}}{{99}}\n{joined}\n\\end{{thebibliography}}\n"
 
     updated, count = REFERENCES_ITEMIZE.subn(repl, latex)
-    if count != 1:
-        raise RuntimeError("expected exactly one References itemize block in LaTeX output")
+    if count > 1:
+        raise RuntimeError("expected at most one References itemize block in LaTeX output")
+    if r"\bibliography{references}" not in updated:
+        raise RuntimeError("References section was not wired to references.bib")
     return updated
 
 

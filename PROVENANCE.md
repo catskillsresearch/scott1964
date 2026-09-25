@@ -24,9 +24,8 @@ Sibling formalizations of related Scott papers:
   — Domains for denotational semantics / information systems (1982)
 
 The 1964 measurement paper predates and is mathematically independent of the
-domain-theory siblings above; nothing is imported from them. The report is
-being prepared as **CMU-CS-26-133** and will be cross-archived on arXiv under
-cs.LO and math.LO.
+domain-theory siblings above; nothing is imported from them. The report is Carnegie Mellon University School of Computer Science Technical
+Report **CMU-CS-26-133**.
 **This repository is submitted to Palomar on its own**, for the 1964 paper
 alone, following the same Challenge / Solution pattern as
 [`catskillsresearch/cardb`](https://github.com/catskillsresearch/cardb) and

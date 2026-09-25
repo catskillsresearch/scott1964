@@ -10,9 +10,8 @@ and Linear Inequalities in Lean 4*, is by **Lars Warren Ericson** (independent
 researcher, d/b/a Catskills Research Company), **Dana S. Scott** (Computer
 Science Department, Carnegie Mellon University, Emeritus), **Vijay D'Silva**
 (Google Research), and **Brian Milnes** (Unaffiliated).
-It is being prepared for the Carnegie Mellon University School of Computer
-Science Technical Report series as **CMU-CS-26-133**, with cross-archival to
-arXiv under cs.LO and math.LO.
+It is Carnegie Mellon University School of Computer Science Technical Report
+**CMU-CS-26-133**.
 
 Scott proves four general finite linear-inequality results (Theorems 1.1--1.4)
 and applies them to intransitive indifference (Theorem 2.1), additive utility
