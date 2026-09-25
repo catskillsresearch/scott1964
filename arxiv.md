@@ -1753,7 +1753,7 @@ Independence of the basis $A$ yields only that the upper and lower arrays are pe
 theorem preference_transitive_of_quadA {A : Type u} {P : A → A → Prop}
     (hirr : ∀ x, ¬ P x x)
     (hquad : ∀ x y z w, P x y → P z w → P x w ∨ P z y) :
-    Transitive P
+    IsTrans A P
 ```
 
 **Mathematical reconstruction from Lean.**
@@ -2639,7 +2639,7 @@ Bibliographic only. The citation is recorded in the report bibliography; it is n
 
 ### 5.1 Kernel verification and reproducible build
 
-The repository pins Lean and mathlib **v4.33.0**.
+The repository pins Lean and mathlib **v4.35.0-rc2**.
 
 ```bash
 lake exe cache get

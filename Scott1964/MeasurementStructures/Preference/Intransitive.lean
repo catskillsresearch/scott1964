@@ -86,7 +86,7 @@ theorem theorem_2_1 {A : Type u} [Fintype A] [Nonempty A] (P : A → A → Prop)
       { 
       le x y := ScottWeakOrder P y x
       le_refl x := scottWeakOrder_refl P x
-      le_trans x y z hxy hyz := scottWeakOrder_trans P hyz hxy
+      le_trans x y z hxy hyz := (scottWeakOrder_trans P).trans z y x hyz hxy
       lt x y := ScottWeakOrder P y x ∧ ¬ScottWeakOrder P x y
       lt_iff_le_not_ge _ _ := Iff.rfl
       }

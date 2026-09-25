@@ -24,8 +24,7 @@ formalizations. This repo is submitted to
 [Palomar](https://palomar-registry.org/about) on its own (see
 `PROVENANCE.md`).
 
-The pin is `leanprover/lean4:v4.33.0` (same as
-[`scott1976`](../scott1976)).
+The pin is `leanprover/lean4:v4.35.0-rc2`.
 
 Original Lean and author-written docs are Apache-2.0. Scott's paper PDF
 `sources/ScottMeasurement1964.pdf` is **not** under that license; see

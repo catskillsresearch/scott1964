@@ -28,7 +28,8 @@ theorem scottWeakOrder_refl (x : A) : ScottWeakOrder P x x :=
   ⟨fun _ h ↦ h, fun _ h ↦ h⟩
 
 theorem scottWeakOrder_trans :
-    Transitive (ScottWeakOrder P) := by
+    IsTrans A (ScottWeakOrder P) := by
+  constructor
   intro x y z hxy hyz
   exact ⟨fun w hwx ↦ hyz.1 w (hxy.1 w hwx),
     fun w hzw ↦ hxy.2 w (hyz.2 w hzw)⟩
@@ -91,12 +92,13 @@ theorem preference_implies_scottWeakOrder
     (hA : ∀ x y z w, P x y → P z w → P x w ∨ P z y)
     {x y : A} (hxy : P x y) :
     ScottWeakOrder P x y := by
-  have htrans : Transitive P := by
+  have htrans : IsTrans A P := by
+    constructor
     intro a b c hab hbc
     rcases hA a b b c hab hbc with hac | hbb
     · exact hac
     · exact (hirr b hbb).elim
-  exact ⟨fun z hzx ↦ htrans hzx hxy, fun z hyz ↦ htrans hxy hyz⟩
+  exact ⟨fun z hzx ↦ htrans.trans z x y hzx hxy, fun z hyz ↦ htrans.trans x y z hxy hyz⟩
 
 theorem scottWeakOrder_preference_scottWeakOrder
     {x x₁ y₁ y : A} (hxx₁ : ScottWeakOrder P x x₁)

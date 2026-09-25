@@ -13,7 +13,8 @@ namespace Scott1964.MeasurementStructures
 theorem preference_transitive_of_quadA {A : Type u} {P : A → A → Prop}
     (hirr : ∀ x, ¬ P x x)
     (hquad : ∀ x y z w, P x y → P z w → P x w ∨ P z y) :
-    Transitive P := by
+    IsTrans A P := by
+  constructor
   intro x y z hxy hyz
   rcases hquad x y y z hxy hyz with hxz | hyy
   · exact hxz
