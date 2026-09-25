@@ -420,6 +420,7 @@ def insert_front_matter_lists(latex: str) -> str:
         "\\clearpage\n"
         "\\listoffigures\n"
         "\\clearpage\n"
+        "\\ifthenelse{\\isodd{\\value{page}}}{}{\\mbox{}\\clearpage}\n"
         "}\n"
         "\\pagestyle{plain}\n\n"
     )
