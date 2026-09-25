@@ -30,4 +30,6 @@ dist/
 *.fdb_latexmk
 *.toc
 *.lof
+*.bbl
+*.blg
 texput.log
