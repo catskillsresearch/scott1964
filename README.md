@@ -1,4 +1,5 @@
 [![Lean 4](https://img.shields.io/github/actions/workflow/status/catskillsresearch/scott1964/build.yml?label=Lean%204)](https://github.com/catskillsresearch/scott1964/actions/workflows/build.yml)
+[![Palomar](https://img.shields.io/badge/Palomar-2026--09--25--000015-0f766e.svg)](https://palomar-registry.org/entry?id=PALOMAR-2026-09-25-000015&version=1)
 
 # scott1964
 
