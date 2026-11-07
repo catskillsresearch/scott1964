@@ -2711,7 +2711,7 @@ bash scripts/generate_arxiv_with_code.sh              # → arxiv_with_code.md
 `lake build` checks the `Scott1964` library (and optional `Solution` re-export).
 
 `arxiv_with_code.md` is generated (narrative, Concordance methodology
-appendix, Lean module index with GitHub links, and the Scott 1964 source
+appendix, complete `MeasurementStructures` Lean source, and the Scott 1964 source
 PDF as Appendix C). Regenerate when
 `arxiv.md` or listed sources change; build the PDF and arXiv zip with
 `bash scripts/build_arxiv_pdf.sh`.
@@ -2800,7 +2800,7 @@ artifact is the sorry-free `Scott1964/MeasurementStructures/` library;
 development. `Challenge.lean`, `Solution.lean`, and `comparator.json` provide
 the formal statement/solution interface used for independent comparison.
 
-The generated review copy appends a hyperlinked index of all Lean modules.
+The generated review copy appends the complete `MeasurementStructures` source, with one heading per file.
 The report build creates the PDF, including sanitized Lean listings and
 pre-rendered dependency figures.
 

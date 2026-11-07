@@ -102,6 +102,38 @@ def narrative_body(arxiv_text: str) -> str:
     return body.rstrip()
 
 
+def measurement_source_appendix(files: list[str]) -> str:
+    """Directory subsections, then one heading and fenced listing per file."""
+    prefix = "Scott1964/MeasurementStructures/"
+    parts = [
+        "# Appendix B: Complete Lean source\n\n",
+        "The complete source of `Scott1964/MeasurementStructures`, checked by "
+        f"`lake build`. Directory names are subsections. Each filename is a "
+        f"heading in this appendix. Repository: [{GITHUB}]({GITHUB}).\n\n",
+    ]
+    open_dirs: list[str] = []
+    for rel in files:
+        pieces = rel[len(prefix) :].split("/")
+        dirs, fname = pieces[:-1], pieces[-1]
+        shared = 0
+        while (
+            shared < len(open_dirs)
+            and shared < len(dirs)
+            and open_dirs[shared] == dirs[shared]
+        ):
+            shared += 1
+        open_dirs = open_dirs[:shared]
+        for directory in dirs[shared:]:
+            open_dirs.append(directory)
+            parts.append(f"{'#' * (2 + len(open_dirs))} {directory}\n\n")
+        parts.append(f"{'#' * (3 + len(dirs))} {fname}\n\n")
+        code = (ROOT / rel).read_text(encoding="utf-8")
+        if not code.endswith("\n"):
+            code += "\n"
+        parts.append(f"```lean\n{code}```\n\n")
+    return "".join(parts)
+
+
 def main() -> None:
     arxiv_path = ROOT / "arxiv.md"
     arxiv = arxiv_path.read_text(encoding="utf-8")
@@ -126,10 +158,10 @@ def main() -> None:
     parts.append(
         "**Review copy.** The narrative body matches [`arxiv.md`](arxiv.md) "
         "(excluding the title block through the first `---`). "
-        "This file appends **Appendix B: Lean module index** with GitHub links "
-        "to every library file (no inlined full source) and **Appendix C: "
-        "Scott 1964 source paper**. Appendix A is the Concordance methodology "
-        "section from `arxiv.md`.\n\n"
+        "This file appends **Appendix B: Complete Lean source** for "
+        "`Scott1964/MeasurementStructures`, with one heading per file, and "
+        "**Appendix C: Scott 1964 source paper**. Appendix A is the Concordance "
+        "methodology section from `arxiv.md`.\n\n"
     )
     parts.append("---\n\n")
     parts.append("## Document map\n\n")
@@ -137,29 +169,17 @@ def main() -> None:
     parts.append("| --- | --- |\n")
     parts.append("| **Narrative** | Full `arxiv.md` body with inline Lean gists |\n")
     parts.append("| **Appendix A** | Concordance methodology |\n")
-    parts.append("| **Appendix B** | Hyperlinked module index |\n")
+    parts.append("| **Appendix B** | Full `MeasurementStructures` source |\n")
     parts.append("| **Appendix C** | Scott 1964 source PDF |\n\n")
     parts.append("---\n\n")
     parts.append("# Narrative (from arxiv.md)\n\n")
     parts.append(body)
     parts.append("\n\n---\n\n")
-    parts.append("# Appendix B: Lean module index\n\n")
-    parts.append(
-        f"Checked by `lake build`. Complete sources: [{GITHUB}]({GITHUB}). "
-        "Each subsection links to the corresponding file on GitHub.\n\n"
-    )
-    parts.append("| Role | File |\n")
-    parts.append("| --- | --- |\n")
-    for f in FILES:
-        parts.append(f"| {FILE_ROLES[f]} | [`{f}`]({github_blob(f)}) |\n")
-    parts.append(
-        "\nPrimary source (PDF): [`sources/ScottMeasurement1964.pdf`]"
-        f"({GITHUB}/blob/main/sources/ScottMeasurement1964.pdf) — Dana S. Scott, "
-        "*Measurement Structures and Linear Inequalities* (J. Math. Psychology 1, 1964).\n\n"
-    )
-
-    total_lines = sum(len((ROOT / f).read_text().splitlines()) for f in FILES)
-    parts.append(f"**Total:** {len(FILES)} modules, {total_lines} lines of Lean.\n\n")
+    source_files = [
+        f for f in FILES if f.startswith("Scott1964/MeasurementStructures/")
+    ]
+    parts.append(measurement_source_appendix(source_files))
+    total_lines = sum(len((ROOT / f).read_text().splitlines()) for f in source_files)
     parts.append("---\n\n")
     parts.append("# Appendix C: Scott 1964 source paper\n\n")
     parts.append(

@@ -1,14 +1,22 @@
 #!/usr/bin/env python3
-"""ASCII sanitization for Lean sources included via listings on arXiv (pdfLaTeX).
+"""Prepare Lean sources for ``\\lstinputlisting`` in the arXiv pdfLaTeX build.
 
-The arXiv AutoTeX pipeline runs pdfLaTeX, which chokes on arbitrary UTF-8 inside
-`lstinputlisting` files. We therefore render the logical/mathematical operators to
-readable ASCII and drop anything still non-ASCII to `?` rather than break the build.
+Listings use the ``leanbox`` style in ``tex_preamble_arxiv.tex``. A character in
+that ``literate`` table stays as UTF-8 and is rendered as LaTeX. Anything else
+is rewritten through ``LEAN_UNICODE_REPLACEMENTS``. An unmapped non-ASCII
+character is an error: the build must not silently print ``?``.
 """
 
 from __future__ import annotations
 
+import re
 import unicodedata
+from functools import lru_cache
+from pathlib import Path
+
+_SCRIPTS = Path(__file__).resolve().parent
+_PREAMBLE = _SCRIPTS / "tex_preamble_arxiv.tex"
+_LEANBOX_LITERATE_RE = re.compile(r"\{([^}]+)\}\{\{")
 
 # Order matters: longer / composite replacements first where needed.
 LEAN_UNICODE_REPLACEMENTS: tuple[tuple[str, str], ...] = (
@@ -140,14 +148,79 @@ LEAN_UNICODE_REPLACEMENTS: tuple[tuple[str, str], ...] = (
 )
 
 
-def sanitize_lean_for_arxiv(text: str) -> str:
+@lru_cache(maxsize=1)
+def leanbox_literate_chars(*, preamble_path: Path | None = None) -> frozenset[str]:
+    """Characters the ``leanbox`` listing style renders via ``literate``."""
+    path = preamble_path or _PREAMBLE
+    text = path.read_text(encoding="utf-8")
+    start = text.find("\\lstdefinestyle{leanbox}")
+    if start < 0:
+        raise RuntimeError(f"leanbox style not found in {path}")
+    end = text.find("\\lstset{style=leanbox}", start)
+    if end < 0:
+        raise RuntimeError(f"leanbox literate block not terminated in {path}")
+    chars: set[str] = set()
+    for key in _LEANBOX_LITERATE_RE.findall(text[start:end]):
+        chars.update(key)
+    return frozenset(chars)
+
+
+def _replacements_for_listings(allowed: frozenset[str]) -> tuple[tuple[str, str], ...]:
+    """Drop ASCII fallbacks for glyphs ``leanbox`` already typesets."""
+    return tuple(
+        (src, dst)
+        for src, dst in LEAN_UNICODE_REPLACEMENTS
+        if not (len(src) == 1 and src in allowed)
+    )
+
+
+class UnmappedLeanCharError(RuntimeError):
+    """A Lean listing contains a character with no LaTeX rendering."""
+
+
+def sanitize_lean_for_arxiv(
+    text: str,
+    *,
+    preamble_path: Path | None = None,
+    source_name: str | None = None,
+) -> str:
+    allowed = leanbox_literate_chars(preamble_path=preamble_path)
     out = text
-    for src, dst in LEAN_UNICODE_REPLACEMENTS:
+    for src, dst in _replacements_for_listings(allowed):
         out = out.replace(src, dst)
-    out = unicodedata.normalize("NFD", out)
-    out = "".join(c for c in out if unicodedata.category(c) != "Mn")
-    # Drop any remaining non-ASCII (comments / docstrings) rather than break pdfLaTeX.
-    return "".join(ch if ord(ch) < 128 else "?" for ch in out)
+
+    missing: set[str] = set()
+    cleaned: list[str] = []
+    for ch in out:
+        if ord(ch) < 128 or ch in allowed:
+            cleaned.append(ch)
+            continue
+        decomp = "".join(
+            c
+            for c in unicodedata.normalize("NFD", ch)
+            if unicodedata.category(c) != "Mn"
+        )
+        if decomp and all(ord(c) < 128 or c in allowed for c in decomp):
+            cleaned.append(decomp)
+            continue
+        missing.add(ch)
+    if missing:
+        where = source_name or "listing"
+        samples: list[str] = []
+        for lineno, line in enumerate(text.splitlines(), 1):
+            bad = [ch for ch in line if ch in missing]
+            if not bad:
+                continue
+            shown = ", ".join(f"U+{ord(ch):04X} {ch!r}" for ch in dict.fromkeys(bad))
+            samples.append(f"  {where}:{lineno}: {shown}: {line.strip()[:160]}")
+            if len(samples) >= 20:
+                break
+        raise UnmappedLeanCharError(
+            "Unmapped Lean characters; refusing to replace them with '?'. "
+            "Add a leanbox literate entry in scripts/tex_preamble_arxiv.tex.\n"
+            + "\n".join(samples)
+        )
+    return "".join(cleaned)
 
 
 def chunk_line_ranges(line_count: int, chunk_size: int = 350) -> list[tuple[int, int]]:

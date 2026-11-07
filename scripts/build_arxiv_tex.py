@@ -175,7 +175,7 @@ def drop_github_nav(text: str) -> str:
 def normalize_appendix_headings(text: str) -> str:
     text = re.sub(
         r"^#\s+Appendix [AB]: (?:Complete Lean source|Lean module index)\s*$",
-        "## Lean module index",
+        "## Complete Lean source",
         text,
         flags=re.MULTILINE,
     )
@@ -205,7 +205,7 @@ def extract_abstract(text: str) -> tuple[str, str]:
 
 def write_listing(code: str, listing_name: str) -> tuple[str, int]:
     LISTINGS_DIR.mkdir(parents=True, exist_ok=True)
-    source = sanitize_lean_for_arxiv(code.rstrip("\n"))
+    source = sanitize_lean_for_arxiv(code.rstrip("\n"), source_name=listing_name)
     listing_path = LISTINGS_DIR / listing_name
     listing_path.write_text(source + "\n", encoding="utf-8")
     rel_path = listing_path.relative_to(ROOT).as_posix()
@@ -395,12 +395,12 @@ def cleanup_pandoc_latex(latex: str) -> str:
     )
     latex = re.sub(
         r"\\section\{Appendix [AB]: (?:Complete Lean source|Lean module index)\}",
-        r"\\section{Lean module index}",
+        r"\\section{Complete Lean source}",
         latex,
     )
     latex = re.sub(
         r"\\section\{Appendix [AB]\. Lean module index\}",
-        r"\\section{Lean module index}",
+        r"\\section{Complete Lean source}",
         latex,
     )
     latex = re.sub(
@@ -493,6 +493,7 @@ def insert_scott_source_pdf(latex: str) -> str:
 def insert_appendix_command(latex: str) -> str:
     for marker in (
         r"\section{Concordance methodology}",
+        r"\section{Complete Lean source}",
         r"\section{Lean module index}",
     ):
         if marker in latex:

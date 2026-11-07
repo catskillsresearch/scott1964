@@ -193,6 +193,28 @@
     {⟶}{{\ensuremath{\longrightarrow}}}2
     {⟷}{{\ensuremath{\longleftrightarrow}}}2
     {⟹}{{\ensuremath{\Longrightarrow}}}2
+    {ℝ}{{\ensuremath{\mathbb{R}}}}1
+    {ℚ}{{\ensuremath{\mathbb{Q}}}}1
+    {ℤ}{{\ensuremath{\mathbb{Z}}}}1
+    {∑}{{\ensuremath{\sum}}}1
+    {μ}{{\ensuremath{\mu}}}1
+    {π}{{\ensuremath{\pi}}}1
+    {ε}{{\ensuremath{\varepsilon}}}1
+    {ₗ}{{\textsubscript{l}}}1
+    {ᵇ}{{\textsuperscript{b}}}1
+    {ᶜ}{{\textsuperscript{c}}}1
+    {⨅}{{\ensuremath{\bigcap}}}1
+    {≻}{{\ensuremath{\succ}}}1
+    {≼}{{\ensuremath{\preccurlyeq}}}1
+    {‖}{{\ensuremath{\Vert}}}1
+    {“}{{``}}1
+    {”}{{''}}1
+    {‹}{{\ensuremath{\langle}}}1
+    {›}{{\ensuremath{\rangle}}}1
+    {∣}{{\ensuremath{\mid}}}1
+    {⊗}{{\ensuremath{\otimes}}}1
+    {⊕}{{\ensuremath{\oplus}}}1
+    {•}{{\ensuremath{\bullet}}}1
 }
 \lstset{style=leanbox}
 
@@ -328,3 +350,13 @@
 \newunicodechar{✓}{\ensuremath{\checkmark}}
 \newunicodechar{æ}{\ae}
 \newunicodechar{ö}{\"o}
+
+% Appendix file headings under a nested directory use \paragraph.
+\setcounter{tocdepth}{4}
+\setcounter{secnumdepth}{4}
+\makeatletter
+\renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
+  {-3.25ex\@plus -1ex \@minus -.2ex}%
+  {1.5ex \@plus .2ex}%
+  {\normalfont\normalsize\bfseries}}
+\makeatother
